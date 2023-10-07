@@ -1,0 +1,13 @@
+TODO:
+    - zaimplementować klasy struktur:
+                                        - stos
+                                        - tablica grafu
+    - przeszukiwanie grafu -> DFS
+
+
+    KLASY:
+    - Graph
+    - Time
+    - menu
+    - DP_TSP
+    -
