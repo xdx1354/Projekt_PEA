@@ -13,6 +13,7 @@
     void Stack::push(int value){
         auto* node = new StackNode(value, Stack::top);
         Stack::top = node;
+        Stack::size++;
     }
 
     /**
@@ -24,6 +25,7 @@
         int val = Stack::top->value;
         delete Stack::top;
         Stack::top = node;
+        Stack::size--;
         return val;
 }
     /**
@@ -32,7 +34,14 @@
     void Stack::print(){
         StackNode* node = Stack::top;
         while(node != nullptr){
-            std::cout<<node<<" ";
+            std::cout<<node->value<<" ";
             node = node->next;
         }
+    }
+
+    /**
+     * return: size of the stack
+     */
+    int Stack::getSize() {
+        return Stack::size;
     }

@@ -7,15 +7,18 @@
 
 
 #include "StackNode.h"
+#include <iostream>
 
 class Stack {
 public:
-    int size;
+    int size = 0;
     StackNode *top = nullptr;
 
     void push(int value);
     int pop();
     void print();
+//    std::string toString();      // TODO
+    int getSize();
 
 };
 

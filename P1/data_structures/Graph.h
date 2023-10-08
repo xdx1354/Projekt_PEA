@@ -6,7 +6,12 @@
 #define P1_GRAPH_H
 #include <bits/stdc++.h>
 
-
+/**
+ * Class for representing graph as adjacency list.
+ * v: two dim array of integers
+ * numOfVertices: number of Vertices of graph
+ *
+ */
 class Graph {
 
 public:
@@ -15,8 +20,9 @@ public:
 
 
 
-    void loadData();
+    void loadData(std::string);
     void printGraph();
+    int getSize();
 
 
 
