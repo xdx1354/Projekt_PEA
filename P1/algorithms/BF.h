@@ -6,25 +6,30 @@
 #define P1_BF_H
 #include <stdlib.h>
 #include <string>
+using namespace std;
 
 
 #include "../data_structures/Graph.h"
 #include "../data_structures/Stack.h"
 
+//TODO: redesign using self-made data structures
+
 class BF {
 public:
     int numOfCities;
-    Stack path;
+    vector <int> path;
+    vector <int> best_path;
+
     bool *visited;
-    int path_len;           // length of path (number of already visited cities)
-    int best_cost;           // minimal cost of checked paths (currently set as maximal integer value)
-    int current_cost;       // cost of current path
-    int startingCity = 0;   // the algo will always start from city number 0
-
-    void brut_force(Graph graph);
-    void hamiltonian_path(int v, Graph graph);
+    int path_len = 0;           // length of path (number of already visited cities)
+    int best_cost;              // minimal cost of checked paths (currently set as maximal integer value)
+    int current_cost;           // cost of current path
+    int **matrix;
 
 
+    void print();
+    explicit BF(Graph graph);        //constructor
+    void recursion(int vertex);
 };
 
 

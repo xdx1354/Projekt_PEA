@@ -23,7 +23,6 @@
     int Stack::pop() {
         auto* node = Stack::top->next;
         int val = Stack::top->value;
-        delete Stack::top;
         Stack::top = node;
         Stack::size--;
         return val;
@@ -63,6 +62,15 @@
         Stack::top = s.top;
         Stack:size = s.size;
     }
+
+//    std::string saveBestPath(){
+//        int *arr = new int[Stack::getSize()];
+//        int starting_size = Stack::getSize();
+//        for(int i = 1; i<=starting_size; i++){
+//            arr[starting_size-i] = Stack::pop();
+//        }
+//
+//    }
 
     void Stack::printFromBottom(){
         // moving all data to array

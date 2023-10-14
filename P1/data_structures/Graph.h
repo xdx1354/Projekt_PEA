@@ -25,8 +25,7 @@ public:
     int getSize();
 
 
-
-
+    int **getMatrix();
 };
 
 

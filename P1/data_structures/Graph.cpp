@@ -48,7 +48,7 @@ void Graph::printGraph(){
     cout<<"pierwsze pole"<<v[0][1]<<"    "<<endl;
 
 
-    for(int i = 0; i <= Graph::numOfVertices; i++){
+    for(int i = 0; i < Graph::numOfVertices; i++){
         for(int j = 0; j < numOfVertices; j++){
           cout<<v[i][j] << " ";                     //TODO: tu przydałoby sie wyrównywanie do 3 miejsc np.
         }
@@ -58,5 +58,14 @@ void Graph::printGraph(){
 
 int Graph::getSize() {
     return numOfVertices;
+}
+
+/**
+ *
+ * @return 2D array of ints
+ */
+
+int **Graph::getMatrix(){
+    return v;
 }
 
