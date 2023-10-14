@@ -14,6 +14,7 @@ int main() {
 
 // TESTING STACK
     Stack s;
+    Stack ss;
     Time t;
     t.start();
     cout<<s.getSize()<<endl;
@@ -24,6 +25,18 @@ int main() {
     s.pop();
     cout<<s.getSize()<<endl;
     s.print();
+    ss.copy(s);
+    cout<<endl;
+    ss.print();
+    cout<<endl;
+    ss.clear();
+    ss.push(1);
+    ss.push(2);
+    ss.push(3);
+    ss.push(4);
+    ss.print();
+    cout<<endl;
+    ss.printFromBottom();
     t.stop();
     cout<<"CZAS: "<<t.returnTime();
 

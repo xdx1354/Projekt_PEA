@@ -19,7 +19,10 @@ public:
     void print();
 //    std::string toString();      // TODO
     int getSize();
+    void clear();
+    void copy(Stack s);
 
+    void printFromBottom();
 };
 
 
