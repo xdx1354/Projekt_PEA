@@ -15,6 +15,8 @@ void Graph::loadData(string fileName) {
     if( fileName[fileName.size()-3] != 't' or fileName[fileName.size()-2] != 'x' or fileName [fileName.size()-1] != 't' ){
         fileName = fileName + ".txt";
     }
+    // TODO: redesign this part. I have to choose where will be te fileName input taken. Probably somewhere higher
+    // to make it global
 
     fileName = R"(D:\PWR\5 sem\PEA\PROJEKT\P1\data\data10.txt)";
     cout<<fileName<<"  ";
@@ -34,9 +36,6 @@ void Graph::loadData(string fileName) {
             fin >> v[i][j];
         }
     }
-
-
-
 }
 
 
@@ -56,12 +55,16 @@ void Graph::printGraph(){
     }
 }
 
+/**
+ * Function for returning size (number of vertices) of graph
+ * @return
+ */
 int Graph::getSize() {
     return numOfVertices;
 }
 
 /**
- *
+ * Function for returning 2D array of vertices.
  * @return 2D array of ints
  */
 

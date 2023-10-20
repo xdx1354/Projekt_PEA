@@ -3,6 +3,9 @@
 #include "data_structures/Stack.h"
 #include "utils/Time.h"
 #include "algorithms/BF.h"
+#include "algorithms/DP.h"
+#include "algorithms/DP2.h"
+#include "algorithms/BB.h"
 
 using namespace std;
 int main() {
@@ -11,9 +14,23 @@ int main() {
     Graph g;
     g.loadData("P1//data//data3.txt");
     g.printGraph();
-    BF bf(g);
-    bf.recursion(0);
-    bf.print();
+    BB bb(g);
+    bb.recursion(0);
+    bb.print();
+
+
+//    Graph g;
+//    g.loadData("P1//data//data3.txt");
+//    g.printGraph();
+//    cout<<"ROZMIAR GRAFU: "<<g.getSize()<<endl;
+//    DP2 dp(g);
+//    dp.apply();
+//    cout<< dp.toString();
+
+//    dp.heldKarp(0, 1);
+//    dp.printTour(0);
+
+
 
 
 //// TESTING STACK

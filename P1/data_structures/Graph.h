@@ -23,8 +23,6 @@ public:
     void loadData(std::string);
     void printGraph();
     int getSize();
-
-
     int **getMatrix();
 };
 

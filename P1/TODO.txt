@@ -18,6 +18,17 @@ DONE:
         - Time
 
 
+
+BRANCH AND BOUND:
+
+1 Przejscie przez graf tak jak brutforce
+2 Po pierwszym przejsciu zapsiuje wynik
+
+3 Podczas kolejnych przejść za każdym razem sprawdzam czy dana gałęź nie bedzie już gorsza niż najlepsza po dołączeniu
+  tej nowej krawędzi ORAZ czy ma potencjał na to by być lepsza
+  Tzn. czy jeśli później będziemy dołączać tylko najtańsze krawędzi (choćby to nie miało sensu) to czy jest potencjał
+  by było to tańsze niż najlepsze rozwiązanie.
+
 PODEJSCIE OLI:
 
 void BF::brut_force(Graph graph) {
