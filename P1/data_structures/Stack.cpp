@@ -53,15 +53,7 @@
             Stack::pop();
         }
     }
-    /**
-     *  Copying one stack to the other one
-     * @param s: Stack to be copied
-     */
-    void Stack::copy(Stack s) {
-        Stack::clear();
-        Stack::top = s.top;
-        Stack:size = s.size;
-    }
+
 
 //    std::string saveBestPath(){
 //        int *arr = new int[Stack::getSize()];
