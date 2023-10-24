@@ -14,13 +14,13 @@ public:
     int size = 0;
     StackNode *top = nullptr;
 
-    void push(int value);
-    int pop();
+    void push_back(int value);
+    int pop_back();
     void print();
 //    std::string toString();      // TODO
     int getSize();
     void clear();
-    void copy(Stack s);
+
 
     void printFromBottom();
 };

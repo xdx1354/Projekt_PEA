@@ -10,7 +10,7 @@
      * pushes a new value on top of the stack
      * @param value: value to be pushed on stack
      */
-    void Stack::push(int value){
+    void Stack::push_back(int value){
         auto* node = new StackNode(value, Stack::top);
         Stack::top = node;
         Stack::size++;
@@ -20,7 +20,7 @@
      * pops the top of the Stack
      * @return: integer value of node
      */
-    int Stack::pop() {
+    int Stack::pop_back() {
         auto* node = Stack::top->next;
         int val = Stack::top->value;
         Stack::top = node;
@@ -50,7 +50,7 @@
      */
     void Stack::clear() {
         while(Stack::size>0){
-            Stack::pop();
+            Stack::pop_back();
         }
     }
 
@@ -59,7 +59,7 @@
 //        int *arr = new int[Stack::getSize()];
 //        int starting_size = Stack::getSize();
 //        for(int i = 1; i<=starting_size; i++){
-//            arr[starting_size-i] = Stack::pop();
+//            arr[starting_size-i] = Stack::pop_back();
 //        }
 //
 //    }
@@ -69,7 +69,7 @@
         int *arr = new int[Stack::getSize()];
         int starting_size = Stack::getSize();
         for(int i = 1; i<=starting_size; i++){
-            arr[starting_size-i] = Stack::pop();
+            arr[starting_size-i] = Stack::pop_back();
         }
 
         // printing the array

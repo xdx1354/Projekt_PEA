@@ -56,7 +56,7 @@ void BF::hamiltonian_path(int v, Graph graph) {
 
     int u;
 
-    path.push(v);
+    path.push_back(v);
     path_len++;
     //visited[v] = true;
 
@@ -88,5 +88,5 @@ void BF::hamiltonian_path(int v, Graph graph) {
     std::cout<<"Czy 0 odziwedozne: " <<visited[0];
     BF::print();
     path_len--;
-    path.pop();                                 // pop() from stack while exiting the recurrent
+    path.pop();                                 // pop_back() from stack while exiting the recurrent
 }

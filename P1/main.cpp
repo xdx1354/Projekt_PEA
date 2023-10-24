@@ -11,12 +11,19 @@ using namespace std;
 int main() {
 
 //TESTING GRAPH
+    Graph g;
+    g.loadData("P1//data//data3.txt");
+    g.printGraph();
+    BB bb(g);
+    bb.recursion(0);
+    bb.print();
+
 //    Graph g;
 //    g.loadData("P1//data//data3.txt");
 //    g.printGraph();
-//    BB bb(g);
-//    bb.recursion(0);
-//    bb.print();
+//    BF bf(g);
+//    bf.recursion(0);
+//    bf.print();
 
 
 //    Graph g;
@@ -34,36 +41,36 @@ int main() {
 
 
 //// TESTING STACK
-    Stack s;
-    Stack ss;
-    Time t;
-    t.start();
-    cout<<s.getSize()<<endl;
-    s.push(10);
-    s.push(11);
-    s.push(12);
-    cout<<s.getSize()<<endl;
-    s.pop();
-    cout<<s.getSize()<<endl;
-    s.print();
-    ss.clear();
-    ss = s;
-    s.clear();
-    s.push(11111);
-    cout<<endl;
-    ss.print();
-    cout<<endl;
-    s.print();
-    ss.clear();
-    ss.push(1);
-    ss.push(2);
-    ss.push(3);
-    ss.push(4);
-    ss.print();
-    cout<<endl;
-    ss.printFromBottom();
-    t.stop();
-    cout<<"CZAS: "<<t.returnTime();
+//    Stack s;
+//    Stack ss;
+//    Time t;
+//    t.start();
+//    cout<<s.getSize()<<endl;
+//    s.push_back(10);
+//    s.push_back(11);
+//    s.push_back(12);
+//    cout<<s.getSize()<<endl;
+//    s.pop_back();
+//    cout<<s.getSize()<<endl;
+//    s.print();
+//    ss.clear();
+//    ss = s;
+//    s.clear();
+//    s.push_back(11111);
+//    cout<<endl;
+//    ss.print();
+//    cout<<endl;
+//    s.print();
+//    ss.clear();
+//    ss.push_back(1);
+//    ss.push_back(2);
+//    ss.push_back(3);
+//    ss.push_back(4);
+//    ss.print();
+//    cout<<endl;
+//    ss.printFromBottom();
+//    t.stop();
+//    cout<<"CZAS: "<<t.returnTime();
 
     return 0;
 

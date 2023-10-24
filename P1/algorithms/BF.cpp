@@ -40,7 +40,7 @@ void BF::recursion(int vertex){
 
         visited[vertex] = false;                        // marking the vertex as not visited on the way back
         path_len--;                                     // keeping the paht_len right
-        path.pop_back();                                // pop the vertex from stack
+        path.pop_back();                                // pop_back the vertex from stack
 
     }
     else if (matrix[vertex][0] <= 0){                   // in this case we came back to starting vertex
@@ -56,8 +56,9 @@ void BF::recursion(int vertex){
         else{                                           // in this case it is better
             best_cost = current_cost;                   // so we change the value and copy the path
             best_path.clear();
-            for(const int& i : path)
-                best_path.push_back(i);
+//            for(const int& i : path)
+//                best_path.push_back(i);
+            best_path = path;
             current_cost -= matrix[vertex][0];          // preparation for going back
         }
         path_len--;                                     // going back to previous city
@@ -72,12 +73,13 @@ void BF::recursion(int vertex){
 void BF::print() {
     std::cout<<"Best path cost: " << best_cost << std::endl;
 
-    if(best_path.empty())
+    if(best_path.getSize()==0)
         printf("\nHamiltonian path doesn't exist.");
     else {
         printf("\nShortest path:\n");
-        for (const int &i: best_path)
-            printf("%i -> ", i);
+//        for (const int &i: best_path)
+//            printf("%i -> ", i);
+        best_path.printFromBottom();
         std::cout << std::endl;
     }
 
