@@ -6,6 +6,7 @@
 #include "algorithms/DP.h"
 #include "algorithms/DP2.h"
 #include "algorithms/BB.h"
+#include "algorithms/DPP.h"
 
 using namespace std;
 int main() {
@@ -17,14 +18,18 @@ int main() {
 //    BB bb(g);
 //    bb.recursion(0);
 //    bb.print();
-    DP2 dp(g);
-    cout << dp.apply();
+//    DP2 dp(g);
+//    cout << dp.apply();
+
+    DP dpp(g);
+    dpp.apply();
+    dpp.toString();
 
 
 //    Graph g;
 //    g.loadData("P1//data//data3.txt");
 //    g.printGraph();
-    cout<<" BRUTFORCE:  ";
+    cout<<"\n\n BRUTFORCE:  ";
     BF bf(g);
     bf.recursion(0);
     bf.print();

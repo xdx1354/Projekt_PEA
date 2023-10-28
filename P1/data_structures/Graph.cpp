@@ -17,7 +17,7 @@ void Graph::loadData(string fileName) {
     }
     // TODO: taking filename from main is not working
 
-    fileName = R"(D:\PWR\5 sem\PEA\PROJEKT\P1\data\data4.txt)";
+    fileName = R"(D:\PWR\5 sem\PEA\PROJEKT\P1\data\data10.txt)";
     cout<<fileName<<"  ";
     ifstream fin;
 

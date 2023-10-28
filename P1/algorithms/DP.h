@@ -1,29 +1,33 @@
 //
-// Created by stani on 15.10.2023.
+// Created by stani on 28.10.2023.
 //
 
 #ifndef P1_DP_H
 #define P1_DP_H
 
-
 #include "../data_structures/Graph.h"
 
-class DP {
+#define INF 9999
 
+class DP
+{
 private:
-
     int **matrix;
-    int numOfCities;
-    int **dp;
+    int count;
+    int result;
+    int temp;
+    int **memory;
+    int **getMemory;
+    int lastVertex;
 
 public:
-    int apply();
+    void apply();
     std::string toString();
-
-
-
+    int getResult();
     DP(Graph graph);
+    ~DP();
 };
 
 
-#endif //P1_DP2_H
+
+#endif //P1_DP_H
