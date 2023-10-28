@@ -12,18 +12,22 @@ int main() {
 
 //TESTING GRAPH
     Graph g;
-    g.loadData("P1//data//data3.txt");
+    g.loadData("P1//data//data5.txt");
     g.printGraph();
-    BB bb(g);
-    bb.recursion(0);
-    bb.print();
+//    BB bb(g);
+//    bb.recursion(0);
+//    bb.print();
+    DP2 dp(g);
+    cout << dp.apply();
+
 
 //    Graph g;
 //    g.loadData("P1//data//data3.txt");
 //    g.printGraph();
-//    BF bf(g);
-//    bf.recursion(0);
-//    bf.print();
+    cout<<" BRUTFORCE:  ";
+    BF bf(g);
+    bf.recursion(0);
+    bf.print();
 
 
 //    Graph g;

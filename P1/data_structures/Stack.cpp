@@ -64,6 +64,10 @@
 //
 //    }
 
+
+    /**
+     * Printing data from bottom of stack. Prints real path of TS
+     */
     void Stack::printFromBottom(){
         // moving all data to array
         int *arr = new int[Stack::getSize()];

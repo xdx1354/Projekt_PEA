@@ -15,10 +15,9 @@ void Graph::loadData(string fileName) {
     if( fileName[fileName.size()-3] != 't' or fileName[fileName.size()-2] != 'x' or fileName [fileName.size()-1] != 't' ){
         fileName = fileName + ".txt";
     }
-    // TODO: redesign this part. I have to choose where will be te fileName input taken. Probably somewhere higher
-    // to make it global
+    // TODO: taking filename from main is not working
 
-    fileName = R"(D:\PWR\5 sem\PEA\PROJEKT\P1\data\data10.txt)";
+    fileName = R"(D:\PWR\5 sem\PEA\PROJEKT\P1\data\data4.txt)";
     cout<<fileName<<"  ";
     ifstream fin;
 
@@ -31,7 +30,7 @@ void Graph::loadData(string fileName) {
 
     // filling the structure with data
     for(int i = 0; i < numOfVertices; i++){
-        v[i] = new int [numOfVertices];             // Tworzenie dwuwymiarowej tablicy - dokladanie drugiego wymiaru
+        v[i] = new int [numOfVertices];             // creating 2nd dim of matrix
         for(int j = 0; j < numOfVertices; j++){
             fin >> v[i][j];
         }
@@ -57,7 +56,7 @@ void Graph::printGraph(){
 
 /**
  * Function for returning size (number of vertices) of graph
- * @return
+ * @return int: number of vertices in graph
  */
 int Graph::getSize() {
     return numOfVertices;
@@ -67,7 +66,6 @@ int Graph::getSize() {
  * Function for returning 2D array of vertices.
  * @return 2D array of ints
  */
-
 int **Graph::getMatrix(){
     return v;
 }

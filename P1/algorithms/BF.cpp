@@ -77,8 +77,6 @@ void BF::print() {
         printf("\nHamiltonian path doesn't exist.");
     else {
         printf("\nShortest path:\n");
-//        for (const int &i: best_path)
-//            printf("%i -> ", i);
         best_path.printFromBottom();
         std::cout << std::endl;
     }

@@ -4,34 +4,26 @@
 
 #ifndef P1_DP_H
 #define P1_DP_H
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <climits>
-#include <stack>
+
+
 #include "../data_structures/Graph.h"
 
-
-using namespace std;
-
 class DP {
-public:
 
-    Graph g;
-    int **cost;
-    int n;
-    int result;
-    int temp;
+private:
+
+    int **matrix;
+    int numOfCities;
     int **dp;
-    int **parent;
-    int lastVertex;
+
+public:
+    int apply();
+    std::string toString();
 
 
-    int heldKarp(int current, int visited);
 
-    void printTour(int startCity);
-    DP();
+    DP(Graph graph);
 };
 
 
-#endif //P1_DP_H
+#endif //P1_DP2_H

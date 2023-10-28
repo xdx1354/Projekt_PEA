@@ -14,21 +14,19 @@ using namespace std;
 #include "../data_structures/Graph.h"
 #include "../data_structures/Stack.h"
 
-//TODO: redesign using self-made data structures
 
 class BB {
 public:
     int numOfCities;
-    Stack path;          // vector containing currently explored path
-    Stack best_path;     // vector containing currently best path
+    Stack path;          // structure containing currently explored path
+    Stack best_path;     // structure containing currently best path
 
     bool *visited;
     int path_len = 0;           // length of path (number of already visited cities)
     int best_cost;              // minimal cost of checked paths (currently set as maximal integer value)
     int current_cost;           // cost of current path
     int **matrix;
-    int *cheapest_entrance;     // helping array with the cheapest entrance to each node
-    int *cheapest_exit;         // ...with the cheapest exit
+    int *cheapest_exit;         // helping array with the cheapest exit
     int lowerBound;
 
     void print();
