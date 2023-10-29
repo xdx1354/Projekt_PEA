@@ -8,7 +8,9 @@ TODO:
     - Zastanowić sie nad strukturą BB, BF, DP. W którym miejscu wczytywany jest graf
     do obiektu klasy. Jak aktualizowac
     - Dodac do Makelist: utils/Menu.cpp utils/Menu.h
-
+    - DANE POWINNY BYĆ GENEROWANIE PRZED KAŻDĄ ITERACJĄ I POMIAREM
+        - funkcja generate data powinna generować pojedyńczy plik dla zadanej liczebności
+        - mozna zrobić dwie funkcje generateAllData() i generateAllData(int numOfNodes);
 
 BRANCH AND BOUND:
 
