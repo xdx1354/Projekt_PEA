@@ -15,6 +15,7 @@ void Menu::start() {
 
 
     int choose = 0;
+    bool isGraphLoaded = false;
 
 
 
@@ -28,6 +29,7 @@ void Menu::start() {
         std::cout<<"5. Perform Dynamic programing algorithm";
         std::cout<<"6. Measure times of algorithms";
         std::cout<<"9. Exit";
+        std::cout<<"10. Autotests";
         std::cout<<"Choose what do you want to do: ";
 
         std::cin>>choose;
@@ -38,24 +40,52 @@ void Menu::start() {
                 std::cout<<"Type name of the file: ";
                 std::cin>>filename;
                 g.loadData(filename);
+                isGraphLoaded = true;
+
             }
             case 2:{
-                g.printGraph();
+                if( isGraphLoaded){
+                    g.printGraph();
+                }
+                else{
+                    std::cout<<"First you need to load graph. Choose 1.";
+                }
             }
             case 3:{
-                run_BF(g);
+                if( isGraphLoaded){
+                    run_BF(g);
+                }
+                else{
+                    std::cout<<"First you need to load graph. Choose 1.";
+                }
+
             }
             case 4:{
-                run_BB(g);
+                if( isGraphLoaded){
+                    run_BB(g);
+                }
+                else{
+                    std::cout<<"First you need to load graph. Choose 1.";
+                }
             }
 
             case 5:{
-                run_DP(g);
+                if( isGraphLoaded){
+                    run_DP(g);
+                }
+                else{
+                    std::cout<<"First you need to load graph. Choose 1.";
+                }
             }
             case 6:{
-                measure_time();
+
             }
             case 9:{
+
+            }
+            case 10:{
+                //  another menu for autotests
+                // Autotest will be called from here
 
             }
             default:{

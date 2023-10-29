@@ -9,41 +9,39 @@
 
 void DP::apply()
 {
-    for (int i = 0; i < count; i++)
+
+    for (int i = 0; i < numOfVertices; i++)
     {
-        memory[(1 << i) | 1][i] = matrix[0][i];
-        getMemory[(1 << i) | 1][i] = 0;
+        dp[(1 << i) | 1][i] = matrix[0][i];
+        history[(1 << i) | 1][i] = 0;
     }
 
-    for (int bitMask = 0; bitMask < 1 << count; bitMask++)
-    {
-        for (int v = 0; v < count; v++)
-        {
-            if (!(bitMask & (1 << v)))
-                continue;
 
-            for (int j = 0; j < count; j++)
-            {
-                if (!(bitMask & (1 << j)))
-                {
-                    if (memory[bitMask][v] + matrix[v][j] < memory[bitMask | (1 << j)][j])
-                    {
-                        getMemory[bitMask | (1 << j)][j] = v;
-                        memory[bitMask | (1 << j)][j] = memory[bitMask][v] + matrix[v][j];
+    for (int mask = 1; mask < (1 << numOfVertices); mask++) {
+
+        for (int v = 0; v < numOfVertices; v++) {
+
+            if (mask & (1 << v)) {
+
+                for (int j = 0; j < numOfVertices; j++) {
+
+                    if (!(mask & (1 << j)) && dp[mask][v] + matrix[v][j] < dp[mask | (1 << j)][j]) {
+
+                        history[mask | (1 << j)][j] = v;
+                        dp[mask | (1 << j)][j] = dp[mask][v] + matrix[v][j];
                     }
                 }
             }
         }
     }
 
+
     result = INF;
     temp = 0;
 
-    for (int i = 0; i < count; i++)
-    {
-        temp = memory[(1 << count) - 1][i] + matrix[i][0];
-        if (temp < result)
-        {
+    for (int i = 0; i < numOfVertices; i++){
+        temp = dp[(1 << numOfVertices) - 1][i] + matrix[i][0];
+        if (temp < result){
             result = temp;
             lastVertex = i;
         }
@@ -54,22 +52,22 @@ std::string DP::toString()
 {
     std::string message = "";
     int min = 1 << 30;
-    int bitMask = (1 << count) - 1;
+    int bitMask = (1 << numOfVertices) - 1;
     int prev;
     Stack path;
     path.push_back(lastVertex);
 
-    for (int i = count - 2; i > 0; i--)
+    for (int i = numOfVertices - 2; i > 0; i--)
     {
-        prev = getMemory[bitMask][lastVertex];
+        prev = history[bitMask][lastVertex];
         path.push_back(prev);
         bitMask = bitMask ^ (1 << lastVertex);
         lastVertex = prev;
     }
 
     message = "Droga: 0 ";
-    path.print();
-    std::cout << "0 \n" << "Koszt: " << std::to_string(result);
+    message+=path.printFromBottom();
+    message += "Koszt: " + std::to_string(result);
 
     return message;
 }
@@ -82,34 +80,34 @@ int DP::getResult()
 DP::DP(Graph graph)
 {
     matrix = graph.getMatrix();
-    count = graph.getSize();
-    memory = new int*[1 << count];
-    getMemory = new int*[1 << count];
+    numOfVertices = graph.getSize();
+    dp = new int*[1 << numOfVertices];
+    history = new int*[1 << numOfVertices];
     temp, result, lastVertex = 0;
 
-    for (int i = 0; i < (1 << count); i++)
+    for (int i = 0; i < (1 << numOfVertices); i++)
     {
-        memory[i] = new int[count];
-        getMemory[i] = new int[count];
+        dp[i] = new int[numOfVertices];
+        history[i] = new int[numOfVertices];
     }
 
-    for (int i = 0; i < (1 << count); i++)
+    for (int i = 0; i < (1 << numOfVertices); i++)
     {
-        for (int j = 0; j < count; j++)
+        for (int j = 0; j < numOfVertices; j++)
         {
-            memory[i][j] = INF;
-            getMemory[i][j] = INF;
+            dp[i][j] = INF;
+            history[i][j] = INF;
         }
     }
 }
 
 DP::~DP()
 {
-    for (int i = 0; i < (1 << count); i++)
+    for (int i = 0; i < (1 << numOfVertices); i++)
     {
-        delete[] memory[i];
-        delete[] getMemory[i];
+        delete[] dp[i];
+        delete[] history[i];
     }
-    delete[] memory;
-    delete[] getMemory;
+    delete[] dp;
+    delete[] history;
 }

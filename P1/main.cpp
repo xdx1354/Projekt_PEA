@@ -23,7 +23,7 @@ int main() {
 
     DP dpp(g);
     dpp.apply();
-    dpp.toString();
+    cout<<dpp.toString();
 
 
 //    Graph g;

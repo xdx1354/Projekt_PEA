@@ -22,7 +22,7 @@ public:
     void clear();
 
 
-    void printFromBottom();
+    std::string printFromBottom();
 };
 
 

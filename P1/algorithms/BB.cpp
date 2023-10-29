@@ -79,7 +79,7 @@ void BB::print() {
         printf("\nHamiltonian path doesn't exist.");
     else {
         printf("\nShortest path:\n");
-        best_path.printFromBottom();
+        std::cout<<best_path.printFromBottom();
         std::cout << std::endl;
     }
 

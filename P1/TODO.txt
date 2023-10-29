@@ -1,22 +1,13 @@
 TODO:
 
-    - przeszukiwanie grafu -> DFS
-
-
-    KLASY:
-
-
-    - menu
-    - DP_TSP
-    -
-
-DONE:
-        - zaimplementować klasy struktur:
-                                            - stos
-                                            - tablica grafu
-        - Graph
-        - Time
-
+    - wybrać jeden styl przekazywania i zwracania danych (printowanie wyniku itd)
+    - jaki był drugi sposob inputu danych??
+    - Klasa MENU
+    - klasa AUTOTESTS
+    - dane do testów? Napisać generator danych w ramach klasy autotest
+    - Zastanowić sie nad strukturą BB, BF, DP. W którym miejscu wczytywany jest graf
+    do obiektu klasy. Jak aktualizowac
+    - Dodac do Makelist: utils/Menu.cpp utils/Menu.h
 
 
 BRANCH AND BOUND:
@@ -29,4 +20,4 @@ BRANCH AND BOUND:
   Tzn. czy jeśli później będziemy dołączać tylko najtańsze krawędzi (choćby to nie miało sensu) to czy jest potencjał
   by było to tańsze niż najlepsze rozwiązanie.
 
-4. Dodac do Makelist: utils/Menu.cpp utils/Menu.h
+4.

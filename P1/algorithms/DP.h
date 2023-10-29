@@ -13,11 +13,11 @@ class DP
 {
 private:
     int **matrix;
-    int count;
+    int numOfVertices;
     int result;
     int temp;
-    int **memory;
-    int **getMemory;
+    int **dp;
+    int **history;
     int lastVertex;
 
 public:

@@ -68,16 +68,30 @@
     /**
      * Printing data from bottom of stack. Prints real path of TS
      */
-    void Stack::printFromBottom(){
+    std::string Stack::printFromBottom(){
         // moving all data to array
         int *arr = new int[Stack::getSize()];
         int starting_size = Stack::getSize();
         for(int i = 1; i<=starting_size; i++){
             arr[starting_size-i] = Stack::pop_back();
         }
+        // loading the array into string
+        std::string res = "";
+        for(int i = 0; i<starting_size; i++){
+            if(i>0){
+                res+=", " + std::to_string(arr[i]);
+            }
+            else if( i == 0){
+                res+=std::to_string(arr[i]);
+            }
+        }
+
+        res+=", 0";
+
 
         // printing the array
-        for(int i = 0; i<starting_size; i++){
-            std::cout<<arr[i]<<", ";
-        }
+//        for(int i = 0; i<starting_size; i++){
+//            std::cout<<arr[i]<<", ";
+//        }
+        return res;
     }
