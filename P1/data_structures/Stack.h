@@ -16,7 +16,7 @@ public:
 
     void push_back(int value);
     int pop_back();
-    void print();
+    std::string print();
 //    std::string toString();      // TODO
     int getSize();
     void clear();

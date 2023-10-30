@@ -7,6 +7,8 @@
 #include "AutoTests.h"
 #include "../data_structures/Graph.h"
 #include "../algorithms/BB.h"
+#include "../algorithms/BF.h"
+#include "../algorithms/DP.h"
 #include "../utils/Time.h"
 
 using namespace std;
@@ -117,6 +119,82 @@ void AutoTests::autoTestBB() {
 
     }
 
+}
+
+void AutoTests::autoTestBF() {
+
+    int quantities[5] = {5, 6, 7, 10, 12};  // fixed list of tested quantities
+
+    for (int q: quantities) {
+        string path = ("data" + to_string(q) +
+                       ".txt");      //TODO: later data will be in subdir /data so need to change path
+        long long results[NUMBER_OF_TESTS] = {0};
+        long long avg = 0;
 
 
+        for (int i = 0; i < NUMBER_OF_TESTS; i++) {
+            // initialization of required objects
+            generateData(q);                        // generating new set of random data for this iteration
+            Graph g;
+            g.loadData(path);
+            BF bf(g);
+            Time time;
+
+            // algorithm time measurement
+            time.start();
+            bf.recursion(0);
+            time.stop();
+
+            // saving data into array
+            results[i] = time.returnTime();
+            cout << "Auto test BF. Size: " << q << "Try: " << i << "/20. Result " << time.returnTime() << "\n";
+
+            avg += 1 / NUMBER_OF_TESTS * results[i];          // calculating avg time
+        }
+
+        cout << "AVG TIME TAKEN: " << avg << "\n";
+        cout << "=======================================================================\n";
+
+        // delete g;    TODO: create destructor for graph class
+
+    }
+}
+
+void AutoTests::autoTestDP() {
+
+    int quantities[5] = {5, 6, 7, 10, 12};  // fixed list of tested quantities
+
+    for (int q: quantities) {
+        string path = ("data" + to_string(q) +
+                       ".txt");      //TODO: later data will be in subdir /data so need to change path
+        long long results[NUMBER_OF_TESTS] = {0};
+        long long avg = 0;
+
+
+        for (int i = 0; i < NUMBER_OF_TESTS; i++) {
+            // initialization of required objects
+            generateData(q);                        // generating new set of random data for this iteration
+            Graph g;
+            g.loadData(path);
+            DP dp(g);
+            Time time;
+
+            // algorithm time measurement
+            time.start();
+            dp.apply();
+            time.stop();
+
+            // saving data into array
+            results[i] = time.returnTime();
+            cout << "Auto test BF. Size: " << q << "Try: " << i << "/20. Result " << time.returnTime() << "\n";
+
+            avg += 1 / NUMBER_OF_TESTS * results[i];          // calculating avg time
+        }
+
+        cout << "AVG TIME TAKEN: " << avg << "\n";
+        cout << "=======================================================================\n";
+
+        // delete g;    TODO: create destructor for graph class
+
+    }
 }

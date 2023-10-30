@@ -66,7 +66,7 @@ std::string DP::toString()
     }
 
     message = "Droga: 0 ";
-    message+=path.printFromBottom();
+    message += path.print();
     message += "Koszt: " + std::to_string(result);
 
     return message;

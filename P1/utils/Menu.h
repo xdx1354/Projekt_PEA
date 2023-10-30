@@ -14,11 +14,11 @@ public:
     Graph g;
     void start();
 
-    void run_BB(Graph g);
+    void run_BB();
 
-    void run_BF(Graph g);
+    void run_BF();
 
-    void run_DP(Graph g);
+    void run_DP();
 
     void measure_time();
 };

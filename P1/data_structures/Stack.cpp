@@ -30,12 +30,15 @@
     /**
      * Printing a Stack structure from top to bottom
      */
-    void Stack::print(){
+    std::string Stack::print(){
         StackNode* node = Stack::top;
+        std::string res = "";
         while(node != nullptr){
-            std::cout<<node->value<<" ";
+//            std::cout<<node->value<<" ";
+            res+= std::to_string(node->value) + ", ";
             node = node->next;
         }
+        return res;
     }
 
     /**

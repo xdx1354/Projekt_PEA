@@ -5,13 +5,13 @@
 #include <iostream>
 #include "Menu.h"
 #include "../data_structures/Graph.h"
+#include "../tests/AutoTests.h"
+#include "../algorithms/BB.h"
+#include "../algorithms/BF.h"
+#include "../algorithms/DP.h"
 
 
 void Menu::start() {
-
-    // structures
-
-
 
 
     int choose = 0;
@@ -37,6 +37,7 @@ void Menu::start() {
         switch(choose){
             case 1:{
                 std::string filename;
+                std::cout<<"Program will be looking for the file in subdirectory /data.\n";
                 std::cout<<"Type name of the file: ";
                 std::cin>>filename;
                 g.loadData(filename);
@@ -84,8 +85,23 @@ void Menu::start() {
 
             }
             case 10:{
-                //  another menu for autotests
-                // Autotest will be called from here
+                AutoTests autoTests;
+                std::cout<<"=======================================================================================";
+                std::cout<<"TESTING BRUT FORCE:";
+                autoTests.autoTestBF();
+                std::cout<<"=======================================================================================";
+                std::cout<<"TESTING BRANCH AND BOUND:";
+                autoTests.autoTestBB();
+                std::cout<<"=======================================================================================";
+                std::cout<<"TESTING DYNAMIC PROGRAMMING:";
+                autoTests.autoTestDP();
+                std::cout<<"=======================================================================================";
+                std::cout<<"TESTS FINISHED";
+                std::cout<<"=======================================================================================";
+                std::cout<<"Press any key to exit to menu";
+                std::string a;
+                std::cin >> a;
+
 
             }
             default:{
@@ -98,9 +114,36 @@ void Menu::start() {
 
     }
 
+}
 
-//    Menu::run_BF(Graph g){
-//
-//    }
+void Menu::run_BF(){
+    // graph is a field of this class
+    // at this point graph is already loaded with data
+
+    BF bf(g);
+    bf.recursion(0);
+    bf.print();
+
+}
+
+
+void Menu::run_BB(){
+    // graph is a field of this class
+    // at this point graph is already loaded with data
+
+    BB bb(g);
+    bb.recursion(0);
+    bb.print();
+
+}
+
+
+void Menu::run_DP(){
+    // graph is a field of this class
+    // at this point graph is already loaded with data
+
+    DP dp(g);
+    dp.apply();
+    dp.getResult();
 
 }
