@@ -28,9 +28,10 @@
         return val;
 }
     /**
-     * Printing a Stack structure from top to bottom
+     * Returning a string of the Stack structure values from top to bottom
+     * @return: String of values of the stack from top
      */
-    std::string Stack::print(){
+    std::string Stack::toString(){
         StackNode* node = Stack::top;
         std::string res = "";
         while(node != nullptr){
@@ -43,6 +44,7 @@
 
     /**
      * return: size of the stack
+     * @return: size of the stack as int
      */
     int Stack::getSize() {
         return Stack::size;
@@ -50,6 +52,7 @@
 
     /**
      * Clearing the structure from all data
+     *
      */
     void Stack::clear() {
         while(Stack::size>0){
@@ -58,20 +61,11 @@
     }
 
 
-//    std::string saveBestPath(){
-//        int *arr = new int[Stack::getSize()];
-//        int starting_size = Stack::getSize();
-//        for(int i = 1; i<=starting_size; i++){
-//            arr[starting_size-i] = Stack::pop_back();
-//        }
-//
-//    }
-
-
     /**
-     * Printing data from bottom of stack. Prints real path of TS
+     * Returning a string of the Stack structure values from bottom to top.
+     * @return string of values from bottom
      */
-    std::string Stack::printFromBottom(){
+    std::string Stack::toStringFromBottom(){
         // moving all data to array
         int *arr = new int[Stack::getSize()];
         int starting_size = Stack::getSize();
@@ -91,10 +85,5 @@
 
         res+=", 0";
 
-
-        // printing the array
-//        for(int i = 0; i<starting_size; i++){
-//            std::cout<<arr[i]<<", ";
-//        }
         return res;
     }

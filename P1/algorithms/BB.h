@@ -29,11 +29,13 @@ public:
     int *cheapest_exit;         // helping array with the cheapest exit
     int lowerBound;
 
-    void print();
+    void printResult();
     explicit BB(Graph graph);        //constructor
     void recursion(int vertex);
     int higherBound(int node);
     void findCheapest();
+
+    void run();
 };
 
 

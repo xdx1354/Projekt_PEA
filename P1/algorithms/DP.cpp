@@ -6,7 +6,9 @@
 #include "iostream"
 #include "../data_structures/Stack.h"
 
-
+/**
+ * Applies the Dynamic Programing algorithm on the graph.
+ */
 void DP::apply()
 {
 
@@ -48,7 +50,11 @@ void DP::apply()
     }
 }
 
-std::string DP::toString()
+/**
+ * Returns string containing answer. Value of path + the real path
+ * @return: string containing answer.
+ */
+std::string DP::resultToString()
 {
     std::string message = "";
     int min = 1 << 30;
@@ -65,18 +71,25 @@ std::string DP::toString()
         lastVertex = prev;
     }
 
-    message = "Droga: 0 ";
-    message += path.print();
-    message += "Koszt: " + std::to_string(result);
+    message = "Best path cost: "  + std::to_string(result);
+    message += "\nShortest path:\n0, ";
+    message += path.toString() + "0\n\n";
 
     return message;
 }
 
-int DP::getResult()
+/**
+ * Printing the answer
+ */
+int DP::printResult()
 {
-    return result;
+    std::cout<<resultToString();
 }
 
+/**
+ * Constructor for the class. Prepares data for DP algorithm. Creates dynamic tables and initializes their data
+ * @param graph
+ */
 DP::DP(Graph graph)
 {
     matrix = graph.getMatrix();
@@ -99,6 +112,12 @@ DP::DP(Graph graph)
             history[i][j] = INF;
         }
     }
+}
+
+
+void DP::run(){
+    apply();
+    printResult();
 }
 
 DP::~DP()

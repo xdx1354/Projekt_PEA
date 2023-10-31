@@ -22,10 +22,12 @@ private:
 
 public:
     void apply();
-    std::string toString();
-    int getResult();
+    std::string resultToString();
+    int printResult();
     DP(Graph graph);
     ~DP();
+
+    void run();
 };
 
 

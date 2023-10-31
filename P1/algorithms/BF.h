@@ -26,9 +26,11 @@ public:
     int current_cost;           // cost of current path
     int **matrix;
 
-    void print();
+    void printResult();
     explicit BF(Graph graph);        //constructor
     void recursion(int vertex);
+
+    void run();
 };
 
 

@@ -70,16 +70,22 @@ void BF::recursion(int vertex){
 /**
  * Printing function.
  */
-void BF::print() {
+void BF::printResult() {
     std::cout<<"Best path cost: " << best_cost << std::endl;
 
     if(best_path.getSize()==0)
         printf("\nHamiltonian path doesn't exist.");
     else {
-        printf("\nShortest path:\n");
-        std::cout<<best_path.printFromBottom();
+        printf("Shortest path:\n");
+        std::cout<< best_path.toStringFromBottom();
+        std::cout << std::endl;
         std::cout << std::endl;
     }
 
+}
+
+void BF::run(){
+    recursion(0);
+    printResult();
 }
 

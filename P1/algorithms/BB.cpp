@@ -72,14 +72,15 @@ void BB::recursion(int vertex){
 /**
  * Printing function.
  */
-void BB::print() {
+void BB::printResult() {
     std::cout<<"Best path cost: " << best_cost << std::endl;
 
     if(best_path.getSize()==0)
         printf("\nHamiltonian path doesn't exist.");
     else {
-        printf("\nShortest path:\n");
-        std::cout<<best_path.printFromBottom();
+        printf("Shortest path:\n");
+        std::cout<< best_path.toStringFromBottom();
+        std::cout << std::endl;
         std::cout << std::endl;
     }
 
@@ -105,14 +106,13 @@ int BB::higherBound(int node) {
 
 void BB::findCheapest() {
 
-//    cheapest_entrance = new int[numOfCities];
+
     cheapest_exit = new int[numOfCities];
     lowerBound = 0;
 
     // filling them with INT_MAX
     for(int i = 0; i < numOfCities; i++){
         cheapest_exit[i] = INT_MAX;
-//        cheapest_entrance[i] = INT_MAX;
     }
 
     // im looking only for the cheapest exits from each node
@@ -131,4 +131,9 @@ void BB::findCheapest() {
     }
 
 
+}
+
+void BB::run(){
+    recursion(0);
+    printResult();
 }
