@@ -87,9 +87,10 @@ void AutoTests::autoTestBB() {
     int quantities[5] = {5, 6, 7, 10, 12};  // fixed list of tested quantities
 
     for( int q: quantities){
-        string path = ("data" + to_string(q) + ".txt");      //TODO: later data will be in subdir /data so need to change path
+        string loc = R"(..\data\)";
+        string path = loc + "data" + to_string(q) + ".txt";
         long long results[NUMBER_OF_TESTS] = {0};
-        long long avg = 0;
+        long double avg = 0;
 
 
         for(int i = 0; i < NUMBER_OF_TESTS; i++){
@@ -102,14 +103,14 @@ void AutoTests::autoTestBB() {
 
             // algorithm time measurement
             time.start();
-            bb.recursion(0);
+            bb.recursion(0);                        // calling just calculating method without printing result
             time.stop();
 
             // saving data into array
             results[i] = time.returnTime();
             cout<<"Auto test BB. Size: "<< q <<"Try: "<<i<<"/20. Result "<<time.returnTime()<<"\n";
 
-            avg += 1/NUMBER_OF_TESTS * results[i];          // calculating avg time
+            avg += (1.0/NUMBER_OF_TESTS) * results[i];          // calculating avg time
         }
 
         cout<<"AVG TIME TAKEN: " << avg <<"\n";
@@ -126,10 +127,10 @@ void AutoTests::autoTestBF() {
     int quantities[5] = {5, 6, 7, 10, 12};  // fixed list of tested quantities
 
     for (int q: quantities) {
-        string path = ("data" + to_string(q) +
-                       ".txt");      //TODO: later data will be in subdir /data so need to change path
+        string loc = R"(..\data\)";
+        string path = loc + "data" + to_string(q) + ".txt";
         long long results[NUMBER_OF_TESTS] = {0};
-        long long avg = 0;
+        long double avg = 0;
 
 
         for (int i = 0; i < NUMBER_OF_TESTS; i++) {
@@ -142,14 +143,14 @@ void AutoTests::autoTestBF() {
 
             // algorithm time measurement
             time.start();
-            bf.recursion(0);
+            bf.recursion(0);                       // calling just calculating method without printing result
             time.stop();
 
             // saving data into array
             results[i] = time.returnTime();
             cout << "Auto test BF. Size: " << q << "Try: " << i << "/20. Result " << time.returnTime() << "\n";
 
-            avg += 1 / NUMBER_OF_TESTS * results[i];          // calculating avg time
+            avg += (1.0 / NUMBER_OF_TESTS) * results[i];          // calculating avg time
         }
 
         cout << "AVG TIME TAKEN: " << avg << "\n";
@@ -165,10 +166,10 @@ void AutoTests::autoTestDP() {
     int quantities[5] = {5, 6, 7, 10, 12};  // fixed list of tested quantities
 
     for (int q: quantities) {
-        string path = ("data" + to_string(q) +
-                       ".txt");      //TODO: later data will be in subdir /data so need to change path
+        string loc = R"(..\data\)";
+        string path = loc + "data" + to_string(q) + ".txt";
         long long results[NUMBER_OF_TESTS] = {0};
-        long long avg = 0;
+        long double avg = 0;
 
 
         for (int i = 0; i < NUMBER_OF_TESTS; i++) {
@@ -181,14 +182,14 @@ void AutoTests::autoTestDP() {
 
             // algorithm time measurement
             time.start();
-            dp.apply();
+            dp.apply();                                 // calling just calculating method without printing result
             time.stop();
 
             // saving data into array
             results[i] = time.returnTime();
-            cout << "Auto test BF. Size: " << q << "Try: " << i << "/20. Result " << time.returnTime() << "\n";
+            cout << "Auto test DP. Size: " << q << " Try: " << i << "/20. Result " << time.returnTime() << "\n";
 
-            avg += 1 / NUMBER_OF_TESTS * results[i];          // calculating avg time
+            avg += (1.0 / NUMBER_OF_TESTS) * results[i];          // calculating avg time
         }
 
         cout << "AVG TIME TAKEN: " << avg << "\n";

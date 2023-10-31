@@ -7,33 +7,31 @@
 #include "algorithms/DP2.h"
 #include "algorithms/BB.h"
 #include "algorithms/DPP.h"
+#include "utils/Menu.h"
 
 using namespace std;
 int main() {
 
-//TESTING GRAPH
+    Menu menu;
+    menu.start();
+
+/*
     Graph g;
-    g.loadData("P1//data//data5.txt");
+    g.loadData("data10");
     g.printGraph();
     cout<<"\n\n------------------------------------------\n\n";
 
     BB bb(g);
-//    bb.recursion(0);
-//    bb.printResult();
     bb.run();
 
 
     DP dp(g);
-//    dp.apply();
-//    dp.printResult();
     dp.run();
 
 
     BF bf(g);
-//    bf.recursion(0);
-//    bf.printResult();
     bf.run();
-
+*/
 
 //    Graph g;
 //    g.loadData("P1//data//data3.txt");

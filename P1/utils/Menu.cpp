@@ -21,18 +21,19 @@ void Menu::start() {
 
     while(choose != -1){
 
-        std::cout<<"MENU";
-        std::cout<<"1. Load data";
-        std::cout<<"2. Print graph";
-        std::cout<<"3. Perform Brut Force algorithm";
-        std::cout<<"4. Perform Branch and Bound algorithm";
-        std::cout<<"5. Perform Dynamic programing algorithm";
-        std::cout<<"6. Measure times of algorithms";
-        std::cout<<"9. Exit";
-        std::cout<<"10. Autotests";
+        std::cout<<"=====MENU=====\n";
+        std::cout<<"1. Load data\n";
+        std::cout<<"2. Print graph\n";
+        std::cout<<"3. Perform Brut Force algorithm\n";
+        std::cout<<"4. Perform Branch and Bound algorithm\n";
+        std::cout<<"5. Perform Dynamic programing algorithm\n";
+        std::cout<<"6. Measure times of algorithms\n";
+        std::cout<<"9. Exit\n";
+        std::cout<<"10. Autotests\n";
         std::cout<<"Choose what do you want to do: ";
 
         std::cin>>choose;
+        std::cout<<"\n\n";
 
         switch(choose){
             case 1:{
@@ -42,6 +43,7 @@ void Menu::start() {
                 std::cin>>filename;
                 g.loadData(filename);
                 isGraphLoaded = true;
+                break;
 
             }
             case 2:{
@@ -51,38 +53,42 @@ void Menu::start() {
                 else{
                     std::cout<<"First you need to load graph. Choose 1.";
                 }
+                break;
             }
             case 3:{
                 if( isGraphLoaded){
-                    run_BF(g);
+                    run_BF();
                 }
                 else{
                     std::cout<<"First you need to load graph. Choose 1.";
                 }
-
+                break;
             }
             case 4:{
                 if( isGraphLoaded){
-                    run_BB(g);
+                    run_BB();
                 }
                 else{
                     std::cout<<"First you need to load graph. Choose 1.";
                 }
+                break;
             }
 
             case 5:{
                 if( isGraphLoaded){
-                    run_DP(g);
+                    run_DP();
                 }
                 else{
                     std::cout<<"First you need to load graph. Choose 1.";
                 }
+                break;
             }
             case 6:{
-
+                break;
             }
             case 9:{
-
+                choose = -1;
+                break;
             }
             case 10:{
                 AutoTests autoTests;
@@ -96,21 +102,20 @@ void Menu::start() {
                 std::cout<<"TESTING DYNAMIC PROGRAMMING:";
                 autoTests.autoTestDP();
                 std::cout<<"=======================================================================================";
-                std::cout<<"TESTS FINISHED";
+                std::cout<<"\nTESTS FINISHED\n";
                 std::cout<<"=======================================================================================";
-                std::cout<<"Press any key to exit to menu";
+                std::cout<<"\nPress any key to exit to menu\n";
                 std::string a;
                 std::cin >> a;
-
+                break;
 
             }
             default:{
                 std::cout<<"Wrong input. Try again: ";
+                break;
             }
 
         }
-
-
 
     }
 
@@ -121,8 +126,7 @@ void Menu::run_BF(){
     // at this point graph is already loaded with data
 
     BF bf(g);
-    bf.recursion(0);
-    bf.print();
+    bf.run();
 
 }
 
@@ -132,8 +136,7 @@ void Menu::run_BB(){
     // at this point graph is already loaded with data
 
     BB bb(g);
-    bb.recursion(0);
-    bb.print();
+    bb.run();
 
 }
 
@@ -143,7 +146,6 @@ void Menu::run_DP(){
     // at this point graph is already loaded with data
 
     DP dp(g);
-    dp.apply();
-    dp.getResult();
+    dp.run();
 
 }
