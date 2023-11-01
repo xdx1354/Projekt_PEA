@@ -57,9 +57,9 @@ void AutoTests::generateAllData() {
  */
 void AutoTests::generateData(int size){
     ofstream file;
-    file.open("data" + to_string(size) + ".txt");
+    string loc = "..\\data\\";
+    file.open(loc + "data" + to_string(size) + ".txt");
     file<<size<<"\n";                                              // loading first line with number of nodes
-
     for(int u = 0; u < size; u++){
         for( int v = 0; v < size; v++){
 
