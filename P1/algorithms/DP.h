@@ -25,9 +25,8 @@ public:
     std::string resultToString();
     int printResult();
     DP(Graph graph);
-    ~DP();
-
     void run();
+    ~DP();
 };
 
 

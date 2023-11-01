@@ -6,6 +6,11 @@
 #include "Stack.h"
 #include "StackNode.h"
 
+    Stack::~Stack(){
+    clear();
+}
+
+
     /**
      * pushes a new value on top of the stack
      * @param value: value to be pushed on stack

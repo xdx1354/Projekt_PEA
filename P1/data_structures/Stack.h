@@ -17,12 +17,11 @@ public:
     void push_back(int value);
     int pop_back();
     std::string toString();
-//    std::string resultToString();      // TODO
     int getSize();
     void clear();
-
-
     std::string toStringFromBottom();
+    ~Stack();
+
 };
 
 

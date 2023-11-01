@@ -13,6 +13,15 @@
 
 using namespace std;
 
+AutoTests::AutoTests(){
+    stats.open("stats.txt");                // opening the ofstream to file
+}
+
+AutoTests::~AutoTests() {
+    stats.close();                              // closing the ofstream to file
+}
+
+
 /**
  * Generating data for auto tests for fixed range of sizes (5 - 20) of graphs.
  * Creates several .txt files in directory /data.
@@ -93,6 +102,9 @@ void AutoTests::autoTestBB() {
         long double avg = 0;
 
 
+        stats<<"BB: " <<q<<";";
+
+
         for(int i = 0; i < NUMBER_OF_TESTS; i++){
             // initialization of required objects
             generateData(q);                        // generating new set of random data for this iteration
@@ -108,11 +120,13 @@ void AutoTests::autoTestBB() {
 
             // saving data into array
             results[i] = time.returnTime();
+            stats<<results[i]<<";";
             cout<<"Auto test BB. Size: "<< q <<"Try: "<<i<<"/20. Result "<<time.returnTime()<<"\n";
 
             avg += (1.0/NUMBER_OF_TESTS) * results[i];          // calculating avg time
         }
 
+        stats<<"\n";
         cout<<"AVG TIME TAKEN: " << avg <<"\n";
         cout<<"=======================================================================\n";
 
@@ -132,6 +146,7 @@ void AutoTests::autoTestBF() {
         long long results[NUMBER_OF_TESTS] = {0};
         long double avg = 0;
 
+        stats<<"BF: " <<q<<";";
 
         for (int i = 0; i < NUMBER_OF_TESTS; i++) {
             // initialization of required objects
@@ -148,11 +163,13 @@ void AutoTests::autoTestBF() {
 
             // saving data into array
             results[i] = time.returnTime();
+            stats<<results[i]<<";";
             cout << "Auto test BF. Size: " << q << "Try: " << i << "/20. Result " << time.returnTime() << "\n";
 
             avg += (1.0 / NUMBER_OF_TESTS) * results[i];          // calculating avg time
         }
 
+        stats<<"\n";
         cout << "AVG TIME TAKEN: " << avg << "\n";
         cout << "=======================================================================\n";
 
@@ -171,6 +188,7 @@ void AutoTests::autoTestDP() {
         long long results[NUMBER_OF_TESTS] = {0};
         long double avg = 0;
 
+        stats<<"DP: " <<q<<";";
 
         for (int i = 0; i < NUMBER_OF_TESTS; i++) {
             // initialization of required objects
@@ -187,15 +205,17 @@ void AutoTests::autoTestDP() {
 
             // saving data into array
             results[i] = time.returnTime();
+            stats<<results[i]<<";";
             cout << "Auto test DP. Size: " << q << " Try: " << i << "/20. Result " << time.returnTime() << "\n";
 
             avg += (1.0 / NUMBER_OF_TESTS) * results[i];          // calculating avg time
         }
 
+        stats<<"\n";
         cout << "AVG TIME TAKEN: " << avg << "\n";
         cout << "=======================================================================\n";
 
-        // delete g;    TODO: create destructor for graph class
+
 
     }
 }

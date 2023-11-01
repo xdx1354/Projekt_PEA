@@ -5,6 +5,14 @@
 #include "Graph.h"
 using namespace std;
 
+Graph::~Graph() {
+
+    for(int i = 0; i < numOfVertices; i++){
+        delete[] v[i];
+    }
+    delete[] v;
+}
+
 /**
  * Loading data from selected file. The file is selected inside this function.
  * @param fileName String name of .txt file (should be given with .txt extension)
@@ -31,6 +39,7 @@ void Graph::loadData(string fileName) {
             fin >> v[i][j];
         }
     }
+    fin.close();
 }
 
 

@@ -4,6 +4,10 @@
 
 #include "BF.h"
 
+BF::~BF() {
+        delete []visited;
+}
+
 BF::BF(Graph graph){
     numOfCities = graph.getSize();      // setting the value of filed
     matrix = graph.getMatrix();         // extracted 2D array from graph class
@@ -88,4 +92,6 @@ void BF::run(){
     recursion(0);
     printResult();
 }
+
+
 

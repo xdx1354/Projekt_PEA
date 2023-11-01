@@ -19,6 +19,10 @@ BB::BB(Graph graph){
     }
 }
 
+BB::~BB(){
+    delete []visited;
+}
+
 
 /**
  * Recursive function looking for cheapest hamiltonian cycle in given graph

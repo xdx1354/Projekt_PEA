@@ -29,8 +29,8 @@ public:
     void printResult();
     explicit BF(Graph graph);        //constructor
     void recursion(int vertex);
-
     void run();
+    ~BF();
 };
 
 

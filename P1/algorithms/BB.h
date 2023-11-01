@@ -34,8 +34,9 @@ public:
     void recursion(int vertex);
     int higherBound(int node);
     void findCheapest();
-
     void run();
+    ~BB();
+
 };
 
 

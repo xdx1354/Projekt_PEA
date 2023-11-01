@@ -7,6 +7,7 @@
 #define NUMBER_OF_TESTS 20
 
 class AutoTests {
+    std::ofstream stats;
 
 public:
     void generateAllData();        //generating data for autotests. Set for specific sizes of graphs
@@ -15,6 +16,8 @@ public:
     void autoTestBF();
     void autoTestBB();
     void autoTestDP();
+    AutoTests();
+    ~AutoTests();
 
 
     void generateData(int size);
