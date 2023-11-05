@@ -11,14 +11,15 @@ using namespace std;
 
 #include "../data_structures/Graph.h"
 #include "../data_structures/Stack.h"
+#include "../data_structures/MyStack.h"
 
 //TODO: redesign using self-made data structures
 
 class BF {
 public:
     int numOfCities;
-    vector<int> path;          // vector containing currently explored path
-    vector<int> best_path;     // vector containing currently best path
+    MyStack path;          // vector containing currently explored path
+    MyStack best_path;     // vector containing currently best path
 
     bool *visited;
     int path_len = 0;           // length of path (number of already visited cities)

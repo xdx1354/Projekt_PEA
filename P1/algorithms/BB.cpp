@@ -64,7 +64,8 @@ void BB::recursion(int vertex){
         else{                                           // in this case it is better
             best_cost = current_cost;                   // so we change the value and copy the path
             best_path.clear();
-            best_path = path;
+//            best_path = path;
+            path.copy(&best_path);
             current_cost -= matrix[vertex][0];          // preparation for going back
         }
         path_len--;                                     // going back to previous city
@@ -79,15 +80,13 @@ void BB::recursion(int vertex){
 void BB::printResult() {
     std::cout<<"Best path cost: " << best_cost << std::endl;
 
-    if(best_path.empty())
+    if(best_path.getSize() == 0)
         printf("\nHamiltonian path doesn't exist.");
     else {
         printf("Shortest path:\n");
-//        std::cout<< best_path.toStringFromBottom();
+        std::cout<< best_path.toStringFromBottom();
 
-        for (const int& element : best_path) {
-            std::cout << element << ", ";
-        }
+
         std::cout<<"0";
 
         std::cout << std::endl;
