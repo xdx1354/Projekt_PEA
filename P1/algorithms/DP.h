@@ -23,7 +23,7 @@ private:
 public:
     void apply();
     std::string resultToString();
-    int printResult();
+    void printResult();
     DP(Graph graph);
     ~DP();
 

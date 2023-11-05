@@ -4,9 +4,7 @@
 #include "utils/Time.h"
 #include "algorithms/BF.h"
 #include "algorithms/DP.h"
-#include "algorithms/DP2.h"
 #include "algorithms/BB.h"
-#include "algorithms/DPP.h"
 #include "utils/Menu.h"
 
 using namespace std;
