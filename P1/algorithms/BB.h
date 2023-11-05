@@ -18,8 +18,9 @@ using namespace std;
 class BB {
 public:
     int numOfCities;
-    Stack path;          // structure containing currently explored path
-    Stack best_path;     // structure containing currently best path
+    vector<int> path;          // vector containing currently explored path
+    vector<int> best_path;     // vector containing currently best path
+
 
     bool *visited;
     int path_len = 0;           // length of path (number of already visited cities)

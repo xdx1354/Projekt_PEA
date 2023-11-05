@@ -77,11 +77,13 @@ void BF::recursion(int vertex){
 void BF::printResult() {
     std::cout<<"Best path cost: " << best_cost << std::endl;
 
-    if(best_path.getSize()==0)
+    if(best_path.empty())
         printf("\nHamiltonian path doesn't exist.");
     else {
         printf("Shortest path:\n");
-        std::cout<< best_path.toStringFromBottom();
+        for(int i:best_path){
+            cout<<i<<", ";
+        }
         std::cout << std::endl;
         std::cout << std::endl;
     }
