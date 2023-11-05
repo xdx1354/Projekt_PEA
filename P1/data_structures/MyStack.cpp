@@ -10,7 +10,7 @@ MyStack::MyStack() {
 }
 
 MyStack::~MyStack() {
-    if(head != nullptr){
+    if(head != nullptr and size>0){
         delete[] head;
         head = nullptr;
         size = 0;

@@ -11,10 +11,10 @@
 using namespace std;
 int main() {
 
-//    Menu menu;
-//    menu.start();
+    Menu menu;
+    menu.start();
 
-
+/*
     Graph g;
     g.loadData("data10");
     g.printGraph();
@@ -27,13 +27,14 @@ int main() {
     bb.run();
 //
 //
-//    DP dp(g);
-//    dp.run();
+    DP dp(g);
+    dp.run();
 
 
-//    BF bf(g);
+    BF bf(g);
+    bf.run();
 //    bf.run();
-//    bf.run();
+ */
 
 
 //    Graph g;

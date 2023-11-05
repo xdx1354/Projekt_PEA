@@ -5,6 +5,7 @@
 #include "DP.h"
 #include "iostream"
 #include "../data_structures/Stack.h"
+#include "../data_structures/MyStack.h"
 
 /**
  * Applies the Dynamic Programing algorithm on the graph.
@@ -56,11 +57,11 @@ void DP::apply()
  */
 std::string DP::resultToString()
 {
-    std::string message = "";
+    std::string message;
     int min = 1 << 30;
     int bitMask = (1 << numOfVertices) - 1;
     int prev;
-    Stack path;
+    MyStack path;
     path.push_back(lastVertex);
 
     for (int i = numOfVertices - 2; i > 0; i--)
@@ -73,7 +74,7 @@ std::string DP::resultToString()
 
     message = "Best path cost: "  + std::to_string(result);
     message += "\nShortest path:\n0, ";
-    message += path.toStringFromBottom() + "0\n\n";
+    message += path.toString() + "0\n\n";
 
     return message;
 }
