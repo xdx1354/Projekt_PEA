@@ -1,25 +1,3 @@
 TODO:
-
-    - wybrać jeden styl przekazywania i zwracania danych (printowanie wyniku itd)
-    - jaki był drugi sposob inputu danych??
-    - Klasa MENU
-    - klasa AUTOTESTS
-    - dane do testów? Napisać generator danych w ramach klasy autotest
-    - Zastanowić sie nad strukturą BB, BF, DP. W którym miejscu wczytywany jest graf
-    do obiektu klasy. Jak aktualizowac
-    - Dodac do Makelist: utils/Menu.cpp utils/Menu.h
-    - DANE POWINNY BYĆ GENEROWANIE PRZED KAŻDĄ ITERACJĄ I POMIAREM
-        - funkcja generate data powinna generować pojedyńczy plik dla zadanej liczebności
-        - mozna zrobić dwie funkcje generateAllData() i generateAllData(int numOfNodes);
-
-BRANCH AND BOUND:
-
-1 Przejscie przez graf tak jak brutforce
-2 Po pierwszym przejsciu zapsiuje wynik
-
-3 Podczas kolejnych przejść za każdym razem sprawdzam czy dana gałęź nie bedzie już gorsza niż najlepsza po dołączeniu
-  tej nowej krawędzi ORAZ czy ma potencjał na to by być lepsza
-  Tzn. czy jeśli później będziemy dołączać tylko najtańsze krawędzi (choćby to nie miało sensu) to czy jest potencjał
-  by było to tańsze niż najlepsze rozwiązanie.
-
-4.
+- unikalne generowanie wartości w generowaniu plików do grafów
+-

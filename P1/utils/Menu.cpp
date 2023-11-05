@@ -14,12 +14,12 @@
 void Menu::start() {
 
 
-    int choose = 0;
+    string choose = "0";
     bool isGraphLoaded = false;
 
 
 
-    while(choose != -1){
+    while(choose != "-1"){
 
         std::cout<<"=====MENU=====\n";
         std::cout<<"1. Load data\n";
@@ -27,22 +27,33 @@ void Menu::start() {
         std::cout<<"3. Perform Brut Force algorithm\n";
         std::cout<<"4. Perform Branch and Bound algorithm\n";
         std::cout<<"5. Perform Dynamic programing algorithm\n";
-        std::cout<<"6. Measure times of algorithms\n";
+        std::cout<<"6. Generate data sets\n";
         std::cout<<"9. Exit\n";
         std::cout<<"10. Autotests\n";
         std::cout<<"Choose what do you want to do: ";
 
         std::cin>>choose;
         std::cout<<"\n\n";
+        int integer_val;
+        try{
+             integer_val = stoi(choose);
+        }
+        catch(const invalid_argument &e) {
+            integer_val = 0;
+        }
 
-        switch(choose){
+        switch(integer_val){
             case 1:{
                 std::string filename;
                 std::cout<<"Program will be looking for the file in subdirectory /data.\n";
                 std::cout<<"Type name of the file: ";
                 std::cin>>filename;
-                g.loadData(filename);
-                isGraphLoaded = true;
+                if(g.loadData(filename)){
+                    isGraphLoaded = true;
+                }else{
+                    isGraphLoaded = false;
+                }
+
                 break;
 
             }
@@ -51,7 +62,7 @@ void Menu::start() {
                     g.printGraph();
                 }
                 else{
-                    std::cout<<"First you need to load graph. Choose 1.";
+                    std::cout<<"\nFirst you need to load graph. Choose 1.\n";
                 }
                 break;
             }
@@ -60,7 +71,7 @@ void Menu::start() {
                     run_BF();
                 }
                 else{
-                    std::cout<<"First you need to load graph. Choose 1.";
+                    std::cout<<"\nFirst you need to load graph. Choose 1.\n";
                 }
                 break;
             }
@@ -69,7 +80,7 @@ void Menu::start() {
                     run_BB();
                 }
                 else{
-                    std::cout<<"First you need to load graph. Choose 1.";
+                    std::cout<<"\nFirst you need to load graph. Choose 1.\n";
                 }
                 break;
             }
@@ -79,15 +90,25 @@ void Menu::start() {
                     run_DP();
                 }
                 else{
-                    std::cout<<"First you need to load graph. Choose 1.";
+                    std::cout<<"\nFirst you need to load graph. Choose 1.\n";
                 }
                 break;
             }
             case 6:{
+                std::cout<<"Generates data sets of sizes from range 5 to 15 nodes.\n";
+                std::cout<<"Files can by loaded from menu by choosing 1st option and typing name\n";
+                std::cout<<"dataX where X is the number of nodes ex. data10\n";
+                std::cout<<"Adding .txt extension is optional\n";
+                AutoTests at;
+                at.generateAllData();
+                std::cout<<"Files generated.\nPRESS ANY BUTTON + ENTER to continue\n";
+                string tmp;
+                cin>>tmp;
+
                 break;
             }
             case 9:{
-                choose = -1;
+                choose = "-1";
                 break;
             }
             case 10:{
@@ -112,6 +133,7 @@ void Menu::start() {
             }
             default:{
                 std::cout<<"Wrong input. Try again: ";
+                choose = "0";
                 break;
             }
 

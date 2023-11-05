@@ -5,41 +5,48 @@
 #include "Graph.h"
 using namespace std;
 
-//Graph::~Graph() {
-//
-//    for(int i = 0; i < numOfVertices; i++){
-//        delete[] v[i];
-//    }
-//    delete[] v;
-//}
 
 /**
  * Loading data from selected file. The file is selected inside this function.
  * @param fileName String name of .txt file (should be given with .txt extension)
  */
-void Graph::loadData(string fileName) {
+bool Graph::loadData(string fileName) {
 
     if( fileName[fileName.size()-3] != 't' or fileName[fileName.size()-2] != 'x' or fileName [fileName.size()-1] != 't' ){
         fileName = fileName + ".txt";
     }
 
     fileName = R"(..\data\)" + fileName;
-    cout<<fileName<<"  ";
     ifstream fin;
 
-    fin.open(fileName.c_str(), ios::in);
-    fin >> numOfVertices;
+    try {
+        fin.open(fileName.c_str(), ios::in);
 
-    Graph::v = new int *[numOfVertices];
-
-    // filling the structure with data
-    for(int i = 0; i < numOfVertices; i++){
-        v[i] = new int [numOfVertices];             // creating 2nd dim of matrix
-        for(int j = 0; j < numOfVertices; j++){
-            fin >> v[i][j];
+        if (!fin.is_open()) {
+            throw std::ifstream::failure("\nFailed to open the file\n");
         }
+
+        fin >> numOfVertices;
+
+        Graph::v = new int *[numOfVertices];
+
+        // filling the structure with data
+        for(int i = 0; i < numOfVertices; i++){
+            v[i] = new int [numOfVertices];             // creating 2nd dim of matrix
+            for(int j = 0; j < numOfVertices; j++){
+                fin >> v[i][j];
+            }
+        }
+        fin.close();
+
+    } catch (const std::ifstream::failure& e) {
+//        std::cerr << "Error: " << e.what() << std::endl;
+        std::cout<<"\nWrong filename. Try again\n";
+        return false;
     }
-    fin.close();
+
+
+    return true;
 }
 
 

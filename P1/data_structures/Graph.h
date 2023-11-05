@@ -20,11 +20,11 @@ public:
 
 
 
-    void loadData(std::string);
+    bool loadData(std::string);
     void printGraph();
     int getSize();
     int **getMatrix();
-//    ~Graph();
+
 };
 
 

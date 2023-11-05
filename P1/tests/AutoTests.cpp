@@ -30,29 +30,28 @@ AutoTests::~AutoTests() {
  */
 void AutoTests::generateAllData() {
 
-    // defying graphs sizes
-    int quantities[16] = {5, 6, 7, 8, 9,10, 11,12, 13, 14, 15, 16, 17, 18, 19, 20};
+    // Defining graph sizes
+    int quantities[16] = {5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
 
-    for(int i = 0; i < size(quantities); i++){
+    // Seed the random number generator once outside the loop
+    srand(static_cast<unsigned>(time(0)));
 
-        ofstream file;
-        file.open("data" + to_string(quantities[i]) + ".txt");
-        file<<i<<"\n";                                              // loading first line with number of nodes
+    for (int i = 0; i < sizeof(quantities) / sizeof(quantities[0]); i++) {
 
-        for(int u = 0; u < i; u++){
-            for( int v = 0; v < i; v++){
+        std::ofstream file;
+        file.open("data" + std::to_string(quantities[i]) + ".txt");
+        file << i << "\n"; // Loading the first line with the number of nodes
 
-                if(u == v){
-                    file<<"0 ";
+        for (int u = 0; u < quantities[i]; u++) {
+            for (int v = 0; v < quantities[i]; v++) {
+                if (u == v) {
+                    file << "0 ";
+                } else {
+                    int randNum = rand() % 100 + 1; // Random number from the range of <1, 101>
+                    file << randNum << " ";
                 }
-                else{
-                    srand(time(NULL));
-                    int randNum = rand()%100 + 1;                   // rand number from range of <1, 101>
-                    file<<randNum<<" ";
-                }
-
             }
-            file<<"\n";
+            file << "\n";
         }
 
         file.close();
@@ -69,6 +68,9 @@ void AutoTests::generateData(int size){
     string loc = "..\\data\\";
     file.open(loc + "data" + to_string(size) + ".txt");
     file<<size<<"\n";                                              // loading first line with number of nodes
+
+    srand(static_cast<unsigned>(time(0)));
+
     for(int u = 0; u < size; u++){
         for( int v = 0; v < size; v++){
 
@@ -76,7 +78,6 @@ void AutoTests::generateData(int size){
                 file<<"0 ";
             }
             else{
-                srand(time(NULL));
                 int randNum = rand()%100 + 1;                   // rand number from range of <1, 101>
                 file<<randNum<<" ";
             }
