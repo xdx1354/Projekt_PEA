@@ -84,6 +84,7 @@ void BF::printResult() {
         for(int i:best_path){
             cout<<i<<", ";
         }
+        std::cout<<"0";
         std::cout << std::endl;
         std::cout << std::endl;
     }

@@ -73,7 +73,7 @@ std::string DP::resultToString()
 
     message = "Best path cost: "  + std::to_string(result);
     message += "\nShortest path:\n0, ";
-    message += path.toStringFromBottom() + "0\n\n";
+    message += path.toString() + "0\n\n";
 
     return message;
 }

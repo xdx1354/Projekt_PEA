@@ -131,7 +131,7 @@ void AutoTests::autoTestBB() {
         cout<<"AVG TIME TAKEN: " << avg <<"\n";
         cout<<"=======================================================================\n";
 
-        // delete g;    TODO: create destructor for graph class
+
 
     }
 
@@ -174,7 +174,7 @@ void AutoTests::autoTestBF() {
         cout << "AVG TIME TAKEN: " << avg << "\n";
         cout << "=======================================================================\n";
 
-        // delete g;    TODO: create destructor for graph class
+
 
     }
 }

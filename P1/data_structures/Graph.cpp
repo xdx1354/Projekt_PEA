@@ -40,7 +40,6 @@ bool Graph::loadData(string fileName) {
         fin.close();
 
     } catch (const std::ifstream::failure& e) {
-//        std::cerr << "Error: " << e.what() << std::endl;
         std::cout<<"\nWrong filename. Try again\n";
         return false;
     }
@@ -57,7 +56,7 @@ void Graph::printGraph(){
 
     for(int i = 0; i < Graph::numOfVertices; i++){
         for(int j = 0; j < numOfVertices; j++){
-          cout<<v[i][j] << " ";                     //TODO: tu przydałoby sie wyrównywanie do 3 miejsc np.
+          cout<<setw(3)<<v[i][j] << " ";
         }
         cout<<endl;
     }

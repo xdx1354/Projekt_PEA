@@ -1,3 +1,5 @@
 TODO:
 - unikalne generowanie wartości w generowaniu plików do grafów
--
+TODO: usunąć niepotrzebne pliki
+TODO: opisać funkcje i kod
+TODO: usunąć niepotrzebne komentarze

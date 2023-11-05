@@ -12,7 +12,6 @@ using namespace std;
 #include "../data_structures/Graph.h"
 #include "../data_structures/Stack.h"
 
-//TODO: redesign using self-made data structures
 
 class BF {
 public:
