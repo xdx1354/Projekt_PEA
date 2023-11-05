@@ -20,16 +20,19 @@ int main() {
     g.printGraph();
     cout<<"\n\n------------------------------------------\n\n";
 
-//    BB bb(g);
-//    bb.run();
+
+
+
+    BB bb(g);
+    bb.run();
 //
 //
 //    DP dp(g);
 //    dp.run();
 
 
-    BF bf(g);
-    bf.run();
+//    BF bf(g);
+//    bf.run();
 //    bf.run();
 
 
@@ -95,8 +98,8 @@ int main() {
 
     cout<<"Printing Stack s of size: " <<s.getSize()<<" containing (fb): " << s.toStringFromBottom()<<endl;
     cout<<"Printing Stack ss of size: " <<ss.getSize()<<" containing (fb): " << ss.toStringFromBottom()<<endl;
-
 */
+
     return 0;
 
 
