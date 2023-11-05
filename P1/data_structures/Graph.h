@@ -24,7 +24,7 @@ public:
     void printGraph();
     int getSize();
     int **getMatrix();
-    ~Graph();
+//    ~Graph();
 };
 
 
