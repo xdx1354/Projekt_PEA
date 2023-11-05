@@ -100,7 +100,7 @@ void Menu::start() {
                 autoTests.autoTestBB();
                 std::cout<<"=======================================================================================";
                 std::cout<<"TESTING DYNAMIC PROGRAMMING:";
-                autoTests.autoTestDP();
+//                autoTests.autoTestDP();
                 std::cout<<"=======================================================================================";
                 std::cout<<"\nTESTS FINISHED\n";
                 std::cout<<"=======================================================================================";

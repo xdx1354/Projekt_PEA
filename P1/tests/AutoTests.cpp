@@ -14,7 +14,7 @@
 using namespace std;
 
 AutoTests::AutoTests(){
-    stats.open("stats.txt");                // opening the ofstream to file
+    stats.open("../results/stats.txt");                // opening the ofstream to file
 }
 
 AutoTests::~AutoTests() {
@@ -32,6 +32,7 @@ void AutoTests::generateAllData() {
 
     // defying graphs sizes
     int quantities[16] = {5, 6, 7, 8, 9,10, 11,12, 13, 14, 15, 16, 17, 18, 19, 20};
+    srand(static_cast<unsigned>(time(0)));
 
     for(int i = 0; i < size(quantities); i++){
 
@@ -46,7 +47,6 @@ void AutoTests::generateAllData() {
                     file<<"0 ";
                 }
                 else{
-                    srand(time(NULL));
                     int randNum = rand()%100 + 1;                   // rand number from range of <1, 101>
                     file<<randNum<<" ";
                 }
@@ -69,6 +69,9 @@ void AutoTests::generateData(int size){
     string loc = "..\\data\\";
     file.open(loc + "data" + to_string(size) + ".txt");
     file<<size<<"\n";                                              // loading first line with number of nodes
+
+    srand(static_cast<unsigned>(time(0)));
+
     for(int u = 0; u < size; u++){
         for( int v = 0; v < size; v++){
 
@@ -76,7 +79,6 @@ void AutoTests::generateData(int size){
                 file<<"0 ";
             }
             else{
-                srand(time(NULL));
                 int randNum = rand()%100 + 1;                   // rand number from range of <1, 101>
                 file<<randNum<<" ";
             }
@@ -93,7 +95,7 @@ void AutoTests::generateData(int size){
  */
 void AutoTests::autoTestBB() {
 
-    int quantities[5] = {5, 6, 7, 10, 12};  // fixed list of tested quantities
+    int quantities[] = {5, 6, 7, 12};  // fixed list of tested quantities
 
     for( int q: quantities){
         string loc = R"(..\data\)";
@@ -138,7 +140,8 @@ void AutoTests::autoTestBB() {
 
 void AutoTests::autoTestBF() {
 
-    int quantities[5] = {5, 6, 7, 10, 12};  // fixed list of tested quantities
+    int quantities[] = {5, 6, 7, 12};  // fixed list of tested quantities
+//    int quantities[] = {5, 6, 7};  // fixed list of tested quantities
 
     for (int q: quantities) {
         string loc = R"(..\data\)";
@@ -180,7 +183,7 @@ void AutoTests::autoTestBF() {
 
 void AutoTests::autoTestDP() {
 
-    int quantities[5] = {5, 6, 7, 10, 12};  // fixed list of tested quantities
+    int quantities[] = {5, 6, 7};  // fixed list of tested quantities
 
     for (int q: quantities) {
         string loc = R"(..\data\)";
