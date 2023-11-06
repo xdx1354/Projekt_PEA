@@ -54,6 +54,10 @@ bool Graph::loadData(string fileName) {
  */
 void Graph::printGraph(){
 
+    if(numOfVertices > 14){
+        cout<<"\n\nWARNING!\n This graph might not be correctly printed because of max width of the terminal.\n\n";
+    }
+
     for(int i = 0; i < Graph::numOfVertices; i++){
         for(int j = 0; j < numOfVertices; j++){
           cout<<setw(3)<<v[i][j] << " ";

@@ -36,24 +36,26 @@ void AutoTests::generateAllData() {
     // Seed the random number generator once outside the loop
     srand(static_cast<unsigned>(time(0)));
 
-    for (int i = 0; i < sizeof(quantities) / sizeof(quantities[0]); i++) {
+    for (int i = 0; i < 16; i++) {
 
-        std::ofstream file;
-        file.open("data" + std::to_string(quantities[i]) + ".txt");
+        ofstream file;
+        string loc = "..\\data\\";
+        file.open(loc + "data" + to_string(quantities[i]) + ".txt");
         file << i << "\n"; // Loading the first line with the number of nodes
 
         for (int u = 0; u < quantities[i]; u++) {
             for (int v = 0; v < quantities[i]; v++) {
+
                 if (u == v) {
                     file << "0 ";
                 } else {
-                    int randNum = rand() % 100 + 1; // Random number from the range of <1, 101>
+                    int randNum = rand() % 100 + 1;                   // rand number from range of <1, 101>
                     file << randNum << " ";
                 }
+
             }
             file << "\n";
         }
-
         file.close();
     }
 }
