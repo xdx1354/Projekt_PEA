@@ -8,10 +8,10 @@
 
 class StackNode {
 public:
-    int value;
-    StackNode* next;
+    int value;                              // integer value of element
+    StackNode* next;                       // single element of stack
 
-    StackNode(int value, StackNode *n);    //konstruktor
+    StackNode(int value, StackNode *n);    // constructor
 
 };
 

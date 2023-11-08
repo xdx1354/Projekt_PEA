@@ -45,10 +45,10 @@ void DP::apply()
 
 
     result = INF;
-    temp = 0;
+    int temp = 0;
 
     for (int i = 0; i < numOfCities; i++){
-        temp = dp[(1 << numOfCities) - 1][i] + matrix[i][0];    // calcuating cost of each hamiltionan path by adding the last vertex
+        temp = dp[(1 << numOfCities) - 1][i] + matrix[i][0];    // calculating cost of each hamiltionan path by adding the last vertex
         if (temp < result){                                     // in the same time keeping track of currently the cheapest one
             result = temp;
             lastVertex = i;                                     // and the last vertex on his way in order to be able to retrieve the whole path
@@ -62,7 +62,7 @@ void DP::apply()
  */
 std::string DP::resultToString()
 {
-    std::string message = "";
+    std::string message;
     int min = 1 << 30;
     int bitMask = (1 << numOfCities) - 1;
     int prev;
@@ -102,7 +102,7 @@ DP::DP(Graph graph)
     numOfCities = graph.getSize();                  // gets the size of graph
     dp = new int*[1 << numOfCities];                // allocates the dynamic programming array for data
     history = new int*[1 << numOfCities];           // allocates historic table for retrieving the path
-    temp, result, lastVertex = 0;                   // initializes helping variables
+    result, lastVertex = 0;                   // initializes helping variables
 
     for (int i = 0; i < (1 << numOfCities); i++)    // allocates space for 2nd dimension of arrays
     {

@@ -14,7 +14,8 @@
 using namespace std;
 
 AutoTests::AutoTests(){
-    stats.open("stats.txt");                // opening the ofstream to file
+    string loc = "..\\results\\";
+    stats.open(loc + "stats.txt");            // opening the ofstream to file
 }
 
 AutoTests::~AutoTests() {
@@ -41,7 +42,7 @@ void AutoTests::generateAllData() {
         ofstream file;
         string loc = "..\\data\\";
         file.open(loc + "data" + to_string(quantities[i]) + ".txt");
-        file << i << "\n"; // Loading the first line with the number of nodes
+        file << quantities[i] << "\n";                                 // Loading the first line with the number of nodes
 
         for (int u = 0; u < quantities[i]; u++) {
             for (int v = 0; v < quantities[i]; v++) {
@@ -96,8 +97,9 @@ void AutoTests::generateData(int size){
  */
 void AutoTests::autoTestBB() {
 
-    int quantities[12] = {5, 6, 7, 9,10, 12, 14, 16, 18, 20 ,22, 24};  // fixed list of tested quantities
+//    int quantities[12] = {5, 6, 7, 9,10, 12, 14, 16, 18, 20 ,22, 24};  // fixed list of tested quantities
 
+    int quantities[4] = {17, 19, 21, 23};  // fixed list of tested quantities
     for( int q: quantities){
         string loc = R"(..\data\)";
         string path = loc + "data" + to_string(q) + ".txt";
@@ -141,7 +143,8 @@ void AutoTests::autoTestBB() {
 
 void AutoTests::autoTestBF() {
 
-    int quantities[9] = {5, 6, 7, 9,10, 12, 14, 16, 18};  // fixed list of tested quantities
+//    int quantities[7] = {5, 6, 7,8, 9,10,11 };  // fixed list of tested quantities
+    int quantities[1] = {13 };  // fixed list of tested quantities
 
     for (int q: quantities) {
         string loc = R"(..\data\)";
@@ -183,7 +186,8 @@ void AutoTests::autoTestBF() {
 
 void AutoTests::autoTestDP() {
 
-    int quantities[11] = {5, 6, 7, 10, 12, 14, 16,18, 20, 22, 24};  // fixed list of tested quantities
+//    int quantities[11] = {5, 6, 7, 10, 12, 14, 16,18, 20, 22, 24};  // fixed list of tested quantities
+    int quantities[6] = {25, 26,27,28,29, 30};  // fixed list of tested quantities
 
     for (int q: quantities) {
         string loc = R"(..\data\)";

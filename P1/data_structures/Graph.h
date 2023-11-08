@@ -18,8 +18,6 @@ public:
     int **v;                        // matrix containing cost of traveling between cities - weights of vertices
     int numOfNodes;                 // number of cities - nodes in graph
 
-
-
     bool loadData(std::string);     // method for loading data with specific filename
     void printGraph();              // method for printing data
     int getSize();                  // returns number of cities

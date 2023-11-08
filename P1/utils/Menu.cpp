@@ -9,6 +9,7 @@
 #include "../algorithms/BB.h"
 #include "../algorithms/BF.h"
 #include "../algorithms/DP.h"
+#include "Time.h"
 
 
 void Menu::start() {
@@ -28,8 +29,8 @@ void Menu::start() {
         std::cout<<"4. Perform Branch and Bound algorithm\n";
         std::cout<<"5. Perform Dynamic programing algorithm\n";
         std::cout<<"6. Generate data sets\n";
-        std::cout<<"9. Exit\n";
-        std::cout<<"10. Autotests\n";
+        std::cout<<"7. Autotests\n";
+        std::cout<<"8. Exit\n";
         std::cout<<"Choose what do you want to do: ";
 
         std::cin>>choose;
@@ -101,27 +102,21 @@ void Menu::start() {
                 std::cout<<"Adding .txt extension is optional\n";
                 AutoTests at;
                 at.generateAllData();
-                std::cout<<"Files generated.\nPRESS ANY BUTTON + ENTER to continue\n";
-                string tmp;
-                cin>>tmp;
+                std::cout<<"Files generated.\n";
 
                 break;
             }
-            case 9:{
-                choose = "-1";
-                break;
-            }
-            case 10:{
+            case 7:{
                 AutoTests autoTests;
                 std::cout<<"=======================================================================================";
                 std::cout<<"TESTING BRUT FORCE:";
                 autoTests.autoTestBF();
                 std::cout<<"=======================================================================================";
                 std::cout<<"TESTING BRANCH AND BOUND:";
-//                autoTests.autoTestBB();
+                autoTests.autoTestBB();
                 std::cout<<"=======================================================================================";
                 std::cout<<"TESTING DYNAMIC PROGRAMMING:";
-//                autoTests.autoTestDP();
+                autoTests.autoTestDP();
                 std::cout<<"=======================================================================================";
                 std::cout<<"\nTESTS FINISHED\n";
                 std::cout<<"=======================================================================================";
@@ -130,6 +125,10 @@ void Menu::start() {
                 std::cin >> a;
                 break;
 
+            }
+            case 8:{
+                choose = "-1";
+                break;
             }
             default:{
                 std::cout<<"Wrong input. Try again: ";
@@ -146,9 +145,13 @@ void Menu::start() {
 void Menu::run_BF(){
     // graph is a field of this class
     // at this point graph is already loaded with data
-
+    Time t;
     BF bf(g);
+    t.start();
     bf.run();
+    t.stop();
+    float time_taken = t.returnTime()/1000;
+    cout<<"\nExecution took:  "<< time_taken <<" us.\n";
 
 }
 
@@ -157,8 +160,13 @@ void Menu::run_BB(){
     // graph is a field of this class
     // at this point graph is already loaded with data
 
+    Time t;
     BB bb(g);
+    t.start();
     bb.run();
+    t.stop();
+    float time_taken = t.returnTime()/1000;
+    cout<<"\nExecution took:  "<< time_taken <<" us.\n";
 
 }
 
@@ -167,7 +175,11 @@ void Menu::run_DP(){
     // graph is a field of this class
     // at this point graph is already loaded with data
 
+    Time t;
     DP dp(g);
+    t.start();
     dp.run();
-
+    t.stop();
+    float time_taken = t.returnTime()/1000;
+    cout<<"\nExecution took:  "<< time_taken <<" us.\n";
 }

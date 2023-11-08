@@ -24,38 +24,38 @@ BF::BF(Graph graph){
 
 /**
  * Recursive function looking for cheapest hamiltonian cycle in given graph
- * @param vertex : vertex from which this functions begins
+ * @param node : node from which this functions begins
  */
-void BF::recursion(int vertex){
+void BF::recursion(int node){
 
-    path.push_back(vertex);
+    path.push_back(node);
     path_len++;
 
     if(path_len != numOfCities){                        // if we did not reach 10 cities
-        visited[vertex] = true;                         // marking current vertex as visited
+        visited[node] = true;                         // marking current node as visited
         for (int u = 0; u < numOfCities; u++){          // iterating through all vertexes
-            if (visited[u])                             // if this vertex was already visited we skip it
+            if (visited[u])                             // if this node was already visited we skip it
                 continue;
 
-            current_cost += matrix[vertex][u];          // adding cost of traveling to next vertex
-            recursion(u);                         // calling this function but whith the next vertex as a starting
-            current_cost -= matrix[vertex][u];          // subtracting cost of travel on the way back
+            current_cost += matrix[node][u];          // adding cost of traveling to next node
+            recursion(u);                         // calling this function but whith the next node as a starting
+            current_cost -= matrix[node][u];          // subtracting cost of travel on the way back
         }
 
-        visited[vertex] = false;                        // marking the vertex as not visited on the way back
+        visited[node] = false;                        // marking the node as not visited on the way back
         path_len--;                                     // keeping the paht_len right
-        path.pop_back();                                // pop_back the vertex from stack
+        path.pop_back();                                // pop_back the node from stack
 
     }
-    else if (matrix[vertex][0] <= 0){                   // in this case we came back to starting vertex
+    else if (matrix[node][0] <= 0){                   // in this case we came back to starting node
         path_len--;                                     // going back to the previous
         path.pop_back();
     }
     else{
-        current_cost += matrix[vertex][0];              // in this case we finally got cycle through all the ten cities
+        current_cost += matrix[node][0];              // in this case we finally got cycle through all the ten cities
 
         if (current_cost >= best_cost){                 // checking if it's worse/equal to the best one
-            current_cost -= matrix[vertex][0];          // if it is we will back off from it
+            current_cost -= matrix[node][0];          // if it is we will back off from it
         }
         else{                                           // in this case it is better
             best_cost = current_cost;                   // so we change the value and copy the path
@@ -63,7 +63,7 @@ void BF::recursion(int vertex){
 //            for(const int& i : path)
 //                best_path.push_back(i);
             best_path = path;
-            current_cost -= matrix[vertex][0];          // preparation for going back
+            current_cost -= matrix[node][0];          // preparation for going back
         }
         path_len--;                                     // going back to previous city
         path.pop_back();

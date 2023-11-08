@@ -16,10 +16,9 @@ private:
     int **matrix;               // matrix containing cost of traveling between cities - weights of vertices
     int numOfCities;            // number of cities - nodes in graph
     int result;                 // result of the algorithm - cost of min Hamiltonian path
-    int temp;                   // temporary TODO: ?make local
-    int **dp;                   // array for storing calcualated data in process of dynamic programming
-    int **history;              // array that will help with retrieving shortest path TODO::check it
-    int lastVertex;             // last vertex of current path TODO:: check it
+    int **dp;                   // array for storing calculated data in process of dynamic programming
+    int **history;              // array that will help with retrieving the shortest path
+    int lastVertex;             // last vertex of current path
 
 public:
     void apply();               // main method for calcualting the result

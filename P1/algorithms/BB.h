@@ -28,14 +28,13 @@ public:
     int current_cost;           // cost of current path
     int **matrix;               // matrix containing cost of traveling between cities - weights of vertices
     int *cheapest_exit;         // helping array with the cheapest exit
-    int lowerBound;             // value of lower bound for current branch
 
-    void printResult();                // method for printing the result
-    explicit BB(Graph graph);          //constructor
-    void recursion(int vertex);        // main method for calculating the result
-    int higherBound(int node);         // method for calculating the bound for current branch
-    void findCheapest();               // method for finding the cheapest exits for each node
-    void run();                        // method for running the algorithm, starts recursion for node 0 and prints result
+    void printResult();                 // method for printing the result
+    explicit BB(Graph graph);           // constructor
+    void recursion(int node);           // main method for calculating the result
+    int lowerBound(int node);           // method for calculating the bound for current branch
+    void findCheapest();                // method for finding the cheapest exits for each node
+    void run();                         // method for running the algorithm, starts recursion for node 0 and prints result
     ~BB();
 
 };

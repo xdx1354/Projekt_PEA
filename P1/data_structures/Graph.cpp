@@ -8,7 +8,7 @@ using namespace std;
 
 /**
  * Loading data from selected file. The file is selected inside this function.
- * @param fileName String name of .txt file (should be given with .txt extension)
+ * @param fileName String name of .txt file (.txt is not necessary)
  */
 bool Graph::loadData(string fileName) {
 
@@ -35,6 +35,9 @@ bool Graph::loadData(string fileName) {
             v[i] = new int [numOfNodes];             // creating 2nd dim of matrix
             for(int j = 0; j < numOfNodes; j++){
                 fin >> v[i][j];
+                if (v[i][j] == -1){                  // algorithms run on representation of graph using 0 to define that
+                    v[i][j] = 0;                     // edge do not exist.
+                }
             }
         }
         fin.close();
@@ -67,7 +70,7 @@ void Graph::printGraph(){
 }
 
 /**
- * Function for returning size (number of vertices) of graph
+ * Function for returning size (number of nodes) of graph
  * @return int: number of vertices in graph
  */
 int Graph::getSize() {

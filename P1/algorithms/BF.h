@@ -25,11 +25,11 @@ public:
     int current_cost;           // cost of current path
     int **matrix;               // matrix containing cost of traveling between cities - weights of vertices
 
-    void printResult();         // method for printing the result
-    explicit BF(Graph graph);        //constructor of class
-    void recursion(int node); // main method for calculating the result
-    void run();                 // method for running the algorithm, starts recursion for node 0 and prints result
-    ~BF();                      // destructor
+    void printResult();             // method for printing the result
+    explicit BF(Graph graph);       // constructor of class
+    void recursion(int node);       // main method for calculating the result
+    void run();                     // method for running the algorithm, starts recursion for node 0 and prints result
+    ~BF();                          // destructor
 };
 
 
