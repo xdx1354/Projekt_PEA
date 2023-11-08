@@ -17,25 +17,25 @@ using namespace std;
 
 class BB {
 public:
-    int numOfCities;
+    int numOfCities;           // number of cities - nodes in graph
     vector<int> path;          // vector containing currently explored path
     vector<int> best_path;     // vector containing currently best path
 
 
-    bool *visited;
+    bool *visited;              // list of already visited cities
     int path_len = 0;           // length of path (number of already visited cities)
     int best_cost;              // minimal cost of checked paths (currently set as maximal integer value)
     int current_cost;           // cost of current path
-    int **matrix;
+    int **matrix;               // matrix containing cost of traveling between cities - weights of vertices
     int *cheapest_exit;         // helping array with the cheapest exit
-    int lowerBound;
+    int lowerBound;             // value of lower bound for current branch
 
-    void printResult();
-    explicit BB(Graph graph);        //constructor
-    void recursion(int vertex);
-    int higherBound(int node);
-    void findCheapest();
-    void run();
+    void printResult();                // method for printing the result
+    explicit BB(Graph graph);          //constructor
+    void recursion(int vertex);        // main method for calculating the result
+    int higherBound(int node);         // method for calculating the bound for current branch
+    void findCheapest();               // method for finding the cheapest exits for each node
+    void run();                        // method for running the algorithm, starts recursion for node 0 and prints result
     ~BB();
 
 };

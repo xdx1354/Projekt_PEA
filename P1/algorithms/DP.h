@@ -8,25 +8,26 @@
 #include "../data_structures/Graph.h"
 
 #define INF 9999
+using namespace std;
 
 class DP
 {
 private:
-    int **matrix;
-    int numOfVertices;
-    int result;
-    int temp;
-    int **dp;
-    int **history;
-    int lastVertex;
+    int **matrix;               // matrix containing cost of traveling between cities - weights of vertices
+    int numOfCities;            // number of cities - nodes in graph
+    int result;                 // result of the algorithm - cost of min Hamiltonian path
+    int temp;                   // temporary TODO: ?make local
+    int **dp;                   // array for storing calcualated data in process of dynamic programming
+    int **history;              // array that will help with retrieving shortest path TODO::check it
+    int lastVertex;             // last vertex of current path TODO:: check it
 
 public:
-    void apply();
-    std::string resultToString();
-    void printResult();
-    DP(Graph graph);
-    void run();
-    ~DP();
+    void apply();               // main method for calcualting the result
+    string resultToString();    // method returning result as string
+    void printResult();         // method for printing the result
+    void run();                 // method for running the algorithm
+    DP(Graph graph);            // constructor
+    ~DP();                      // destructor
 };
 
 

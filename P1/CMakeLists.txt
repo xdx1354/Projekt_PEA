@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.24)
 project(P1)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_EXE_LINKER_FLAGS "-static")
 
 add_executable(P1 main.cpp utils/Time.cpp utils/Time.h data_structures/Graph.cpp data_structures/Graph.h
         data_structures/Stack.cpp data_structures/Stack.h data_structures/StackNode.cpp

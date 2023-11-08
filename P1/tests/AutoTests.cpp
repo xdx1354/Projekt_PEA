@@ -96,7 +96,7 @@ void AutoTests::generateData(int size){
  */
 void AutoTests::autoTestBB() {
 
-    int quantities[5] = {5, 6, 7, 10, 12};  // fixed list of tested quantities
+    int quantities[12] = {5, 6, 7, 9,10, 12, 14, 16, 18, 20 ,22, 24};  // fixed list of tested quantities
 
     for( int q: quantities){
         string loc = R"(..\data\)";
@@ -141,7 +141,7 @@ void AutoTests::autoTestBB() {
 
 void AutoTests::autoTestBF() {
 
-    int quantities[5] = {5, 6, 7, 10, 12};  // fixed list of tested quantities
+    int quantities[9] = {5, 6, 7, 9,10, 12, 14, 16, 18};  // fixed list of tested quantities
 
     for (int q: quantities) {
         string loc = R"(..\data\)";
@@ -183,7 +183,7 @@ void AutoTests::autoTestBF() {
 
 void AutoTests::autoTestDP() {
 
-    int quantities[5] = {5, 6, 7, 10, 12};  // fixed list of tested quantities
+    int quantities[11] = {5, 6, 7, 10, 12, 14, 16,18, 20, 22, 24};  // fixed list of tested quantities
 
     for (int q: quantities) {
         string loc = R"(..\data\)";

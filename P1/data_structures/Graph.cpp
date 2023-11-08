@@ -26,14 +26,14 @@ bool Graph::loadData(string fileName) {
             throw std::ifstream::failure("\nFailed to open the file\n");
         }
 
-        fin >> numOfVertices;
+        fin >> numOfNodes;
 
-        Graph::v = new int *[numOfVertices];
+        Graph::v = new int *[numOfNodes];
 
         // filling the structure with data
-        for(int i = 0; i < numOfVertices; i++){
-            v[i] = new int [numOfVertices];             // creating 2nd dim of matrix
-            for(int j = 0; j < numOfVertices; j++){
+        for(int i = 0; i < numOfNodes; i++){
+            v[i] = new int [numOfNodes];             // creating 2nd dim of matrix
+            for(int j = 0; j < numOfNodes; j++){
                 fin >> v[i][j];
             }
         }
@@ -54,12 +54,12 @@ bool Graph::loadData(string fileName) {
  */
 void Graph::printGraph(){
 
-    if(numOfVertices > 14){
+    if(numOfNodes > 14){
         cout<<"\n\nWARNING!\n This graph might not be correctly printed because of max width of the terminal.\n\n";
     }
 
-    for(int i = 0; i < Graph::numOfVertices; i++){
-        for(int j = 0; j < numOfVertices; j++){
+    for(int i = 0; i < Graph::numOfNodes; i++){
+        for(int j = 0; j < numOfNodes; j++){
           cout<<setw(3)<<v[i][j] << " ";
         }
         cout<<endl;
@@ -71,7 +71,7 @@ void Graph::printGraph(){
  * @return int: number of vertices in graph
  */
 int Graph::getSize() {
-    return numOfVertices;
+    return numOfNodes;
 }
 
 /**

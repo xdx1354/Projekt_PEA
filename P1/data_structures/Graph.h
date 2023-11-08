@@ -9,21 +9,21 @@
 /**
  * Class for representing graph as adjacency list.
  * v: two dim array of integers
- * numOfVertices: number of Vertices of graph
+ * numOfNodes: number of Vertices of graph
  *
  */
 class Graph {
 
 public:
-    int **v;
-    int numOfVertices;
+    int **v;                        // matrix containing cost of traveling between cities - weights of vertices
+    int numOfNodes;                 // number of cities - nodes in graph
 
 
 
-    bool loadData(std::string);
-    void printGraph();
-    int getSize();
-    int **getMatrix();
+    bool loadData(std::string);     // method for loading data with specific filename
+    void printGraph();              // method for printing data
+    int getSize();                  // returns number of cities
+    int **getMatrix();              // returns matrix **v
 
 };
 

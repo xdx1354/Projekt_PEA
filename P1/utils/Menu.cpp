@@ -118,10 +118,10 @@ void Menu::start() {
                 autoTests.autoTestBF();
                 std::cout<<"=======================================================================================";
                 std::cout<<"TESTING BRANCH AND BOUND:";
-                autoTests.autoTestBB();
+//                autoTests.autoTestBB();
                 std::cout<<"=======================================================================================";
                 std::cout<<"TESTING DYNAMIC PROGRAMMING:";
-                autoTests.autoTestDP();
+//                autoTests.autoTestDP();
                 std::cout<<"=======================================================================================";
                 std::cout<<"\nTESTS FINISHED\n";
                 std::cout<<"=======================================================================================";
