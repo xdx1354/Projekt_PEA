@@ -16,16 +16,25 @@ TS::TS(Graph graph){
 
 void TS::apply(int maxIterations){
 
-    currentPath = generateFirstPath();
+    generateFirstPath();
     bestPath = currentPath;
 
     // initializing the tabu list
-    tabulist = new int*[maxIterations];
-    for (int i = 0; i < maxIterations; ++i) {
+
+    tabulist = new int*[numOfCities];
+    for (int i = 0; i < numOfCities; ++i) {
         tabulist[i] = new int[numOfCities];
+        for (int j = 0; j < numOfCities; ++j) {
+            tabulist[i][j] = -1; // Ustawiamy na -1 jako początkową wartość
+        }
     }
 
-    //TODO: initialize the bestPath, neighbourPath, currentPath
+    bestPath = new int[numOfCities];
+    neighbourPath = new int[numOfCities];
+    currentPath = new int[numOfCities];
+
+    /// should i fill them with initial data?
+
 
     /// loop trying to calculate best solution
     for(int i = 0; i < maxIterations; i++){
@@ -67,25 +76,62 @@ void TS::epoch() {
         }
     }
 }
+
 /**
  * generates neighbour path for path stored in currentPath
  * @return generated path as integer pointer
  */
 void TS::generateNeighbourPath() {
-    // should add the generated result to tabu list
-    int pos1 = rand() % (numOfCities - 1) + 1;
-    int pos2 = rand() % (numOfCities - 1) + 1;
-
-    // assert that pos1 and pos2 are not the same
-    // excludes possibility of empty iteration when getting no change in path
-    while (pos1 == pos2){
+    int pos1, pos2;
+    do {
+        pos1 = rand() % (numOfCities - 1) + 1;
         pos2 = rand() % (numOfCities - 1) + 1;
-    }
-//    int* neighbor_solution = new int[numOfCities];
-    memcpy(neighbourPath, currentPath, numOfCities * sizeof(int));      // copying the data to new array
-    swap(neighbourPath[pos1], neighbourPath[pos2]);                     // swapping two cities
-    neighbourPathCost = calculatePathCost(neighbourPath);               // updating the cost
+    } while (pos1 == pos2 || tabulist[pos1][pos2] != -1);
 
-    ///TODO: check tabu, if its already in tabu list -> generate again and so on
+    // Apply the move
+    memcpy(neighbourPath, currentPath, numOfCities * sizeof(int));
+    swap(neighbourPath[pos1], neighbourPath[pos2]);
+    neighbourPathCost = calculatePathCost(neighbourPath);
+}
+
+/**
+ * Calculates cost of traveling current path. Includes last step to starting city.
+ * TODO: should first city be always the same?
+ * @param path: array of integers
+ * @return
+ */
+int TS::calculatePathCost(int *path) {
+    int cost = 0;
+    for(int i = 1; i < numOfCities; i++){
+        cost += matrix[path[i-1]][path[i]];
+    }
+    cost += matrix[path[numOfCities-1]][path[0]];               // adding cost of coming back to starting point
+
+    return cost;
+}
+
+/**
+ * First path will be generated randomly
+ * @return
+ */
+void TS::generateFirstPath() {
+
+    int* solution = new int[numOfCities];
+    for (int i = 0; i < numOfCities; ++i) {
+        solution[i] = i;
+    }
+    // Losowe przemieszanie miast, z pominięciem pierwszego (miasta startowego)
+    for (int i = 1; i < numOfCities - 1; ++i) {
+        int j = rand() % (numOfCities - i) + i;
+        std::swap(solution[i], solution[j]);
+    }
+}
+
+void TS::printPath(int *path) {
+    for(int i = 0; i< numOfCities; i++){
+        cout<<path[i]<<", ";
+    }
+    cout<<path[0]<<endl;
+
 }
 

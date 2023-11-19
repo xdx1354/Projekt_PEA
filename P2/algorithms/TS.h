@@ -13,12 +13,12 @@ class TS {
 public:
     TS(Graph graph);
     void apply(int maxIterations);               // running the algorithm, preparing var and objects
-    int* generateFirstPath();   // generates initial path with selected method  // TODO: can be void if data will be passed directly to field of class
+    void generateFirstPath();   // generates initial path with selected method  // TODO: can be void if data will be passed directly to field of class
     void generateNeighbourPath();    // generates path using certain method (swaps etc. TODO: decide on a method)
     void epoch();               // loop method, loop for set times and tries to calculate the most optimal res
     int calculatePathCost(int path[]);   // for a given path calculates it cost
     bool findInTabu(int path[]);          // checks if given path is present in tabu list
-
+    void printPath(int *path);
 
     ///COMMENTS
     // Paths will be stored as dynamic arrays
