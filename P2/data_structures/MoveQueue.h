@@ -7,7 +7,9 @@
 
 
 #include "Move.h"
-
+/**
+ * Cyclic Queue
+ */
 class MoveQueue {
 private:
     Move** moves;

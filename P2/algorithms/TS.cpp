@@ -33,8 +33,6 @@ void TS::apply(int maxIterations){
     neighbourPath = new int[numOfCities];
     currentPath = new int[numOfCities];
 
-    /// should i fill them with initial data?
-
 
     /// loop trying to calculate best solution
     for(int i = 0; i < maxIterations; i++){
@@ -132,6 +130,5 @@ void TS::printPath(int *path) {
         cout<<path[i]<<", ";
     }
     cout<<path[0]<<endl;
-
 }
 

@@ -14,11 +14,7 @@ public:
     Graph g;                    // Object of class graph, it will contain currently used graph
     void start();               // starts the menu
 
-    void run_BB();              // runs Branch and Bound algorithm for graph
-
-    void run_BF();              // runs Brut Force algorithm for graph
-
-    void run_DP();              // runs Dynamic Programming algorithm for graph
+    void runTS();
 
 };
 

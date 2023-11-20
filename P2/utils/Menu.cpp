@@ -6,9 +6,7 @@
 #include "Menu.h"
 #include "../data_structures/Graph.h"
 #include "../tests/AutoTests.h"
-#include "../algorithms/BB.h"
-#include "../algorithms/BF.h"
-#include "../algorithms/DP.h"
+#include "../algorithms/TS.h"
 #include "Time.h"
 
 
@@ -25,9 +23,7 @@ void Menu::start() {
         std::cout<<"=====MENU=====\n";
         std::cout<<"1. Load data\n";
         std::cout<<"2. Print graph\n";
-        std::cout<<"3. Perform Brut Force algorithm\n";
-        std::cout<<"4. Perform Branch and Bound algorithm\n";
-        std::cout<<"5. Perform Dynamic programing algorithm\n";
+        std::cout<<"3. Perform Tabu Search algorithm\n";
         std::cout<<"6. Generate data sets\n";
         std::cout<<"7. Autotests\n";
         std::cout<<"8. Exit\n";
@@ -69,16 +65,7 @@ void Menu::start() {
             }
             case 3:{
                 if( isGraphLoaded){
-                    run_BF();
-                }
-                else{
-                    std::cout<<"\nFirst you need to load graph. Choose 1.\n";
-                }
-                break;
-            }
-            case 4:{
-                if( isGraphLoaded){
-                    run_BB();
+                    runTS();
                 }
                 else{
                     std::cout<<"\nFirst you need to load graph. Choose 1.\n";
@@ -86,15 +73,6 @@ void Menu::start() {
                 break;
             }
 
-            case 5:{
-                if( isGraphLoaded){
-                    run_DP();
-                }
-                else{
-                    std::cout<<"\nFirst you need to load graph. Choose 1.\n";
-                }
-                break;
-            }
             case 6:{
                 std::cout<<"Generates data sets of sizes from range 5 to 15 nodes.\n";
                 std::cout<<"Files can by loaded from menu by choosing 1st option and typing name\n";
@@ -109,14 +87,8 @@ void Menu::start() {
             case 7:{
                 AutoTests autoTests;
                 std::cout<<"=======================================================================================";
-                std::cout<<"TESTING BRUT FORCE:";
+                std::cout<<"TESTING TABU SEARCH:";
                 autoTests.autoTestBF();
-                std::cout<<"=======================================================================================";
-                std::cout<<"TESTING BRANCH AND BOUND:";
-                autoTests.autoTestBB();
-                std::cout<<"=======================================================================================";
-                std::cout<<"TESTING DYNAMIC PROGRAMMING:";
-                autoTests.autoTestDP();
                 std::cout<<"=======================================================================================";
                 std::cout<<"\nTESTS FINISHED\n";
                 std::cout<<"=======================================================================================";
@@ -142,44 +114,9 @@ void Menu::start() {
 
 }
 
-void Menu::run_BF(){
-    // graph is a field of this class
-    // at this point graph is already loaded with data
-    Time t;
-    BF bf(g);
-    t.start();
-    bf.run();
-    t.stop();
-    float time_taken = t.returnTime()/1000;
-    cout<<"\nExecution took:  "<< time_taken <<" us.\n";
-
-}
 
 
-void Menu::run_BB(){
-    // graph is a field of this class
-    // at this point graph is already loaded with data
 
-    Time t;
-    BB bb(g);
-    t.start();
-    bb.run();
-    t.stop();
-    float time_taken = t.returnTime()/1000;
-    cout<<"\nExecution took:  "<< time_taken <<" us.\n";
+void Menu::runTS(){
 
-}
-
-
-void Menu::run_DP(){
-    // graph is a field of this class
-    // at this point graph is already loaded with data
-
-    Time t;
-    DP dp(g);
-    t.start();
-    dp.run();
-    t.stop();
-    float time_taken = t.returnTime()/1000;
-    cout<<"\nExecution took:  "<< time_taken <<" us.\n";
 }
