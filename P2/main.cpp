@@ -12,7 +12,7 @@ int main() {
 
 
     Graph g;
-    g.loadData("data10");
+    g.loadData("data5");
     g.printGraph();
     cout<<"\n\n------------------------------------------\n\n";
 

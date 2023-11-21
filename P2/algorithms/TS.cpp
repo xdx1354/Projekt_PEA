@@ -111,7 +111,7 @@ int TS::calculatePathCost(int *path) {
     int cost = 0;
 
     // Przechodzimy przez wszystkie wierzchołki ścieżki, z wyjątkiem pierwszego i ostatniego
-    for (int i = 1; i < numOfCities - 1; i++) {
+    for (int i = 1; i < numOfCities; i++) {
         cost += matrix[path[i - 1]][path[i]];
     }
 

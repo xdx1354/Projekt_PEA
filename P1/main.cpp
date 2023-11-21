@@ -10,19 +10,19 @@
 using namespace std;
 int main() {
 
-    Menu menu;
-    menu.start();
+    //Menu menu;
+    //menu.start();
 
-/*
+
     Graph g;
-    g.loadData("data10");
+    g.loadData("data5");
     g.printGraph();
     cout<<"\n\n------------------------------------------\n\n";
 
     BB bb(g);
     bb.run();
 
-
+/*
     DP dp(g);
     dp.run();
 
