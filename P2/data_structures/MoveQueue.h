@@ -26,6 +26,8 @@ public:
     void push(int city1, int city2);
 
     void printMoves();
+
+    bool findMove(int c1, int c2);
 };
 
 

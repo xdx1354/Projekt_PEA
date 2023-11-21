@@ -6,10 +6,14 @@
 #include "random"
 using namespace std;
 
-TS::TS(Graph graph){
+TS::TS(Graph graph) : tabulist(10){
     numOfCities = graph.getSize();
     g = graph;                              // may not be necessary
     matrix = g.getMatrix();
+    endCondition = 1000;
+    bestPath = new int[numOfCities];
+    neighbourPath = new int[numOfCities];
+    currentPath = new int[numOfCities];
 
 }
 
@@ -19,29 +23,19 @@ void TS::apply(int maxIterations){
     generateFirstPath();
     bestPath = currentPath;
 
-    // initializing the tabu list
-
-    tabulist = new int*[numOfCities];
-    for (int i = 0; i < numOfCities; ++i) {
-        tabulist[i] = new int[numOfCities];
-        for (int j = 0; j < numOfCities; ++j) {
-            tabulist[i][j] = -1; // Ustawiamy na -1 jako początkową wartość
-        }
-    }
-
-    bestPath = new int[numOfCities];
-    neighbourPath = new int[numOfCities];
-    currentPath = new int[numOfCities];
-
 
     /// loop trying to calculate best solution
     for(int i = 0; i < maxIterations; i++){
-        epoch();
+        epoch(i);
     }
+
+    cout<<"Best found cost: " << bestPathCost <<"\n";
+    cout<<"Path: ";
+    printPath(bestPath);
 }
 
 
-void TS::epoch() {
+void TS::epoch(int currentIteration) {
     // calculate new path
     generateNeighbourPath();
     neighbourPathCost = calculatePathCost(neighbourPath);
@@ -68,7 +62,7 @@ void TS::epoch() {
         std::uniform_real_distribution<> dis(0.0, 1.0);
         double random_number = dis(gen);
 
-        if (random_number < 1.0 - 1.0 / tabulistLength) {
+        if (random_number < 1.0 - 1.0 / currentIteration) {
             currentPath = neighbourPath;
             currentPathCost = neighbourPathCost;
         }
@@ -84,7 +78,7 @@ void TS::generateNeighbourPath() {
     do {
         pos1 = rand() % (numOfCities - 1) + 1;
         pos2 = rand() % (numOfCities - 1) + 1;
-    } while (pos1 == pos2 || tabulist[pos1][pos2] != -1);
+    } while (pos1 == pos2 or tabulist.findMove(pos1, pos2));
 
     // Apply the move
     memcpy(neighbourPath, currentPath, numOfCities * sizeof(int));
@@ -131,4 +125,5 @@ void TS::printPath(int *path) {
     }
     cout<<path[0]<<endl;
 }
+
 

@@ -6,6 +6,8 @@
 #define P1_TS_H
 using namespace std;
 #include "../data_structures/Graph.h"
+#include "../data_structures/MoveQueue.h"
+
 /**
  * Tabu Search algorithm at first generates a base, starting result and than new neighbour results by swapping some cities
  * (to in each step). If result is better then current one, it will be expanded. Also to prevent coming to previous res
@@ -17,12 +19,11 @@ class TS {
 
 public:
     TS(Graph graph);
-    void apply(int maxIterations);          // running the algorithm, preparing var and objects
+    void apply(int endCondition);          // running the algorithm, preparing var and objects
     void generateFirstPath();               // generates initial path with selected method  // TODO: can be void if data will be passed directly to field of class
     void generateNeighbourPath();           // generates path using certain method (swaps etc. TODO: decide on a method)
-    void epoch();                           // loop method, loop for set times and tries to calculate the most optimal res
+    void epoch(int currentIteration);       // loop method, loop for set times and tries to calculate the most optimal res
     int calculatePathCost(int path[]);      // for a given path calculates it cost
-    bool findInTabu(int path[]);            // checks if given path is present in tabu list
     void printPath(int *path);              // printing given path, will be used in creating result
 
     ///COMMENTS
@@ -41,8 +42,7 @@ public:
     int neighbourPathCost = INT_MAX;
     int endCondition;           // specific end condition - prbly will specify number of the iteration - epochs
     int **matrix;               // extracted matrix from graph class to have more convenient access
-    int **tabulist;             // TODO: wont be used, will use cyclic queue
-    int tabulistLength;         // TODO: same
+    MoveQueue tabulist;
 
 };
 

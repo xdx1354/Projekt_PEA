@@ -34,10 +34,20 @@ void MoveQueue::push(int city1, int city2) {
 
 void MoveQueue::printMoves() {
     int current = front;
-    std::cout << "Ostatnie ruchy w kolejce: ";
+    std::cout << "Curently restricted steps: ";
     for (int i = 0; i < itemCount; ++i) {
-        std::cout << "(" << moves[current]->city1 << ", " << moves[current]->city2 << ") ";
+        std::cout << "(" << moves[current]->city1 << " <-> " << moves[current]->city2 << ") ";
         current = (current + 1) % maxSize;
     }
     std::cout << std::endl;
+}
+
+bool MoveQueue::findMove(int c1, int c2) {
+
+    for(int i=0; i < maxSize; i++){
+        // checking if move (c1 <-> c2) or (c2 <-> c1) is restricted
+        if((moves[i]->city1 == c1 and moves[i] -> city2 == c2) or (moves[i]->city1 == c2 and moves[i] -> city2 == c1))
+            return true;
+    }
+    return false;
 }
