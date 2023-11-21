@@ -8,4 +8,4 @@ add_executable(P1 main.cpp utils/Time.cpp utils/Time.h data_structures/Graph.cpp
         data_structures/Stack.cpp data_structures/Stack.h data_structures/StackNode.cpp
         data_structures/StackNode.h algorithms/BF.cpp algorithms/BF.h algorithms/BB.cpp
         algorithms/BB.h algorithms/DP.cpp algorithms/DP.h
-        tests/AutoTests.cpp tests/AutoTests.h utils/Menu.cpp ../P2/algorithms/TS.cpp ../P2/algorithms/TS.h ../P2/data_structures/Move.cpp ../P2/data_structures/Move.h ../P2/data_structures/MoveQueue.cpp ../P2/data_structures/MoveQueue.h ../P2/utils/Menu.cpp ../P2/main.cpp)
+        tests/AutoTests.cpp tests/AutoTests.h utils/Menu.cpp)

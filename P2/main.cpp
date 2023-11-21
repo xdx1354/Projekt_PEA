@@ -18,6 +18,8 @@ int main() {
 
     TS ts(g);
 
+    ts.apply(40000);
+
 /*
     BB bb(g);
     bb.run();

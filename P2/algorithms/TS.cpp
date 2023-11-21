@@ -10,7 +10,6 @@ TS::TS(Graph graph) : tabulist(10){
     numOfCities = graph.getSize();
     g = graph;                              // may not be necessary
     matrix = g.getMatrix();
-    endCondition = 1000;
     bestPath = new int[numOfCities];
     neighbourPath = new int[numOfCities];
     currentPath = new int[numOfCities];
@@ -21,7 +20,8 @@ TS::TS(Graph graph) : tabulist(10){
 void TS::apply(int maxIterations){
 
     generateFirstPath();
-    bestPath = currentPath;
+//    bestPath = currentPath;
+    srand(time(NULL));
 
 
     /// loop trying to calculate best solution
@@ -29,7 +29,7 @@ void TS::apply(int maxIterations){
         epoch(i);
     }
 
-    cout<<"Best found cost: " << bestPathCost <<"\n";
+    cout<<"Best found cost: " << bestPathCost <<" vs "<<calculatePathCost(bestPath)<<"\n";
     cout<<"Path: ";
     printPath(bestPath);
 }
@@ -39,14 +39,24 @@ void TS::epoch(int currentIteration) {
     // calculate new path
     generateNeighbourPath();
     neighbourPathCost = calculatePathCost(neighbourPath);
+/*
+    cout<<"Ite: " << currentIteration <<" neighbour path: ";
+    for(int i =0; i <numOfCities; i++){
+        cout<<neighbourPath[i] << ", ";
+    }
+    cout<<"Cost: "<< neighbourPathCost <<"\n\n\n";
+*/
+
 
     if( neighbourPathCost < currentPathCost){
-        currentPath = neighbourPath;
+        // copies neighbourPath to currentPath
+        std::copy(neighbourPath, neighbourPath + numOfCities, currentPath);
         currentPathCost = neighbourPathCost;
 
         // keeping track of the best ever found result
         if(currentPathCost < bestPathCost){
-            bestPath = currentPath;
+            // copies currentPath to bestPath
+            std::copy(currentPath, currentPath + numOfCities, bestPath);
             bestPathCost = currentPathCost;
         }
 
@@ -63,7 +73,8 @@ void TS::epoch(int currentIteration) {
         double random_number = dis(gen);
 
         if (random_number < 1.0 - 1.0 / currentIteration) {
-            currentPath = neighbourPath;
+            // copies neighbourPath to currentPath
+            std::copy(neighbourPath, neighbourPath + numOfCities, currentPath);
             currentPathCost = neighbourPathCost;
         }
     }
@@ -75,13 +86,17 @@ void TS::epoch(int currentIteration) {
  */
 void TS::generateNeighbourPath() {
     int pos1, pos2;
+
     do {
         pos1 = rand() % (numOfCities - 1) + 1;
         pos2 = rand() % (numOfCities - 1) + 1;
     } while (pos1 == pos2 or tabulist.findMove(pos1, pos2));
 
     // Apply the move
-    memcpy(neighbourPath, currentPath, numOfCities * sizeof(int));
+    //memcpy(neighbourPath, currentPath, numOfCities * sizeof(int));
+    for(int i = 0; i < numOfCities; i++){
+        neighbourPath[i] = currentPath[i];
+    }
     swap(neighbourPath[pos1], neighbourPath[pos2]);
     neighbourPathCost = calculatePathCost(neighbourPath);
 }
@@ -94,10 +109,14 @@ void TS::generateNeighbourPath() {
  */
 int TS::calculatePathCost(int *path) {
     int cost = 0;
-    for(int i = 1; i < numOfCities; i++){
-        cost += matrix[path[i-1]][path[i]];
+
+    // Przechodzimy przez wszystkie wierzchołki ścieżki, z wyjątkiem pierwszego i ostatniego
+    for (int i = 1; i < numOfCities - 1; i++) {
+        cost += matrix[path[i - 1]][path[i]];
     }
-    cost += matrix[path[numOfCities-1]][path[0]];               // adding cost of coming back to starting point
+
+    // Dodajemy koszt podróży z ostatniego wierzchołka do pierwszego
+    cost += matrix[path[numOfCities - 1]][path[0]];
 
     return cost;
 }
@@ -117,6 +136,8 @@ void TS::generateFirstPath() {
         int j = rand() % (numOfCities - i) + i;
         std::swap(solution[i], solution[j]);
     }
+    std::copy(solution, solution + numOfCities, currentPath);
+
 }
 
 void TS::printPath(int *path) {

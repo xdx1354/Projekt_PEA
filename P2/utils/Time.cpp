@@ -1,4 +1,5 @@
 #include "Time.h"
+#include "ctime"
 //
 // Created by stani on 24.05.2023.
 //
