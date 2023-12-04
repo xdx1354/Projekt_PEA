@@ -12,13 +12,13 @@ int main() {
 
 
     Graph g;
-    g.loadData("data5");
+    g.loadData("wersja2");
     g.printGraph();
     cout<<"\n\n------------------------------------------\n\n";
 
     TS ts(g);
 
-    ts.apply(40000);
+    ts.apply(1000000);
 
 /*
     BB bb(g);

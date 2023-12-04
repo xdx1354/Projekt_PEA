@@ -22,9 +22,11 @@ public:
     void apply(int endCondition);          // running the algorithm, preparing var and objects
     void generateFirstPath();               // generates initial path with selected method  // TODO: can be void if data will be passed directly to field of class
     void generateNeighbourPath();           // generates path using certain method (swaps etc. TODO: decide on a method)
+    void generateNeighbourPath2();           // generates path using certain method (swaps etc. TODO: decide on a method)
     void epoch(int currentIteration);       // loop method, loop for set times and tries to calculate the most optimal res
     int calculatePathCost(int path[]);      // for a given path calculates it cost
     void printPath(int *path);              // printing given path, will be used in creating result
+    void generateRandomPath();
 
     ///COMMENTS
     // Paths will be stored as dynamic arrays
@@ -44,6 +46,9 @@ public:
     int **matrix;               // extracted matrix from graph class to have more convenient access
     MoveQueue tabulist;
 
+    void shaking();
+
+    void generateNeighbourPath2Opt();
 };
 
 
