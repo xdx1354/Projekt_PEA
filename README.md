@@ -10,6 +10,6 @@ P1:
   - Dynamic Programming
 
 P2:
-  - ##
+  - Tabu Search
 P3:
   - ##
