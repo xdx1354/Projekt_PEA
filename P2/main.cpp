@@ -3,6 +3,7 @@
 #include "utils/Time.h"
 #include "algorithms/TS.h"
 #include "utils/Menu.h"
+#include "tests/AutoTests.h"
 
 using namespace std;
 int main() {
@@ -18,7 +19,10 @@ int main() {
 
     TS ts(g);
 
-    ts.apply(1000000);
+    ts.apply(100000, 0.5, 0.5);
+
+//    AutoTests tt;
+//    tt.autoTestTS();
 
 /*
     BB bb(g);

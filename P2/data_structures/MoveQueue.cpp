@@ -51,3 +51,13 @@ bool MoveQueue::findMove(int c1, int c2) {
     }
     return false;
 }
+
+void MoveQueue::clear() {
+    for (int i = 0; i < maxSize; ++i) {
+        delete moves[i];
+        moves[i] = nullptr;
+    }
+    front = 0;
+    rear = -1;
+    itemCount = 0;
+}

@@ -27,6 +27,8 @@ public:
 
     void printMoves();
 
+   void clear();
+
     bool findMove(int c1, int c2);
 };
 

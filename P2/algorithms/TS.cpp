@@ -6,36 +6,39 @@
 #include "random"
 using namespace std;
 
-TS::TS(Graph graph) : tabulist(20){
+TS::TS(Graph graph) : tabulist(graph.getSize()/2){
     numOfCities = graph.getSize();
     g = graph;                              // may not be necessary
     matrix = g.getMatrix();
     bestPath = new int[numOfCities];
     neighbourPath = new int[numOfCities];
     currentPath = new int[numOfCities];
+    iterations_since_last_change = 0;
 
 }
 
 
-void TS::apply(int maxIterations){
+void TS::apply(int maxIterations, float q1, float q2){
 
-    generateFirstPath();
-//    bestPath = currentPath;
     srand(time(NULL));
 
+//    generateFirstPath();
+//    bestPath = currentPath;
+    grasp(0.7);
 
     /// loop trying to calculate best solution
     for(int i = 0; i < maxIterations; i++){
-        epoch(i);
+        epoch(i, maxIterations, q1, q2);
+
     }
 
-    cout<<"Best found cost: " << bestPathCost <<" vs "<<calculatePathCost(bestPath)<<"\n";
-    cout<<"Path: ";
     printPath(bestPath);
+    cout<<"\nBest cost: "<<bestPathCost;
+
 }
 
 
-void TS::epoch(int currentIteration) {
+void TS::epoch(int currentIteration, int maxIterations, float q1, float q2) {
     // calculate new path
 
     std::random_device rd;
@@ -43,19 +46,18 @@ void TS::epoch(int currentIteration) {
     std::uniform_real_distribution<> dis(0.0, 1.0);
     double random_number = dis(gen);
 
-//        if(currentIteration % currentIteration/10 == 0){
-//            generateRandomPath();
-//        }
-
-    if (random_number < 0.4) {
-        generateNeighbourPath(); // Probability of 30% to use generateNeighbourPath()
-    } else if (random_number < 0.6) {
-        generateNeighbourPath2(); // Probability of 30% to use generateNeighbourPath2()
-    } else if (random_number < 0.85){
-        generateNeighbourPath2Opt(); // Probability of 40% to use generateNeighbourPath2Opt()
-    } else{
+    if(iterations_since_last_change >= maxIterations * 0.1){
+        tabulist.clear();
         shaking();
     }
+    else{
+        if (random_number < q1) {
+            generateNeighbourPath(); // Probability of q1 to use generateNeighbourPath()
+        }else{
+            generateNeighbourPath2Opt(); // Probability of q3 to use generateNeighbourPath2Opt()
+        }
+    }
+
 
 
 
@@ -69,6 +71,9 @@ void TS::epoch(int currentIteration) {
 
 
     if( neighbourPathCost < currentPathCost){
+
+        iterations_since_last_change = 0;
+
         // copies neighbourPath to currentPath
         std::copy(neighbourPath, neighbourPath + numOfCities, currentPath);
         currentPathCost = calculatePathCost(currentPath);
@@ -82,20 +87,9 @@ void TS::epoch(int currentIteration) {
 
 
     }
-//    else {
-//        // randomly chosen chance generated to pick neighbour solution even if it worse than currently held one
-//        // in purpose to leave the local minimum
-//        std::random_device rd;
-//        std::mt19937 gen(rd());
-//        std::uniform_real_distribution<> dis(0.0, 1.0);
-//        double random_number = dis(gen);
-//
-//        if (random_number < 0.01) {
-//            generateRandomPath();
-//        }
-//        std::copy(currentPath, currentPath + numOfCities, neighbourPath);
-//        neighbourPathCost = calculatePathCost(neighbourPath);
-//    }
+    else{
+    iterations_since_last_change++;
+    }
 
 }
 
@@ -169,11 +163,7 @@ void TS::generateNeighbourPath2Opt() {
     }
 
     neighbourPathCost = calculatePathCost(neighbourPath);
-//    cout<<"After 2opt\n";
-//    for(int i =0; i <numOfCities; i++){
-//        cout<<neighbourPath[i] << ", ";
-//    }
-//    cout<<"Cost: "<< neighbourPathCost <<"\n\n\n";
+
 }
 
 void TS::shaking() {
@@ -263,7 +253,59 @@ void TS::generateFirstPath() {
     delete[] solution;
     delete[] visited;
 }
+//TODO: opracować, dodać dokumetacje
+void TS::grasp(float alpha) {
+    int* solution = new int[numOfCities];
+    bool* visited = new bool[numOfCities] {false}; // Keep track of visited cities
+    solution[0] = rand() % numOfCities; // Start from a random city
+    visited[solution[0]] = true;
 
+    for (int i = 1; i < numOfCities; ++i) {
+        int currentCity = solution[i - 1];
+        int nearestCity = -1;
+        int minDistance = INT_MAX;
+        int* candidates = new int[numOfCities]; // Candidates list to store cities close enough to endpoints
+        int numCandidates = 0;
+
+        for (int j = 0; j < numOfCities; ++j) {
+            if (!visited[j] && matrix[currentCity][j] < minDistance) {
+                minDistance = matrix[currentCity][j];
+            }
+        }
+
+        // Populate candidates list with cities close enough to endpoints
+        for (int j = 0; j < numOfCities; ++j) {
+            if (!visited[j] && matrix[currentCity][j] <= minDistance * alpha) {
+                candidates[numCandidates++] = j;
+            }
+        }
+
+        // Randomly select a city from candidates list
+        if (numCandidates > 0) {
+            int randomIndex = rand() % numCandidates;
+            nearestCity = candidates[randomIndex];
+        } else {
+            // If no candidates found, choose a random unvisited city
+            do {
+                nearestCity = rand() % numOfCities;
+            } while (visited[nearestCity]);
+        }
+
+        solution[i] = nearestCity;
+        visited[nearestCity] = true;
+        delete[] candidates;
+    }
+
+    std::copy(solution, solution + numOfCities, currentPath);
+    std::copy(solution, solution + numOfCities, bestPath);
+    bestPathCost = calculatePathCost(solution);
+    currentPathCost = calculatePathCost(currentPath);
+
+    delete[] solution;
+    delete[] visited;
+
+    printPath(currentPath);
+}
 
 
 
@@ -285,6 +327,15 @@ void TS::generateRandomPath() {
 
 
 
+}
+
+
+string TS::getBestPath() {
+
+    string message;
+    for( int i = 0; i < numOfCities; i++){
+//        message +=
+    }  
 }
 
 
