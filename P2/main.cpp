@@ -23,11 +23,12 @@ int main() {
 
 
     AutoTests at;
-    at.autoTestTS();
+    at.finalTests();
+//    at.paramsTests();
 //    at.aplhaTests();
 //    AutoTests tt;
 
-//    tt.autoTestTS();
+//    tt.paramsTests();
 
 /*
     BB bb(g);

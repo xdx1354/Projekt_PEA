@@ -13,13 +13,15 @@ public:
     void generateAllData();        //   generating data for autotests. Set for specific sizes of graphs. Array of sizes is hardcoded
     void generateData(int size);   // generates data of specified size graph
     // auto test based on generated data. Include time measurement. Calculates avg time of x repetitions for each quantity
-    void autoTestTS();
+    void paramsTests();
     AutoTests();                   // constructors
     ~AutoTests();                  // destructor
 
 
 
     void aplhaTests();
+
+    void finalTests();
 };
 
 
