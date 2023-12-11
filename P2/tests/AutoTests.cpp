@@ -129,15 +129,34 @@ void AutoTests::autoTestTS() {
 
                     ts.apply(numOfIterations[i], proportions[p][0], proportions[p][1]);
                     results[k] = ts.bestPathCost;
-                    stats << ts.bestPathCost << ";";
+//                    stats << ts.bestPathCost << ";";
                     cout << "Auto test TS. Size: " << quantities[j] << " Try: " << k << "/19. Number of iterations: "
                          << numOfIterations[i] << " Result " << results[k] << "\n";
                     avg += (1.0 / NUMBER_OF_TESTS) * ts.bestPathCost; // calculating avg result
                 }
+                stats << avg << "\n";
+                avg = 0;
             }
             stats << "\n";
         }
-        cout << "AVG TIME TAKEN: " << avg << "\n";
+        cout << "AVG CALCULATED RESULT: " << avg << "\n";
         cout << "=======================================================================\n";
     }
+}
+
+
+void AutoTests::aplhaTests(){
+
+    float alpha[10] = {0.1 ,0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 0.9, 1};
+
+
+    for (float a : alpha){
+        Graph g;
+        g.loadData("wersja2");
+        TS ts(g);
+        ts.grasp(a);
+        cout<<"Test alpha = " << a <<" Wynik: " <<ts.currentPathCost<< endl;
+    }
+
+
 }

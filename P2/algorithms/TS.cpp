@@ -6,7 +6,7 @@
 #include "random"
 using namespace std;
 
-TS::TS(Graph graph) : tabulist(graph.getSize()/2){
+TS::TS(Graph graph) : tabulist(20){
     numOfCities = graph.getSize();
     g = graph;                              // may not be necessary
     matrix = g.getMatrix();
@@ -24,7 +24,7 @@ void TS::apply(int maxIterations, float q1, float q2){
 
 //    generateFirstPath();
 //    bestPath = currentPath;
-    grasp(0.7);
+    grasp(1);
 
     /// loop trying to calculate best solution
     for(int i = 0; i < maxIterations; i++){
@@ -33,7 +33,7 @@ void TS::apply(int maxIterations, float q1, float q2){
     }
 
     printPath(bestPath);
-    cout<<"\nBest cost: "<<bestPathCost;
+//    cout<<"\nBest cost: "<<bestPathCost;
 
 }
 
@@ -304,7 +304,7 @@ void TS::grasp(float alpha) {
     delete[] solution;
     delete[] visited;
 
-    printPath(currentPath);
+//    printPath(currentPath);
 }
 
 

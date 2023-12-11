@@ -1,0 +1,135 @@
+TS: 20;
+Quantity: 20, Iterations: 100, Proportions: 0.4, 0.6
+319.75
+Quantity: 20, Iterations: 100, Proportions: 0.6, 0.4
+329.4
+Quantity: 20, Iterations: 100, Proportions: 0.2, 0.8
+327.8
+Quantity: 20, Iterations: 100, Proportions: 0.8, 0.2
+287.95
+Quantity: 20, Iterations: 100, Proportions: 0.7, 0.3
+234
+
+Quantity: 20, Iterations: 10000, Proportions: 0.4, 0.6
+226.35
+Quantity: 20, Iterations: 10000, Proportions: 0.6, 0.4
+186.6
+Quantity: 20, Iterations: 10000, Proportions: 0.2, 0.8
+194.3
+Quantity: 20, Iterations: 10000, Proportions: 0.8, 0.2
+208.85
+Quantity: 20, Iterations: 10000, Proportions: 0.7, 0.3
+190.7
+
+Quantity: 20, Iterations: 100000, Proportions: 0.4, 0.6
+204.75
+Quantity: 20, Iterations: 100000, Proportions: 0.6, 0.4
+194.25
+Quantity: 20, Iterations: 100000, Proportions: 0.2, 0.8
+207.45
+Quantity: 20, Iterations: 100000, Proportions: 0.8, 0.2
+191.7
+Quantity: 20, Iterations: 100000, Proportions: 0.7, 0.3
+191.4
+
+Quantity: 20, Iterations: 1000000, Proportions: 0.4, 0.6
+173.9
+Quantity: 20, Iterations: 1000000, Proportions: 0.6, 0.4
+182.55
+Quantity: 20, Iterations: 1000000, Proportions: 0.2, 0.8
+172.25
+Quantity: 20, Iterations: 1000000, Proportions: 0.8, 0.2
+178.5
+Quantity: 20, Iterations: 1000000, Proportions: 0.7, 0.3
+175.15
+
+TS: 40;
+Quantity: 40, Iterations: 100, Proportions: 0.4, 0.6
+428.5
+Quantity: 40, Iterations: 100, Proportions: 0.6, 0.4
+433
+Quantity: 40, Iterations: 100, Proportions: 0.2, 0.8
+433
+Quantity: 40, Iterations: 100, Proportions: 0.8, 0.2
+433
+Quantity: 40, Iterations: 100, Proportions: 0.7, 0.3
+403.55
+
+Quantity: 40, Iterations: 10000, Proportions: 0.4, 0.6
+356.2
+Quantity: 40, Iterations: 10000, Proportions: 0.6, 0.4
+303.9
+Quantity: 40, Iterations: 10000, Proportions: 0.2, 0.8
+305.3
+Quantity: 40, Iterations: 10000, Proportions: 0.8, 0.2
+308.5
+Quantity: 40, Iterations: 10000, Proportions: 0.7, 0.3
+305.3
+
+Quantity: 40, Iterations: 100000, Proportions: 0.4, 0.6
+324.75
+Quantity: 40, Iterations: 100000, Proportions: 0.6, 0.4
+315.2
+Quantity: 40, Iterations: 100000, Proportions: 0.2, 0.8
+338.45
+Quantity: 40, Iterations: 100000, Proportions: 0.8, 0.2
+312.25
+Quantity: 40, Iterations: 100000, Proportions: 0.7, 0.3
+336.2
+
+Quantity: 40, Iterations: 1000000, Proportions: 0.4, 0.6
+308.35
+Quantity: 40, Iterations: 1000000, Proportions: 0.6, 0.4
+317.3
+Quantity: 40, Iterations: 1000000, Proportions: 0.2, 0.8
+322.2
+Quantity: 40, Iterations: 1000000, Proportions: 0.8, 0.2
+315.65
+Quantity: 40, Iterations: 1000000, Proportions: 0.7, 0.3
+314.7
+
+TS: 80;
+Quantity: 80, Iterations: 100, Proportions: 0.4, 0.6
+472.8
+Quantity: 80, Iterations: 100, Proportions: 0.6, 0.4
+502
+Quantity: 80, Iterations: 100, Proportions: 0.2, 0.8
+406.8
+Quantity: 80, Iterations: 100, Proportions: 0.8, 0.2
+397.15
+Quantity: 80, Iterations: 100, Proportions: 0.7, 0.3
+533
+
+Quantity: 80, Iterations: 10000, Proportions: 0.4, 0.6
+407.85
+Quantity: 80, Iterations: 10000, Proportions: 0.6, 0.4
+488.6
+Quantity: 80, Iterations: 10000, Proportions: 0.2, 0.8
+538.65
+Quantity: 80, Iterations: 10000, Proportions: 0.8, 0.2
+462.75
+Quantity: 80, Iterations: 10000, Proportions: 0.7, 0.3
+437.65
+
+Quantity: 80, Iterations: 100000, Proportions: 0.4, 0.6
+429.5
+Quantity: 80, Iterations: 100000, Proportions: 0.6, 0.4
+410.15
+Quantity: 80, Iterations: 100000, Proportions: 0.2, 0.8
+389.8
+Quantity: 80, Iterations: 100000, Proportions: 0.8, 0.2
+398.4
+Quantity: 80, Iterations: 100000, Proportions: 0.7, 0.3
+423
+
+Quantity: 80, Iterations: 1000000, Proportions: 0.4, 0.6
+413.85
+Quantity: 80, Iterations: 1000000, Proportions: 0.6, 0.4
+410.9
+Quantity: 80, Iterations: 1000000, Proportions: 0.2, 0.8
+416.9
+Quantity: 80, Iterations: 1000000, Proportions: 0.8, 0.2
+398.9
+Quantity: 80, Iterations: 1000000, Proportions: 0.7, 0.3
+404.45
+

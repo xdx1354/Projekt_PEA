@@ -12,16 +12,21 @@ int main() {
     //menu.start();
 
 
-    Graph g;
-    g.loadData("wersja2");
-    g.printGraph();
-    cout<<"\n\n------------------------------------------\n\n";
+//    Graph g;
+//    g.loadData("wersja2");
+//    g.printGraph();
+//    cout<<"\n\n------------------------------------------\n\n";
+//
+//    TS ts(g);
 
-    TS ts(g);
+//    ts.apply(100000, 0.5, 0.5);
 
-    ts.apply(100000, 0.5, 0.5);
 
+    AutoTests at;
+    at.autoTestTS();
+//    at.aplhaTests();
 //    AutoTests tt;
+
 //    tt.autoTestTS();
 
 /*
