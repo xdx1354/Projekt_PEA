@@ -40,7 +40,7 @@ void TS::apply(int maxIterations, float q1, float q2){
 
 void TS::epoch(int currentIteration, int maxIterations, float q1, float q2) {
     // calculate new path
-
+    bool _shaking = 0;
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(0.0, 1.0);
@@ -49,6 +49,7 @@ void TS::epoch(int currentIteration, int maxIterations, float q1, float q2) {
     if(iterations_since_last_change >= maxIterations * 0.1){
         tabulist.clear();
         shaking();
+        _shaking = 1;
     }
     else{
         if (random_number < q1) {
@@ -70,7 +71,7 @@ void TS::epoch(int currentIteration, int maxIterations, float q1, float q2) {
 
 
 
-    if( neighbourPathCost < currentPathCost){
+    if( neighbourPathCost < currentPathCost or _shaking){
 
         iterations_since_last_change = 0;
 

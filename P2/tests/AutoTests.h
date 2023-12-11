@@ -19,7 +19,7 @@ public:
 
 
 
-    void aplhaTests();
+    void alphaTests();
 
     void finalTests();
 };

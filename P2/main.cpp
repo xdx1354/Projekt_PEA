@@ -18,14 +18,15 @@ int main() {
 //    cout<<"\n\n------------------------------------------\n\n";
 //
 //    TS ts(g);
-
-//    ts.apply(100000, 0.5, 0.5);
+//
+//    ts.apply(100000, 0.8, 0.2);
+//    cout<<"best cost: "<<ts.bestPathCost;
 
 
     AutoTests at;
     at.finalTests();
 //    at.paramsTests();
-//    at.aplhaTests();
+//    at.alphaTests();
 //    AutoTests tt;
 
 //    tt.paramsTests();

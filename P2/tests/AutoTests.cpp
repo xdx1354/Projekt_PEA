@@ -145,7 +145,7 @@ void AutoTests::paramsTests() {
 }
 
 
-void AutoTests::aplhaTests(){
+void AutoTests::alphaTests(){
 
     float alpha[10] = {0.1 ,0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 0.9, 1};
 
