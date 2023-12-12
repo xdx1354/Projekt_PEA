@@ -8,8 +8,8 @@
 using namespace std;
 int main() {
 
-    //Menu menu;
-    //menu.start();
+    Menu menu;
+    menu.start();
 
 
 //    Graph g;
@@ -23,8 +23,8 @@ int main() {
 //    cout<<"best cost: "<<ts.bestPathCost;
 
 
-    AutoTests at;
-    at.finalTests();
+//    AutoTests at;
+//    at.finalTests();
 //    at.paramsTests();
 //    at.alphaTests();
 //    AutoTests tt;

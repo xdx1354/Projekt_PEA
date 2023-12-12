@@ -22,8 +22,7 @@ void TS::apply(int maxIterations, float q1, float q2){
 
     srand(time(NULL));
 
-//    generateFirstPath();
-//    bestPath = currentPath;
+
     grasp(1);
 
     /// loop trying to calculate best solution
@@ -39,7 +38,7 @@ void TS::apply(int maxIterations, float q1, float q2){
 
 
 void TS::epoch(int currentIteration, int maxIterations, float q1, float q2) {
-    // calculate new path
+
     bool _shaking = 0;
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -58,17 +57,6 @@ void TS::epoch(int currentIteration, int maxIterations, float q1, float q2) {
             generateNeighbourPath2Opt(); // Probability of q3 to use generateNeighbourPath2Opt()
         }
     }
-
-
-
-
-
-//    cout<<"Ite: " << currentIteration <<" neighbour path: ";
-//    for(int i =0; i <numOfCities; i++){
-//        cout<<neighbourPath[i] << ", ";
-//    }
-//    cout<<"Cost: "<< neighbourPathCost <<"\n\n\n";
-
 
 
     if( neighbourPathCost < currentPathCost or _shaking){
@@ -331,12 +319,11 @@ void TS::generateRandomPath() {
 }
 
 
-string TS::getBestPath() {
+void TS::printResult() {
+    cout<<"\n Best path: ";
+    printPath(bestPath);
+    cout<<"\n Best path cost: " << bestPathCost << "\n";
 
-    string message;
-    for( int i = 0; i < numOfCities; i++){
-//        message +=
-    }  
 }
 
 

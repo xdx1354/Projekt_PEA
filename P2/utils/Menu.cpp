@@ -65,7 +65,16 @@ void Menu::start() {
             }
             case 3:{
                 if( isGraphLoaded){
-                    runTS();
+                    int endCondition = 0;
+                    float q1;
+                    cout<<"\nHow many iterations should algorithm perform? Type: ";
+                    cin >> endCondition;
+                    cout<<"Choose probability of using first method of generating neighbour result (Swapping two cities in path). \n"
+                          " probability of reversing path between two cities will be calcucated as reaming to 1.0.\n"
+                          "Type number in range of: 0.0 to 1.0 ";
+                    cin >> q1;
+
+                    runTS(endCondition, q1, 1.0-q1);
                 }
                 else{
                     std::cout<<"\nFirst you need to load graph. Choose 1.\n";
@@ -117,6 +126,8 @@ void Menu::start() {
 
 
 
-void Menu::runTS(){
-
+void Menu::runTS(int endCon, float q1, float q2){
+    TS ts(g);
+    ts.apply(endCon, q1, q2);
+    ts.printResult();
 }

@@ -14,7 +14,7 @@ public:
     Graph g;                    // Object of class graph, it will contain currently used graph
     void start();               // starts the menu
 
-    void runTS();
+    void runTS(int, float, float);
 
 };
 
