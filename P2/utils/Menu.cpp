@@ -67,11 +67,11 @@ void Menu::start() {
                 if( isGraphLoaded){
                     int endCondition = 0;
                     float q1;
-                    cout<<"\nHow many iterations should algorithm perform? Type: ";
+                    cout<<"\nHow many iterations should algorithm perform? Type:   ";
                     cin >> endCondition;
-                    cout<<"Choose probability of using first method of generating neighbour result (Swapping two cities in path). \n"
-                          " probability of reversing path between two cities will be calcucated as reaming to 1.0.\n"
-                          "Type number in range of: 0.0 to 1.0 ";
+                    cout<<"\nChoose probability of using first method of generating neighbour result (Swapping two cities in path). \n"
+                          "Probability of reversing path between two cities will be calculated as reaming to 1.0.\n"
+                          "Type number in range of 0.0 to 1.0:   ";
                     cin >> q1;
 
                     runTS(endCondition, q1, 1.0-q1);

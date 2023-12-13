@@ -31,8 +31,8 @@ void TS::apply(int maxIterations, float q1, float q2){
 
     }
 
-    printPath(bestPath);
-//    cout<<"\nBest cost: "<<bestPathCost;
+//    printPath(bestPath);
+
 
 }
 
