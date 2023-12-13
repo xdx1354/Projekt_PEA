@@ -11,10 +11,10 @@
 class Menu {
 public:
 
-    Graph g;                    // Object of class graph, it will contain currently used graph
-    void start();               // starts the menu
+    Graph g;                        // Object of class graph, it will contain currently used graph
+    void start();                   // starts the menu
 
-    void runTS(int, float, float);
+    void runTS(int, float, float);  // runs Tabu Search algorithm
 
 };
 

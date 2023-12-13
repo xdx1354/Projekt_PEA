@@ -25,23 +25,23 @@ public:
     void epoch(int currentIteration, int maxIterations,  float, float);       // loop method, loop for set times and tries to calculate the most optimal res
 
     /// PATH GENERATIONS METHODS
-    void generateNeighbourPath();           // generates path using certain method
-    void shaking();
-    void generateNeighbourPath2Opt();
-    void grasp(float);
+    void generateNeighbourPath();           // generates neighbour solution by swapping two cities
+    void shaking();                         // shuffles random subset (part of the path) in order to escape local minimum
+    void generateNeighbourPath2Opt();       // generates neighbour solution by swapping direction of subset between two cities
+    void grasp(float);                      // generates initial solution, in fact acts as greedy algo for chosen alpha
 
     /// UTILITY METHODS
     int calculatePathCost(int path[]);      // for a given path calculates it cost
-    void printPath(int *path);              // printing given path, will be used in creating result
-    void printResult();
+    void printPath(int *path);              // printing given path
+    void printResult();                     // printing result
 
     /// unused methods - some because were inefficient, other because the conception changed
     /// they are working and can be useful in futer for further developments
-    void generateFirstPath();               // generates initial path with selected method
-    void generateNeighbourPath2();           // generates path using certain method
-    void generateRandomPath();
-    string getBestPath();
-    int getBestPathValue();
+    void generateFirstPath();               // generates initial path with greedy algo
+    void generateNeighbourPath2();          // generates neighbour solution by swapping two pairs of cities
+    void generateRandomPath();              // randomly generates new path - it was less efficient than grasp
+    string getBestPath();                   // for returning just best path
+    int getBestPathValue();                 // for returning best path value
 
     // fields
 
@@ -57,7 +57,7 @@ public:
     int **matrix;                       // extracted matrix from graph class to have more convenient access
     int iterations_since_last_change;   // used for keeping track of progress of alg, helpful to detect local optimum areas
                                         // where algorithm can easily get stuck
-    MoveQueue tabulist;
+    MoveQueue tabulist;                 // tabu list object represented by cyclic queue
 
 
 };

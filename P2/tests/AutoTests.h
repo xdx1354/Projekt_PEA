@@ -10,18 +10,15 @@ class AutoTests {
     std::ofstream stats;           // ofstream for writting results of autotest to .txt file
 
 public:
-    void generateAllData();        //   generating data for autotests. Set for specific sizes of graphs. Array of sizes is hardcoded
-    void generateData(int size);   // generates data of specified size graph
-    // auto test based on generated data. Include time measurement. Calculates avg time of x repetitions for each quantity
-    void paramsTests();
-    AutoTests();                   // constructors
-    ~AutoTests();                  // destructor
+    void generateAllData();         // generating data for autotests. Set for specific sizes of graphs. Array of sizes is hardcoded
+    void generateData(int size);    // generates data of specified size graph
 
+    void paramsTests();             // testing parameters q1, q2 for optimising  the algorithm - evaluated in paper
+    void alphaTests();              // testing parameter alpha
+    void finalTests();              // finalTests of algorithm, with optimised parameters
+    AutoTests();                    // constructors
+    ~AutoTests();                   // destructor
 
-
-    void alphaTests();
-
-    void finalTests();
 };
 
 
