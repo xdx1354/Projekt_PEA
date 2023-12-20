@@ -19,6 +19,7 @@ public:
     AutoTests();                    // constructors
     ~AutoTests();                   // destructor
 
+    void raportTests();
 };
 
 

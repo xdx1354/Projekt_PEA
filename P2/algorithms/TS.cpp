@@ -242,7 +242,7 @@ void TS::generateFirstPath() {
     delete[] solution;
     delete[] visited;
 }
-//TODO: opracować, dodać dokumetacje
+
 void TS::grasp(float alpha) {
     int* solution = new int[numOfCities];
     bool* visited = new bool[numOfCities] {false}; // Keep track of visited cities

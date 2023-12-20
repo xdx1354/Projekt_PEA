@@ -160,6 +160,7 @@ void AutoTests::alphaTests(){
 
 }
 
+
 void AutoTests::finalTests(){
 
     float proportions[2] ={0.8, 0.2};
@@ -200,6 +201,58 @@ void AutoTests::finalTests(){
             }
             stats << avg<<";";
             avg = 0;
+
+        }
+        cout << "AVG CALCULATED RESULT: " << avg << "\n";
+        cout << "=======================================================================\n";
+    }
+}
+
+
+/**
+ * method performing specific test required for university raport
+ */
+void AutoTests::raportTests(){
+
+    float proportions[2] ={0.8, 0.2};
+
+    string fileNames[5] = {"tsp_10c", "tsp_14_db", "tsp_65", "tsp_171", "tsp_443"};
+    int lenFileNames = 5;
+    int numOfIterations[6] = {100, 10000, 50000, 100000, 1000000, 2000000};
+    int bestRes = INT_MAX;
+
+    for (int j = 0; j < lenFileNames; j++) {
+
+
+        string loc = R"(..\data\)";
+        string path = loc + fileNames[j] + ".txt";
+
+        int results[NUMBER_OF_TESTS] = {0};
+        float avg = 0;
+
+        stats << "TS: " << fileNames[j] << ";\n";
+
+        for (int i=0; i < 6; i++) {
+
+            stats  << "\n" << fileNames[j] << ";" << numOfIterations[i] << "\n";
+
+            for (int k = 0; k < NUMBER_OF_TESTS; k++) {
+
+                Graph g;
+                g.loadData(path);
+                TS ts(g);
+
+                ts.apply(numOfIterations[i], proportions[0], proportions[1]);
+
+                if(bestRes > ts.bestPathCost){
+                    bestRes = ts.bestPathCost;
+                }
+
+                cout << "Auto test TS. Size: " << fileNames[j] << " Try: " << k << "/19. Number of iterations: "
+                     << numOfIterations << " Result " << results[k] << "\n";
+            }
+            stats << bestRes<<";";
+            bestRes = INT_MAX;
 
         }
         cout << "AVG CALCULATED RESULT: " << avg << "\n";

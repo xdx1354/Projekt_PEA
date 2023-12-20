@@ -8,7 +8,7 @@ using namespace std;
 int main() {
 
     Menu menu;
-    menu.start();
+//    menu.start();
 
 
 //    Graph g;
@@ -22,9 +22,9 @@ int main() {
 //    cout<<"best cost: "<<ts.bestPathCost;
 
 
-//    AutoTests at;
-//    at.finalTests();
-//    at.paramsTests();
+    AutoTests at;
+    at.raportTests();
+    //    at.paramsTests();
 //    at.alphaTests();
 //    AutoTests tt;
 
