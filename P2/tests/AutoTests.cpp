@@ -19,7 +19,6 @@ AutoTests::~AutoTests() {
     stats.close();                              // closing the ofstream to file
 }
 
-
 /**
  * Generating data for auto tests for fixed range of sizes (5 - 20) of graphs.
  * Creates several .txt files in directory /data.
@@ -143,7 +142,6 @@ void AutoTests::paramsTests() {
     }
 }
 
-
 void AutoTests::alphaTests(){
 
     float alpha[10] = {0.1 ,0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 0.9, 1};
@@ -159,7 +157,6 @@ void AutoTests::alphaTests(){
 
 
 }
-
 
 void AutoTests::finalTests(){
 
@@ -208,7 +205,6 @@ void AutoTests::finalTests(){
     }
 }
 
-
 /**
  * method performing specific test required for university raport
  */
@@ -222,7 +218,6 @@ void AutoTests::raportTests(){
     int bestRes = INT_MAX;
 
     for (int j = 0; j < lenFileNames; j++) {
-
 
         string loc = R"(..\data\)";
         string path = loc + fileNames[j] + ".txt";
