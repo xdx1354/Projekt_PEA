@@ -49,15 +49,24 @@ void Genetic::apply(int numOfIterations) {
 
 void Genetic::epoch(int currentIteration) {
 
-
-
     for(int i = 0; i < crossCount; i++){
-        cross(rand() % populationSize, rand() % populationSize);
+
+        int first, second;
+        do{
+            first = rand() % populationSize;
+            second = rand() % populationSize;
+        } while (first == second);
+
+        listOfPaths[currentNumOfPaths] = cross(listOfPaths[first], listOfPaths[second]);
+        currentNumOfPaths++;
     }
 
 
     for(int i = 0; i < mutateCount; i++){
-        mutate(rand() % populationSize);
+
+
+        listOfPaths[currentNumOfPaths] = mutate(listOfPaths[rand() % populationSize]);
+        currentNumOfPaths++;
     }
 
     pickTopResults();
@@ -67,7 +76,7 @@ void Genetic::epoch(int currentIteration) {
 void Genetic::pickTopResults() {
     int bestCurrentCost = INT_MAX;
 
-    //bubble sort
+    // bubble sort
     for(int i = 0; i < populationSize - 1; i++){
         for(int j = i+1; j < populationSize; j++){
             if(listOfPaths[j].getCost() > listOfPaths[j+1].getCost()){
@@ -84,8 +93,73 @@ void Genetic::pickTopResults() {
 
     // ignore paths at the end
     currentNumOfPaths = populationSize;
-
 }
+
+
+Path Genetic::cross(Path A, Path B) {
+    int *newPath = new int[numOfCities];
+    Path newObjPath(numOfCities);
+
+    // Take the first half of cities from Path A
+    for (int i = 0; i < numOfCities / 2; i++) {
+        newPath[i] = A.getCitiesList()[i];
+    }
+
+    // Fill the remaining cities from Path B
+    int counter = numOfCities / 2;
+    for (int i = 0; i < numOfCities; i++) {
+        int potentialCity = B.getCitiesList()[i];
+        bool isPresent = false;
+
+        // Check if the city is already present in the first half of newPath
+        for (int j = 0; j < numOfCities / 2; j++) {
+            if (potentialCity == newPath[j]) {
+                isPresent = true;
+                break;
+            }
+        }
+
+        // If the city is not present, add it to newPath
+        if (!isPresent) {
+            newPath[counter] = potentialCity;
+            counter++;
+        }
+
+        // Check if all cities are added to newPath
+        if (counter >= numOfCities) {
+            break;
+        }
+    }
+
+    newObjPath.setCitiesList(newPath);
+    newObjPath.calculateCost();
+
+    delete[] newPath; // Free dynamically allocated memory
+
+    return newObjPath;
+}
+
+Path Genetic::mutate(Path A) {
+
+    int *newPath = new int[numOfCities];
+    Path newObjPath(numOfCities);
+
+    newPath = A.getCitiesList();
+
+
+    int first, second;
+    do{
+        first = rand() % numOfCities;
+        second = rand() % numOfCities;
+    } while (first == second);
+
+    std::swap(newPath[first], newPath[second]);
+
+    newObjPath.setCitiesList(newPath);
+
+    return  newObjPath;
+}
+
 
 
 int Genetic::getCurrentNumOfPaths() const {

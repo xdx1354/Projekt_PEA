@@ -57,8 +57,8 @@ private:
     void epoch(int currentIteration);
 
     /// genetic operations
-    int* cross(int A, int B);       // takes half of A and fills with B
-    int* mutate(int A);             // swaps two cities
+    Path cross(Path A, Path B);       // takes half of A and fills with B
+    Path mutate(Path A);             // swaps two cities
 
 
     ///utility methods
