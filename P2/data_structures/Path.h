@@ -8,6 +8,26 @@
 
 class Path {
 
+    int* citiesList;
+    int cost;
+    int size;
+
+public:
+
+
+    int *getCitiesList() const;
+
+    void setCitiesList(int *citiesList);
+
+    int getCost() const;
+
+    void setCost(int cost);\
+
+    int calculateCost();
+
+    ~Path();
+
+    Path(int size);
 };
 
 

@@ -7,7 +7,8 @@
 
 
 
-Genetic::Genetic(int numOfIterations,  int sizeOfPopulation, int crossCount, int mutateCount) {
+Genetic::Genetic(int numOfIterations, int sizeOfPopulation, int crossCount, int mutateCount, Path bestPath)
+        : bestPath(bestPath) {
 
     srand(time(NULL));
 
@@ -15,15 +16,19 @@ Genetic::Genetic(int numOfIterations,  int sizeOfPopulation, int crossCount, int
     pathsListSize = sizeOfPopulation + crossCount + mutateCount;
     populationSize = sizeOfPopulation;
     bestCost = INT_MAX;
-    bestPathFound = nullptr;
 
-    // initializing list as empty
+    // initializing list with empty objects of path
     for(int i = 0; i < pathsListSize; i++){
-        listOfPaths[i] = nullptr;
+        Path p(numOfCities);
+        listOfPaths[i] = p;
     }
 
     this -> crossCount = crossCount;
     this -> mutateCount = mutateCount;
+
+    Path p(numOfCities);
+    bestPath = p;
+    p.setCost(INT_MAX);
 }
 
 void Genetic::apply(int numOfIterations) {
@@ -44,6 +49,8 @@ void Genetic::apply(int numOfIterations) {
 
 void Genetic::epoch(int currentIteration) {
 
+
+
     for(int i = 0; i < crossCount; i++){
         cross(rand() % populationSize, rand() % populationSize);
     }
@@ -53,14 +60,30 @@ void Genetic::epoch(int currentIteration) {
         mutate(rand() % populationSize);
     }
 
-    picTopResults();
+    pickTopResults();
 
 }
 
-void Genetic::picTopResults() {
+void Genetic::pickTopResults() {
+    int bestCurrentCost = INT_MAX;
 
+    //bubble sort
+    for(int i = 0; i < populationSize - 1; i++){
+        for(int j = i+1; j < populationSize; j++){
+            if(listOfPaths[j].getCost() > listOfPaths[j+1].getCost()){
+                std::swap(listOfPaths[j], listOfPaths[j+1]);
+            }
+        }
+    }
 
+    // check if new best result found
+    bestCurrentCost = listOfPaths[0].getCost();
+    if(bestCurrentCost < bestCost){
+        bestCost = bestCurrentCost;
+    }
 
+    // ignore paths at the end
+    currentNumOfPaths = populationSize;
 
 }
 
@@ -69,12 +92,8 @@ int Genetic::getCurrentNumOfPaths() const {
     return currentNumOfPaths;
 }
 
-int **Genetic::getListOfPaths() const {
+Path *Genetic::getListOfPaths() const {
     return listOfPaths;
-}
-
-int *Genetic::getBestPathFound() const {
-    return bestPathFound;
 }
 
 int Genetic::getBestCost() const {
@@ -85,14 +104,26 @@ void Genetic::setCurrentNumOfPaths(int currentNumOfPaths) {
     Genetic::currentNumOfPaths = currentNumOfPaths;
 }
 
-void Genetic::setListOfPaths(int **listOfPaths) {
+void Genetic::setListOfPaths(Path *listOfPaths) {
     Genetic::listOfPaths = listOfPaths;
-}
-
-void Genetic::setBestPathFound(int *bestPathFound) {
-    Genetic::bestPathFound = bestPathFound;
 }
 
 void Genetic::setBestCost(int bestCost) {
     Genetic::bestCost = bestCost;
+}
+
+const Path &Genetic::getBestPath() const {
+    return bestPath;
+}
+
+void Genetic::setBestPath(const Path &bestPath) {
+    Genetic::bestPath = bestPath;
+}
+
+int Genetic::getNumOfCities() const {
+    return numOfCities;
+}
+
+void Genetic::setNumOfCities(int numOfCities) {
+    Genetic::numOfCities = numOfCities;
 }

@@ -6,35 +6,31 @@
 #define P2_GENETIC_H
 
 
+#include "../data_structures/Path.h"
+
 class Genetic {
 
 
-
-
 public:
-
     void apply(int numOfIterations);
-    int getCurrentNumOfPaths() const;
 
+    const Path &getBestPath() const;
+    void setBestPath(const Path &bestPath);
+
+    int getCurrentNumOfPaths() const;
     void setCurrentNumOfPaths(int currentNumOfPaths);
 
-    void setListOfPaths(int **listOfPaths);
-
-    void setBestPathFound(int *bestPathFound);
+    void setListOfPaths(Path *listOfPaths);
+    Path *getListOfPaths() const;
 
     void setBestCost(int bestCost);
-
-    int **getListOfPaths() const;
-
-    int *getBestPathFound() const;
-
     int getBestCost() const;
 
 private:
     int currentNumOfPaths;          // number of currently stored paths in listOfPaths
-    int **listOfPaths;              // [X][10] - X must fit whole population and additional path developed in current epoch
+    Path *listOfPaths;              // [X][10] - X must fit whole population and additional path developed in current epoch
                                     // therefore it has to be calculated in constructor
-    int *bestPathFound;
+    Path bestPath;
     int bestCost;
 
     int populationSize;             // number of paths at the beginning of each epoch
@@ -43,9 +39,18 @@ private:
     int crossCount;
     int mutateCount;
 
+    int numOfCities;
+public:
+    int getNumOfCities() const;
+
+    void setNumOfCities(int numOfCities);
+
+private:
+
 
     /// constructor/destructor
-    Genetic(int numOfIterations,  int sizeOfPopulation, int probabilityOfCross, int probabilityOfMutation );
+    Genetic(int numOfIterations, int sizeOfPopulation, int probabilityOfCross, int probabilityOfMutation,
+            Path bestPath);
     ~Genetic();
 
     /// method responsible for main logic of algo
@@ -57,8 +62,8 @@ private:
 
 
     ///utility methods
-    void picTopResults();           // it will sort and then save only top 10 results
-    int* generateRandomPath();      // might be changed later to improve algo
+    void pickTopResults();           // it will sort and then save only top 10 results
+    Path generateRandomPath();      // might be changed later to improve algo
 
 
 };
