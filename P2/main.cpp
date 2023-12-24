@@ -3,18 +3,23 @@
 #include "algorithms/TS.h"
 #include "utils/Menu.h"
 #include "tests/AutoTests.h"
+#include "algorithms/Genetic.h"
 
 using namespace std;
 int main() {
 
-    Menu menu;
+//    Menu menu;
 //    menu.start();
 
 
-//    Graph g;
-//    g.loadData("wersja2");
-//    g.printGraph();
-//    cout<<"\n\n------------------------------------------\n\n";
+    Graph g;
+    g.loadData("data5");
+    g.printGraph();
+    cout<<"\n\n------------------------------------------\n\n";
+
+    Genetic gen(g, 10, 10, 2, 2);
+    gen.apply(10);
+
 //
 //    TS ts(g);
 //
@@ -22,8 +27,8 @@ int main() {
 //    cout<<"best cost: "<<ts.bestPathCost;
 
 
-    AutoTests at;
-    at.raportTests();
+//    AutoTests at;
+//    at.raportTests();
     //    at.paramsTests();
 //    at.alphaTests();
 //    AutoTests tt;

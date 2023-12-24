@@ -4,23 +4,31 @@
 
 #include "Genetic.h"
 #include "iostream"
+#include <algorithm>
+//#include <iterator>
+//#include <random>
 
 
-
-Genetic::Genetic(int numOfIterations, int sizeOfPopulation, int crossCount, int mutateCount, Path bestPath)
+Genetic::Genetic(Graph graph, int numOfIterations, int sizeOfPopulation, int crossCount, int mutateCount)
         : bestPath(bestPath) {
 
     srand(time(NULL));
+
+    g = graph;
+    matrix = g.getMatrix();
+    numOfCities = g.getSize();
 
     currentNumOfPaths = 0;
     pathsListSize = sizeOfPopulation + crossCount + mutateCount;
     populationSize = sizeOfPopulation;
     bestCost = INT_MAX;
 
+    listOfPaths = new Path[pathsListSize];
+
     // initializing list with empty objects of path
     for(int i = 0; i < pathsListSize; i++){
         Path p(numOfCities);
-        listOfPaths[i] = p;
+        listOfPaths[i] = Path(numOfCities);
     }
 
     this -> crossCount = crossCount;
@@ -33,18 +41,24 @@ Genetic::Genetic(int numOfIterations, int sizeOfPopulation, int crossCount, int 
 
 void Genetic::apply(int numOfIterations) {
 
-    //fill with initial values
 
     // generate random paths x sizeOfPopulation
     for(int i = 0; i < populationSize; i++){
         listOfPaths[i] = generateRandomPath();
     }
+    currentNumOfPaths = populationSize;
+
+    std::cout<<"rand paths generated";
+    printCurrentList();
+
+    std::cout<<"\nprinted";
 
 
-    //main loop iterating through epochs
-    for(int i = 0; i < numOfIterations; i++){
-        epoch(i);
-    }
+
+//    //main loop iterating through epochs
+//    for(int i = 0; i < numOfIterations; i++){
+//        epoch(i);
+//    }
 }
 
 void Genetic::epoch(int currentIteration) {
@@ -64,10 +78,14 @@ void Genetic::epoch(int currentIteration) {
 
     for(int i = 0; i < mutateCount; i++){
 
-
         listOfPaths[currentNumOfPaths] = mutate(listOfPaths[rand() % populationSize]);
         currentNumOfPaths++;
+
     }
+
+    std::cout<<"Epoch: " + std::to_string(currentIteration);
+    printCurrentList();
+    std::cout<<"\n\n";
 
     pickTopResults();
 
@@ -132,7 +150,7 @@ Path Genetic::cross(Path A, Path B) {
     }
 
     newObjPath.setCitiesList(newPath);
-    newObjPath.calculateCost();
+    newObjPath.calculateCost(g);
 
     delete[] newPath; // Free dynamically allocated memory
 
@@ -155,13 +173,42 @@ Path Genetic::mutate(Path A) {
 
     std::swap(newPath[first], newPath[second]);
 
+    newObjPath.calculateCost(g);
     newObjPath.setCitiesList(newPath);
 
     return  newObjPath;
 }
 
 
+Path Genetic::generateRandomPath() {
+    Path p(numOfCities);
 
+    // Initialize the cities list in Path p
+    int* cities = new int[numOfCities];
+    for (int i = 0; i < numOfCities; ++i) {
+        cities[i] = i;
+    }
+    p.setCitiesList(cities);
+
+    // Shuffle the cities list
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::shuffle(cities, cities + numOfCities, gen);
+
+    return p;
+}
+
+void Genetic::printCurrentList() {
+    for( int i = 0; i < currentNumOfPaths; i++){
+        std::cout<<listOfPaths[i].to_string();
+//        std::cout<<listOfPaths[i].getCitiesList()[0]<<currentNumOfPaths;
+
+        std::cout<<"\n";
+    }
+}
+
+
+/// GETTERS SETTERS
 int Genetic::getCurrentNumOfPaths() const {
     return currentNumOfPaths;
 }
@@ -200,4 +247,8 @@ int Genetic::getNumOfCities() const {
 
 void Genetic::setNumOfCities(int numOfCities) {
     Genetic::numOfCities = numOfCities;
+}
+
+Genetic::~Genetic() {
+
 }

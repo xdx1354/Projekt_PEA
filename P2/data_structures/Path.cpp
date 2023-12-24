@@ -3,6 +3,7 @@
 //
 
 #include "Path.h"
+#include "Graph.h"
 
 
 Path::Path(int size){
@@ -12,17 +13,33 @@ Path::Path(int size){
 
 }
 
-int Path::calculateCost() {
+int Path::calculateCost(Graph g) {
 
     int sum;
 
-    for(int i = 0; i < size; i++){
-        sum += citiesList[i];
+    for(int i = 0; i < size-1; i++){
+        sum += g.getMatrix()[citiesList[i]][citiesList[i+1]];
     }
+    sum += g.getMatrix()[citiesList[size-1]][citiesList[0]];
     cost = sum;
 
     return sum;
 }
+
+
+std::string Path::to_string() {
+
+    std::string output;
+
+    for( int i = 0; i < size; i++){
+        output +=  std::to_string(citiesList[i]) + ", ";
+    }
+
+    output += std::to_string(citiesList[0]);
+
+    return output;
+}
+
 
 int *Path::getCitiesList() const {
     return citiesList;
@@ -39,4 +56,19 @@ int Path::getCost() const {
 void Path::setCost(int cost) {
     Path::cost = cost;
 }
+
+int Path::getSize() const {
+    return size;
+}
+
+void Path::setSize(int size) {
+    Path::size = size;
+}
+
+Path::Path() {}
+
+Path::~Path() {
+
+}
+
 

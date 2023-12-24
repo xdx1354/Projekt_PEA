@@ -7,6 +7,7 @@
 
 
 #include "../data_structures/Path.h"
+#include "../data_structures/Graph.h"
 
 class Genetic {
 
@@ -40,18 +41,23 @@ private:
     int mutateCount;
 
     int numOfCities;
+    Graph g;
+    int **matrix;
+
+
 public:
     int getNumOfCities() const;
 
     void setNumOfCities(int numOfCities);
 
+    /// constructor/destructor
+    Genetic(Graph graph,int numOfIterations, int sizeOfPopulation, int crossCount, int mutateCount);
+    ~Genetic();
+
 private:
 
 
-    /// constructor/destructor
-    Genetic(int numOfIterations, int sizeOfPopulation, int probabilityOfCross, int probabilityOfMutation,
-            Path bestPath);
-    ~Genetic();
+
 
     /// method responsible for main logic of algo
     void epoch(int currentIteration);
@@ -64,6 +70,7 @@ private:
     ///utility methods
     void pickTopResults();           // it will sort and then save only top 10 results
     Path generateRandomPath();      // might be changed later to improve algo
+    void printCurrentList();
 
 
 };

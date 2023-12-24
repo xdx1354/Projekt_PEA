@@ -6,6 +6,8 @@
 #define P2_PATH_H
 
 
+#include "Graph.h"
+
 class Path {
 
     int* citiesList;
@@ -23,11 +25,18 @@ public:
 
     void setCost(int cost);\
 
-    int calculateCost();
+    int calculateCost(Graph g);
 
     ~Path();
 
     Path(int size);
+    Path();
+
+    std::string to_string();
+
+    int getSize() const;
+
+    void setSize(int size);
 };
 
 
