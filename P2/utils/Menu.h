@@ -16,6 +16,7 @@ public:
 
     void runTS(int, float, float);  // runs Tabu Search algorithm
 
+    void runGenetic(int endCon, int crossCount, int mutateCount, int sizeOfPopulation);
 };
 
 

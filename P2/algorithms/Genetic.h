@@ -13,7 +13,7 @@ class Genetic {
 
 
 public:
-    void apply(int numOfIterations);
+    void apply();
 
     const Path &getBestPath() const;
     void setBestPath(const Path &bestPath);
@@ -43,6 +43,7 @@ private:
     int numOfCities;
     Graph g;
     int **matrix;
+    int numOfIterations;
 
 
 public:

@@ -8,6 +8,7 @@
 #include "../tests/AutoTests.h"
 #include "../algorithms/TS.h"
 #include "Time.h"
+#include "../algorithms/Genetic.h"
 
 
 void Menu::start() {
@@ -24,6 +25,7 @@ void Menu::start() {
         std::cout<<"1. Load data\n";
         std::cout<<"2. Print graph\n";
         std::cout<<"3. Perform Tabu Search algorithm\n";
+        std::cout<<"4. Perform genetic algorithm\n";
         std::cout<<"6. Generate data sets\n";
         std::cout<<"7. Autotests\n";
         std::cout<<"8. Exit\n";
@@ -82,6 +84,53 @@ void Menu::start() {
                 break;
             }
 
+            case 4:{
+
+                if( isGraphLoaded){
+                    string whatParams;
+
+                    std::cout<<"\n 1. Run with predefined, universal parameters."
+                               "\n 2. Run with custom parameters";
+                    std::cin>>whatParams;
+
+                    switch(stoi(whatParams)){
+                        case 1:{
+
+                            runGenetic(100000, 20, 20, 100);        // TODO: fill with optimal data after tests
+
+                            break;
+                        }
+                        case 2:{
+                            string iterations, population, cross, mutate;
+
+                            cout<<"Choose number of iterations: ";
+                            cin>>iterations;
+                            cout<<"Choose number size of population: ";
+                            cin>>population;
+                            cout<<"Choose number of crossing operations per epoch: ";
+                            cin>>cross;
+                            cout<<"Choose number of mutate operations per epoch: ";
+                            cin>>mutate;
+
+                            runGenetic(stoi(iterations), stoi(cross), stoi(mutate), stoi(population));
+                            break;
+                        }
+                        default:{
+                            cout<<"\nWrong input, try again \n";
+                            break;
+                        }
+                    }
+
+                    break;
+                }
+                else{
+                    std::cout<<"\nFirst you need to load graph. Choose 1.\n";
+                }
+                break;
+
+
+            }
+
             case 6:{
                 std::cout<<"Generates data sets of sizes from range 5 to 15 nodes.\n";
                 std::cout<<"Files can by loaded from menu by choosing 1st option and typing name\n";
@@ -130,4 +179,9 @@ void Menu::runTS(int endCon, float q1, float q2){
     TS ts(g);
     ts.apply(endCon, q1, q2);
     ts.printResult();
+}
+
+void Menu::runGenetic(int endCon, int crossCount, int mutateCount, int sizeOfPopulation){
+    Genetic gen(g, endCon, sizeOfPopulation, crossCount, mutateCount);
+    gen.apply();
 }

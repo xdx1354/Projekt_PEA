@@ -33,13 +33,14 @@ Genetic::Genetic(Graph graph, int numOfIterations, int sizeOfPopulation, int cro
 
     this -> crossCount = crossCount;
     this -> mutateCount = mutateCount;
+    this -> numOfIterations = numOfIterations;
 
     Path p(numOfCities);
     bestPath = p;
     p.setCost(INT_MAX);
 }
 
-void Genetic::apply(int numOfIterations) {
+void Genetic::apply() {
 
 
     // generate random paths x sizeOfPopulation
@@ -88,9 +89,9 @@ void Genetic::epoch(int currentIteration) {
 
     }
 
-    std::cout<<"Epoch: " + std::to_string(currentIteration) <<"\n";
+//    std::cout<<"Epoch: " + std::to_string(currentIteration) <<"\n";
 //    printCurrentList();
-    std::cout<<"\n\n";
+//    std::cout<<"\n\n";
 
     pickTopResults();
 
