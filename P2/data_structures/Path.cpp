@@ -15,7 +15,7 @@ Path::Path(int size){
 
 int Path::calculateCost(Graph g) {
 
-    int sum;
+    int sum = 0;
 
     for(int i = 0; i < size-1; i++){
         sum += g.getMatrix()[citiesList[i]][citiesList[i+1]];

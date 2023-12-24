@@ -48,17 +48,21 @@ void Genetic::apply(int numOfIterations) {
     }
     currentNumOfPaths = populationSize;
 
-    std::cout<<"rand paths generated";
+    std::cout<<"Rand paths generated\n";
+
+
+
+
+    //main loop iterating through epochs
+    for(int i = 0; i < numOfIterations; i++){
+        epoch(i);
+    }
+
+    pickTopResults();
     printCurrentList();
-
-    std::cout<<"\nprinted";
-
-
-
-//    //main loop iterating through epochs
-//    for(int i = 0; i < numOfIterations; i++){
-//        epoch(i);
-//    }
+    std::cout<<"Cheapest ever path cost: " <<bestCost<<"\n";
+    std::cout<<"Cheapest path cost: " <<listOfPaths[0].getCost()<<"\n";
+    std::cout<<"2nd cheapest path cost: " <<listOfPaths[1].getCost()<<"\n";
 }
 
 void Genetic::epoch(int currentIteration) {
@@ -83,8 +87,8 @@ void Genetic::epoch(int currentIteration) {
 
     }
 
-    std::cout<<"Epoch: " + std::to_string(currentIteration);
-    printCurrentList();
+    std::cout<<"Epoch: " + std::to_string(currentIteration) <<"\n";
+//    printCurrentList();
     std::cout<<"\n\n";
 
     pickTopResults();
@@ -94,18 +98,26 @@ void Genetic::epoch(int currentIteration) {
 void Genetic::pickTopResults() {
     int bestCurrentCost = INT_MAX;
 
+    // calculate current costs TODO: this should be done while adding a new path to save time
+
+    /// THIS IS JUST A HOTFIX
+    for(int i = 0; i < numOfCities; i++){
+        listOfPaths[i].calculateCost(g);
+    }
+
+
     // bubble sort
-    for(int i = 0; i < populationSize - 1; i++){
-        for(int j = i+1; j < populationSize; j++){
-            if(listOfPaths[j].getCost() > listOfPaths[j+1].getCost()){
-                std::swap(listOfPaths[j], listOfPaths[j+1]);
+    for (int i = 0; i < populationSize - 1; i++) {
+        for (int j = 0; j < populationSize - i - 1; j++) {
+            if (listOfPaths[j].getCost() > listOfPaths[j + 1].getCost()) {
+                std::swap(listOfPaths[j], listOfPaths[j + 1]);
             }
         }
     }
 
     // check if new best result found
     bestCurrentCost = listOfPaths[0].getCost();
-    if(bestCurrentCost < bestCost){
+    if (bestCurrentCost < bestCost) {
         bestCost = bestCurrentCost;
     }
 
@@ -150,7 +162,9 @@ Path Genetic::cross(Path A, Path B) {
     }
 
     newObjPath.setCitiesList(newPath);
+//    std::cout<<"\n Path: "<<newObjPath.to_string();
     newObjPath.calculateCost(g);
+//    std::cout<<"  worked well\n";
 
     delete[] newPath; // Free dynamically allocated memory
 
@@ -173,8 +187,8 @@ Path Genetic::mutate(Path A) {
 
     std::swap(newPath[first], newPath[second]);
 
-    newObjPath.calculateCost(g);
     newObjPath.setCitiesList(newPath);
+    newObjPath.calculateCost(g);
 
     return  newObjPath;
 }
@@ -200,7 +214,8 @@ Path Genetic::generateRandomPath() {
 
 void Genetic::printCurrentList() {
     for( int i = 0; i < currentNumOfPaths; i++){
-        std::cout<<listOfPaths[i].to_string();
+        listOfPaths[i].calculateCost(g);
+        std::cout<<listOfPaths[i].to_string() <<"    COST: " << listOfPaths[i].getCost();
 //        std::cout<<listOfPaths[i].getCitiesList()[0]<<currentNumOfPaths;
 
         std::cout<<"\n";
