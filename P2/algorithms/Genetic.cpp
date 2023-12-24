@@ -45,6 +45,7 @@ void Genetic::apply(int numOfIterations) {
     // generate random paths x sizeOfPopulation
     for(int i = 0; i < populationSize; i++){
         listOfPaths[i] = generateRandomPath();
+
     }
     currentNumOfPaths = populationSize;
 
@@ -208,6 +209,8 @@ Path Genetic::generateRandomPath() {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::shuffle(cities, cities + numOfCities, gen);
+
+    p.calculateCost(g);
 
     return p;
 }
