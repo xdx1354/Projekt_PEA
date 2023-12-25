@@ -31,6 +31,7 @@ Genetic::Genetic(Graph graph, int numOfIterations, int sizeOfPopulation, int cro
         listOfPaths[i] = Path(numOfCities);
     }
 
+
     this -> crossCount = crossCount;
     this -> mutateCount = mutateCount;
     this -> cross2Count = cross2Count;
@@ -48,13 +49,12 @@ void Genetic::apply() {
     // generate random paths x sizeOfPopulation
     for(int i = 0; i < populationSize; i++){
         listOfPaths[i] = generateRandomPath();
+        listOfPaths[i].calculateCost(g);
 
     }
     currentNumOfPaths = populationSize;
 
     std::cout<<"Rand paths generated\n";
-
-
 
 
     //main loop iterating through epochs
@@ -63,7 +63,11 @@ void Genetic::apply() {
     }
 
     pickTopResults();
+    std::cout<<"\nAFTER\n";
     printCurrentList();
+//    std::cout<<"\nAFTER v2\n";
+//    printCurrentList();
+
     std::cout<<"Cheapest ever path cost: " <<bestCost<<"\n";
     std::cout<<"Cheapest path cost: " <<listOfPaths[0].getCost()<<"\n";
     std::cout<<"2nd cheapest path cost: " <<listOfPaths[1].getCost()<<"\n";
@@ -71,26 +75,26 @@ void Genetic::apply() {
 
 void Genetic::epoch(int currentIteration) {
 
-    for(int i = 0; i < crossCount; i++){
-
-        int first, second;
-        do{
-            first = rand() % (populationSize/2);
-            second = rand() % (populationSize/2);
-        } while (first == second);
-
-
-        std::tuple<Path, Path> crossResult = cross2(listOfPaths[first], listOfPaths[second]);
-        listOfPaths[currentNumOfPaths] = std::get<0>(crossResult);
-        currentNumOfPaths++;
-        listOfPaths[currentNumOfPaths] = std::get<1>(crossResult);
-        currentNumOfPaths++;
-    }
+//    for(int i = 0; i < crossCount; i++){
+//
+//        int first, second;
+//        do{
+//            first = rand() % (populationSize/2);
+//            second = rand() % (populationSize/2);
+//        } while (first == second);
+//
+//
+//        std::tuple<Path, Path> crossResult = cross2(listOfPaths[first], listOfPaths[second]);
+//        listOfPaths[currentNumOfPaths] = std::get<0>(crossResult);
+//        currentNumOfPaths++;
+//        listOfPaths[currentNumOfPaths] = std::get<1>(crossResult);
+//        currentNumOfPaths++;
+//    }
 
 
     for(int i = 0; i < mutateCount; i++){
 
-        listOfPaths[currentNumOfPaths] = mutate2(listOfPaths[rand() % (populationSize / 2)]);
+        listOfPaths[currentNumOfPaths] = mutate(listOfPaths[rand() % (populationSize / 2)]);
         currentNumOfPaths++;
 
     }
@@ -108,21 +112,33 @@ void Genetic::pickTopResults() {
 
     // calculate current costs TODO: this should be done while adding a new path to save time
 
-    /// THIS IS JUST A HOTFIX
-    for(int i = 0; i < numOfCities; i++){
-        listOfPaths[i].calculateCost(g);
-    }
+//    /// THIS IS JUST A HOTFIX
+//    for(int i = 0; i < currentNumOfPaths; i++){
+//        listOfPaths[i].calculateCost(g);
+//    }
+
+    std::cout<<"\n\n\nBEFORE SORTING\n";
+    printCurrentList();
+
+//    // bubble sort
+//    for (int i = 0; i < currentNumOfPaths - 1; i++) {
+//        for (int j = 0; j < currentNumOfPaths - i - 1; j++) {
+//            if (listOfPaths[j].getCost() > listOfPaths[j + 1].getCost()) {
+//                std::swap(listOfPaths[j], listOfPaths[j + 1]);
+//
+//            }
+//        }
+//    }
+    std::sort(listOfPaths, listOfPaths + currentNumOfPaths, [](const Path& a, const Path& b) {
+        return a.getCost() < b.getCost(); // Sort in ascending order of cost
+    });
+
+//    std::vector<Path> vec;
+//    for(int i = 0; i < populationSize)
 
 
-    // bubble sort
-    for (int i = 0; i < populationSize - 1; i++) {
-        for (int j = 0; j < populationSize - i - 1; j++) {
-            if (listOfPaths[j].getCost() > listOfPaths[j + 1].getCost()) {
-                std::swap(listOfPaths[j], listOfPaths[j + 1]);
-            }
-        }
-    }
-
+    std::cout<<"\n\n\nAFTER SORTING\n";
+    printCurrentList();
     // check if new best result found
     bestCurrentCost = listOfPaths[0].getCost();
     if (bestCurrentCost < bestCost) {
@@ -361,7 +377,7 @@ Path Genetic::mutate(Path A) {
     int *newPath = new int[numOfCities];
     Path newObjPath(numOfCities);
 
-    newPath = A.getCitiesList();
+    std::copy(A.getCitiesList(), A.getCitiesList() + A.getSize(), newPath);
 
 
     int first, second;
@@ -381,8 +397,10 @@ Path Genetic::mutate(Path A) {
 Path Genetic::mutate2(Path A){
 
     Path p(numOfCities);
+    int *newPath = new int[numOfCities];
 
-    int *tempList = (A.getCitiesList());
+    std::copy(A.getCitiesList(), A.getCitiesList() + A.getSize(), newPath);
+
 
     int pos1, pos2;
     do {
@@ -399,11 +417,11 @@ Path Genetic::mutate2(Path A){
 
     // Apply 2-opt swap
     while (pos1 < pos2) {
-        std::swap(tempList[pos1], tempList[pos2]);
+        std::swap(newPath[pos1], newPath[pos2]);
         pos1++;
         pos2--;
     }
-    p.setCitiesList(tempList);
+    p.setCitiesList(newPath);
     p.calculateCost(g);
     return p;
 }
@@ -417,13 +435,14 @@ Path Genetic::generateRandomPath() {
     for (int i = 0; i < numOfCities; ++i) {
         cities[i] = i;
     }
-    p.setCitiesList(cities);
+
 
     // Shuffle the cities list
     std::random_device rd;
     std::mt19937 gen(rd());
     std::shuffle(cities, cities + numOfCities, gen);
 
+    p.setCitiesList(cities);
     p.calculateCost(g);
 
     return p;
@@ -433,7 +452,6 @@ void Genetic::printCurrentList() {
     for( int i = 0; i < currentNumOfPaths; i++){
         listOfPaths[i].calculateCost(g);
         std::cout<<listOfPaths[i].to_string() <<"    COST: " << listOfPaths[i].getCost();
-//        std::cout<<listOfPaths[i].getCitiesList()[0]<<currentNumOfPaths;
 
         std::cout<<"\n";
     }

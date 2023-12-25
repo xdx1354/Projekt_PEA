@@ -14,17 +14,23 @@ Path::Path(int size){
 }
 
 int Path::calculateCost(Graph g) {
-
     int sum = 0;
-
-    for(int i = 0; i < size-1; i++){
-        sum += g.getMatrix()[citiesList[i]][citiesList[i+1]];
+//    std::cout<<"\n";
+    for (int i = 0; i < size; i++) {
+        int currentCity = citiesList[i];
+        int nextCity = citiesList[(i + 1) % size];
+        int val = g.getMatrix()[currentCity][nextCity];
+//        std::cout<<" + "<< val;
+        sum += val;
     }
-    sum += g.getMatrix()[citiesList[size-1]][citiesList[0]];
-    cost = sum;
 
+
+//    std::cout<<" = " << sum;
+//    std::cout<<"\n";
+    cost = sum;
     return sum;
 }
+
 
 
 std::string Path::to_string() {

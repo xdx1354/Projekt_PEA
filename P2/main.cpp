@@ -12,13 +12,20 @@ int main() {
 //    menu.start();
 
 
-//    Graph g;
-//    g.loadData("data5");
-//    g.printGraph();
-//    cout<<"\n\n------------------------------------------\n\n";
+    Graph g;
+    g.loadData("data10");
+    g.printGraph();
+    cout<<"\n\n------------------------------------------\n\n";
+
+    Genetic gen(g, 5, 5, 2, 2, 2, 2);
+    gen.apply();
+////
+//    Path ph(10);
+//    int temp[10] = {0, 9, 4, 6, 3, 5, 2, 7, 8, 1};
 //
-//    Genetic gen(g, 10, 10, 2, 2, 2, 2);
-//    gen.apply();
+//    ph.setCitiesList(temp);
+//    ph.calculateCost(g);
+//    cout<<ph.to_string() <<"   COST: " <<ph.getCost();
 
 //
 //    TS ts(g);
@@ -27,8 +34,8 @@ int main() {
 //    cout<<"best cost: "<<ts.bestPathCost;
 
 
-    AutoTests at;
-    at.mutateTestsGenetic();
+//    AutoTests at;
+//    at.mutateTestsGenetic();
 //    at.populationTestsGenetic();
 //    at.raportTests();
     //    at.paramsTestsTS();

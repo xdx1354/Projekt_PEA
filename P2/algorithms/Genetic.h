@@ -43,9 +43,11 @@ private:
     int mutate2Count;
 
     int numOfCities;
-    Graph g{};
     int **matrix;
     int numOfIterations;
+
+protected: Graph g{};
+
 
 
 public:
@@ -67,7 +69,10 @@ private:
 
     /// genetic operations
     std::tuple<Path, Path> cross(Path A, Path B);       // takes half of A and fills with B
-    Path mutate(Path A);             // swaps two cities
+    std::tuple<Path, Path> cross2(Path A, Path B);
+
+    Path mutate(Path A);                                // swaps two cities
+    Path mutate2(Path A);
 
 
     ///utility methods
@@ -76,9 +81,7 @@ private:
     void printCurrentList();
 
 
-    std::tuple<Path, Path> cross2(Path A, Path B);
 
-    Path mutate2(Path A);
 };
 
 
