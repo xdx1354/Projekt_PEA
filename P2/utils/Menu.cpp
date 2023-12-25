@@ -96,23 +96,28 @@ void Menu::start() {
                     switch(stoi(whatParams)){
                         case 1:{
 
-                            runGenetic(100000, 20, 20, 100);        // TODO: fill with optimal data after tests
+                            runGenetic(100000, 20, 20, 20, 20, 100);        // TODO: fill with optimal data after tests
 
                             break;
                         }
                         case 2:{
-                            string iterations, population, cross, mutate;
+                            int iterations, population, cross, mutate, cross2, mutate2;
 
-                            cout<<"Choose number of iterations: ";
+                            cout<<"\nChoose number of iterations: ";
                             cin>>iterations;
-                            cout<<"Choose number size of population: ";
+                            cout<<"\nChoose number size of population: ";
                             cin>>population;
-                            cout<<"Choose number of crossing operations per epoch: ";
+                            cout<<"\nChoose number of crossing operations (swap to nodes) per epoch: ";
                             cin>>cross;
-                            cout<<"Choose number of mutate operations per epoch: ";
+                            cout<<"\nChoose number of crossing2 operations (2opt) per epoch: ";
+                            cin>>cross2;
+                            cout<<"\nChoose number of mutate operations (half from A, filling from B in order of appearing) per epoch: ";
                             cin>>mutate;
-
-                            runGenetic(stoi(iterations), stoi(cross), stoi(mutate), stoi(population));
+                            cout<<"\nChoose number of mutate operations \n(raw part from A paste in the same place,"
+                                  " filling with B, legalized using mapping) per epoch: ";
+                            cin>>mutate2;
+//                            runGenetic(100000, 20, 20, 20, 20, 100);
+                            runGenetic(iterations, cross, mutate, cross2, mutate2, population);
                             break;
                         }
                         default:{
@@ -181,7 +186,7 @@ void Menu::runTS(int endCon, float q1, float q2){
     ts.printResult();
 }
 
-void Menu::runGenetic(int endCon, int crossCount, int mutateCount, int sizeOfPopulation){
-    Genetic gen(g, endCon, sizeOfPopulation, crossCount, mutateCount);
+void Menu::runGenetic(int endCon, int crossCount, int mutateCount, int crossCount2, int mutateCount2, int sizeOfPopulation){
+    Genetic gen(g, endCon, sizeOfPopulation, crossCount, mutateCount, crossCount2, mutateCount2);
     gen.apply();
 }

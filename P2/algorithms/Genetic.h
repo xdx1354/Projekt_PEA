@@ -39,9 +39,11 @@ private:
 
     int crossCount;
     int mutateCount;
+    int cross2Count;
+    int mutate2Count;
 
     int numOfCities;
-    Graph g;
+    Graph g{};
     int **matrix;
     int numOfIterations;
 
@@ -52,7 +54,7 @@ public:
     void setNumOfCities(int numOfCities);
 
     /// constructor/destructor
-    Genetic(Graph graph,int numOfIterations, int sizeOfPopulation, int crossCount, int mutateCount);
+    Genetic(Graph graph,int numOfIterations, int sizeOfPopulation, int crossCount, int mutateCount, int cross2Count, int mutate2Count);
     ~Genetic();
 
 private:

@@ -8,17 +8,17 @@
 using namespace std;
 int main() {
 
-//    Menu menu;
-//    menu.start();
+    Menu menu;
+    menu.start();
 
 
-    Graph g;
-    g.loadData("data5");
-    g.printGraph();
-    cout<<"\n\n------------------------------------------\n\n";
-
-    Genetic gen(g, 10, 10, 2, 2);
-    gen.apply();
+//    Graph g;
+//    g.loadData("data5");
+//    g.printGraph();
+//    cout<<"\n\n------------------------------------------\n\n";
+//
+//    Genetic gen(g, 10, 10, 2, 2, 2, 2);
+//    gen.apply();
 
 //
 //    TS ts(g);

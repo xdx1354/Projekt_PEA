@@ -9,7 +9,7 @@
 //#include <random>
 
 
-Genetic::Genetic(Graph graph, int numOfIterations, int sizeOfPopulation, int crossCount, int mutateCount)
+Genetic::Genetic(Graph graph, int numOfIterations, int sizeOfPopulation, int crossCount, int mutateCount, int cross2Count, int mutate2Count)
         : bestPath(bestPath) {
 
     srand(time(NULL));
@@ -19,7 +19,7 @@ Genetic::Genetic(Graph graph, int numOfIterations, int sizeOfPopulation, int cro
     numOfCities = g.getSize();
 
     currentNumOfPaths = 0;
-    pathsListSize = sizeOfPopulation + (crossCount * 2) + mutateCount;
+    pathsListSize = sizeOfPopulation + crossCount + cross2Count + mutateCount + mutate2Count;
     populationSize = sizeOfPopulation;
     bestCost = INT_MAX;
 
@@ -33,6 +33,8 @@ Genetic::Genetic(Graph graph, int numOfIterations, int sizeOfPopulation, int cro
 
     this -> crossCount = crossCount;
     this -> mutateCount = mutateCount;
+    this -> cross2Count = cross2Count;
+    this -> mutate2Count = mutate2Count;
     this -> numOfIterations = numOfIterations;
 
     Path p(numOfCities);
@@ -73,8 +75,8 @@ void Genetic::epoch(int currentIteration) {
 
         int first, second;
         do{
-            first = rand() % populationSize;
-            second = rand() % populationSize;
+            first = rand() % (populationSize/2);
+            second = rand() % (populationSize/2);
         } while (first == second);
 
 
@@ -88,7 +90,7 @@ void Genetic::epoch(int currentIteration) {
 
     for(int i = 0; i < mutateCount; i++){
 
-        listOfPaths[currentNumOfPaths] = mutate2(listOfPaths[rand() % populationSize]);
+        listOfPaths[currentNumOfPaths] = mutate2(listOfPaths[rand() % (populationSize / 2)]);
         currentNumOfPaths++;
 
     }
