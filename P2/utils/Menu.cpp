@@ -116,7 +116,6 @@ void Menu::start() {
                             cout<<"\nChoose number of mutate operations \n(raw part from A paste in the same place,"
                                   " filling with B, legalized using mapping) per epoch: ";
                             cin>>mutate2;
-//                            runGenetic(100000, 20, 20, 20, 20, 100);
                             runGenetic(iterations, cross, mutate, cross2, mutate2, population);
                             break;
                         }

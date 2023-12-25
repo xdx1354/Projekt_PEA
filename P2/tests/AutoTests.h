@@ -13,13 +13,19 @@ public:
     void generateAllData();         // generating data for autotests. Set for specific sizes of graphs. Array of sizes is hardcoded
     void generateData(int size);    // generates data of specified size graph
 
-    void paramsTests();             // testing parameters q1, q2 for optimising  the algorithm - evaluated in paper
+    void paramsTestsTS();             // testing parameters q1, q2 for optimising  the algorithm - evaluated in paper
     void alphaTests();              // testing parameter alpha
     void finalTests();              // finalTests of algorithm, with optimised parameters
     AutoTests();                    // constructors
     ~AutoTests();                   // destructor
 
     void raportTests();
+
+    void populationTestsGenetic();
+
+    void mutateTestsGenetic();
+
+    void crossTestsGenetic();
 };
 
 

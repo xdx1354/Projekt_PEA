@@ -5,7 +5,6 @@
 #ifndef P1_MENU_H
 #define P1_MENU_H
 
-
 #include "../data_structures/Graph.h"
 
 class Menu {
