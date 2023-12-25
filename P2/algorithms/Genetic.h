@@ -64,7 +64,7 @@ private:
     void epoch(int currentIteration);
 
     /// genetic operations
-    Path cross(Path A, Path B);       // takes half of A and fills with B
+    std::tuple<Path, Path> cross(Path A, Path B);       // takes half of A and fills with B
     Path mutate(Path A);             // swaps two cities
 
 
@@ -74,6 +74,9 @@ private:
     void printCurrentList();
 
 
+    std::tuple<Path, Path> cross2(Path A, Path B);
+
+    Path mutate2(Path A);
 };
 
 

@@ -19,7 +19,7 @@ Genetic::Genetic(Graph graph, int numOfIterations, int sizeOfPopulation, int cro
     numOfCities = g.getSize();
 
     currentNumOfPaths = 0;
-    pathsListSize = sizeOfPopulation + crossCount + mutateCount;
+    pathsListSize = sizeOfPopulation + (crossCount * 2) + mutateCount;
     populationSize = sizeOfPopulation;
     bestCost = INT_MAX;
 
@@ -77,14 +77,18 @@ void Genetic::epoch(int currentIteration) {
             second = rand() % populationSize;
         } while (first == second);
 
-        listOfPaths[currentNumOfPaths] = cross(listOfPaths[first], listOfPaths[second]);
+
+        std::tuple<Path, Path> crossResult = cross2(listOfPaths[first], listOfPaths[second]);
+        listOfPaths[currentNumOfPaths] = std::get<0>(crossResult);
+        currentNumOfPaths++;
+        listOfPaths[currentNumOfPaths] = std::get<1>(crossResult);
         currentNumOfPaths++;
     }
 
 
     for(int i = 0; i < mutateCount; i++){
 
-        listOfPaths[currentNumOfPaths] = mutate(listOfPaths[rand() % populationSize]);
+        listOfPaths[currentNumOfPaths] = mutate2(listOfPaths[rand() % populationSize]);
         currentNumOfPaths++;
 
     }
@@ -127,50 +131,227 @@ void Genetic::pickTopResults() {
     currentNumOfPaths = populationSize;
 }
 
+/**
+ * Takes half of path A and fill with lacking nodes in order of appearing in B.
+ * @param A first parent path
+ * @param B second parent path
+ * @return Tuple of two paths
+ */
+std::tuple<Path, Path> Genetic::cross(Path A, Path B) {
+    int* newPathA = new int[numOfCities];
+    int* newPathB = new int[numOfCities];
 
-Path Genetic::cross(Path A, Path B) {
-    int *newPath = new int[numOfCities];
-    Path newObjPath(numOfCities);
+    Path newObjPathA(numOfCities);
+    Path newObjPathB(numOfCities);
+
+    // Generating the first child path (newObjPathA)
+    int counterA = 0;
 
     // Take the first half of cities from Path A
     for (int i = 0; i < numOfCities / 2; i++) {
-        newPath[i] = A.getCitiesList()[i];
+        newPathA[i] = A.getCitiesList()[i];
+        counterA++;
     }
 
-    // Fill the remaining cities from Path B
-    int counter = numOfCities / 2;
+    // Fill the remaining cities from Path B to form newObjPathA
     for (int i = 0; i < numOfCities; i++) {
         int potentialCity = B.getCitiesList()[i];
         bool isPresent = false;
 
-        // Check if the city is already present in the first half of newPath
+        // Check if the city is already present in the first half of newPathA
         for (int j = 0; j < numOfCities / 2; j++) {
-            if (potentialCity == newPath[j]) {
+            if (potentialCity == newPathA[j]) {
                 isPresent = true;
                 break;
             }
         }
 
-        // If the city is not present, add it to newPath
+        // If the city is not present, add it to newPathA
         if (!isPresent) {
-            newPath[counter] = potentialCity;
-            counter++;
+            newPathA[counterA] = potentialCity;
+            counterA++;
         }
 
-        // Check if all cities are added to newPath
-        if (counter >= numOfCities) {
+        // Check if all cities are added to newPathA
+        if (counterA >= numOfCities) {
             break;
         }
     }
 
-    newObjPath.setCitiesList(newPath);
-//    std::cout<<"\n Path: "<<newObjPath.to_string();
-    newObjPath.calculateCost(g);
-//    std::cout<<"  worked well\n";
+    newObjPathA.setCitiesList(newPathA);
+    newObjPathA.calculateCost(g);
 
-    delete[] newPath; // Free dynamically allocated memory
+    // Generating the second child path (newObjPathB)
+    int counterB = 0;
 
-    return newObjPath;
+    // Take the first half of cities from Path B
+    for (int i = 0; i < numOfCities / 2; i++) {
+        newPathB[i] = B.getCitiesList()[i];
+        counterB++;
+    }
+
+    // Fill the remaining cities from Path A to form newObjPathB
+    for (int i = 0; i < numOfCities; i++) {
+        int potentialCity = A.getCitiesList()[i];
+        bool isPresent = false;
+
+        // Check if the city is already present in the first half of newPathB
+        for (int j = 0; j < numOfCities / 2; j++) {
+            if (potentialCity == newPathB[j]) {
+                isPresent = true;
+                break;
+            }
+        }
+
+        // If the city is not present, add it to newPathB
+        if (!isPresent) {
+            newPathB[counterB] = potentialCity;
+            counterB++;
+        }
+
+        // Check if all cities are added to newPathB
+        if (counterB >= numOfCities) {
+            break;
+        }
+    }
+
+    newObjPathB.setCitiesList(newPathB);
+    newObjPathB.calculateCost(g);
+
+    delete[] newPathA; // Free dynamically allocated memory for newPathA
+    delete[] newPathB; // Free dynamically allocated memory for newPathB
+
+    return std::make_tuple(newObjPathA, newObjPathB);
+}
+
+
+
+/**
+ * Takes part of path A and rest of elemgents from B to form A'. Then by applying mapping legalizes the path.
+ * To create B', takes part of B and fills rest with nodes from A, then applies mappin
+ * @param A Path - first parent
+ * @param B Path - second parent
+ * @return Tuple of two objects Path
+ */
+std::tuple <Path, Path> Genetic::cross2(Path A, Path B){
+    Path aPrim(numOfCities);
+    Path bPrim(numOfCities);
+
+    int *aPrimList = new int[numOfCities];
+    int *bPrimList = new int[numOfCities];
+
+    int *aList = A.getCitiesList();
+    int *bList = B.getCitiesList();
+
+    /// ALGORITHM LOGIC
+
+    int aBegin, aEnd, bBegin, bEnd;         // beginnings and ends of copied part from A/B to aPrim/bPrim
+
+    // pick random positions and make them in proper order
+    aBegin = rand()%numOfCities;
+    aEnd = rand()%numOfCities;
+
+    bBegin = rand()%numOfCities;
+    bEnd = rand()%numOfCities;
+
+    if(aBegin > aEnd){
+        std::swap(aBegin, aEnd);
+    }
+    if(bBegin > bEnd){
+        std::swap(bBegin, bEnd);
+    }
+
+
+    // Copying part of A and B to A' and B'
+    for (int i = 0; i < numOfCities; i++) {
+        // Logic for aPrimList
+        if (i >= aBegin && i < aEnd) {
+            aPrimList[i] = aList[i];
+        } else {
+            // Store elements from B that are not already in A'
+            int currentElement = bList[i];
+            bool isDuplicate = false;
+
+            // Check if the element from B already exists in A'
+            for (int j = aBegin; j < aEnd; j++) {
+                if (aList[j] == currentElement) {
+                    isDuplicate = true;
+                    break;
+                }
+            }
+
+            if (!isDuplicate) {
+                aPrimList[i] = bList[i];
+            } else {
+                // If the element from B already exists in A', find a suitable replacement from A
+                for (int j = 0; j < numOfCities; j++) {
+                    bool foundInBPrim = false;
+
+                    // Check if the element from A already exists in B'
+                    for (int k = bBegin; k < bEnd; k++) {
+                        if (bList[k] == aList[j]) {
+                            foundInBPrim = true;
+                            break;
+                        }
+                    }
+
+                    if (!foundInBPrim) {
+                        aPrimList[i] = aList[j];
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Logic for bPrimList
+        if (i >= bBegin && i < bEnd) {
+            bPrimList[i] = bList[i];
+        } else {
+            // Store elements from A that are not already in B'
+            int currentElement = aList[i];
+            bool isDuplicate = false;
+
+            // Check if the element from A already exists in B'
+            for (int j = bBegin; j < bEnd; j++) {
+                if (bList[j] == currentElement) {
+                    isDuplicate = true;
+                    break;
+                }
+            }
+
+            if (!isDuplicate) {
+                bPrimList[i] = aList[i];
+            } else {
+                // If the element from A already exists in B', find a suitable replacement from B
+                for (int j = 0; j < numOfCities; j++) {
+                    bool foundInAPrim = false;
+
+                    // Check if the element from B already exists in A'
+                    for (int k = aBegin; k < aEnd; k++) {
+                        if (aList[k] == bList[j]) {
+                            foundInAPrim = true;
+                            break;
+                        }
+                    }
+
+                    if (!foundInAPrim) {
+                        bPrimList[i] = bList[j];
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
+    aPrim.setCitiesList(aPrimList);
+    aPrim.calculateCost(g);
+    bPrim.setCitiesList(bPrimList);
+    bPrim.calculateCost(g);
+
+    return std::make_tuple(aPrim,bPrim);
 }
 
 Path Genetic::mutate(Path A) {
@@ -193,6 +374,36 @@ Path Genetic::mutate(Path A) {
     newObjPath.calculateCost(g);
 
     return  newObjPath;
+}
+
+Path Genetic::mutate2(Path A){
+
+    Path p(numOfCities);
+
+    int *tempList = (A.getCitiesList());
+
+    int pos1, pos2;
+    do {
+        pos1 = rand() % (numOfCities - 1) + 1;
+        pos2 = rand() % (numOfCities - 1) + 1;
+    } while (pos1 == pos2 || abs(pos1 - pos2) < 2);
+
+
+
+
+    if (pos1 > pos2) {
+        std::swap(pos1, pos2);
+    }
+
+    // Apply 2-opt swap
+    while (pos1 < pos2) {
+        std::swap(tempList[pos1], tempList[pos2]);
+        pos1++;
+        pos2--;
+    }
+    p.setCitiesList(tempList);
+    p.calculateCost(g);
+    return p;
 }
 
 
