@@ -28,7 +28,7 @@ Genetic::Genetic(Graph graph, int numOfIterations, int sizeOfPopulation, int cro
     numOfCities = g.getSize();
 
     currentNumOfPaths = 0;
-    pathsListSize = sizeOfPopulation + crossCount + cross2Count + mutateCount + mutate2Count;
+    pathsListSize = sizeOfPopulation + 2 * crossCount + 2 * cross2Count + mutateCount + mutate2Count;
     populationSize = sizeOfPopulation;
     bestCost = INT_MAX;
 
@@ -98,6 +98,9 @@ void Genetic::epoch(int currentIteration) {
     //// for example 600 instead of in range of (0, 10). Somehow first action affects the data/
 
 /// Performing crossCount crossing operations
+
+
+    /// CROSS action
     for(int i = 0; i < crossCount; i++){
 
         int first, second;
@@ -107,47 +110,53 @@ void Genetic::epoch(int currentIteration) {
         } while (first == second);
 
 
-
-
-        /// CROSS action
-        std::cout<<"First path: " << listOfPaths[first].to_string() <<" \n";
-        std::cout<<"Second path: " << listOfPaths[second].to_string() <<" \n\n";
-        std::tuple<Path, Path> crossResult = cross2(listOfPaths[first], listOfPaths[second]);
+        //std::cout<<"First path: " << listOfPaths[first].to_string() <<" \n";
+        //std::cout<<"Second path: " << listOfPaths[second].to_string() <<" \n\n";
+        std::tuple<Path, Path> crossResult = cross(listOfPaths[first], listOfPaths[second]);
 
         listOfPaths[currentNumOfPaths] = std::get<0>(crossResult);
-        std::cout<<"First child: " << listOfPaths[currentNumOfPaths].to_string() <<" \n\n";
+        //std::cout<<"First child: " << listOfPaths[currentNumOfPaths].to_string() <<" \n\n";
         currentNumOfPaths++;
 
         listOfPaths[currentNumOfPaths] = std::get<1>(crossResult);
-        std::cout<<"Second child: " << listOfPaths[currentNumOfPaths].to_string() <<" \n\n";
+        //std::cout<<"Second child: " << listOfPaths[currentNumOfPaths].to_string() <<" \n\n";
         currentNumOfPaths++;
 
-        std::cout<<"--------------------\n";
-
-        /// TO DO: CROSS2 action
-//        std::tuple<Path, Path> crossResult2 = cross(listOfPaths[first], listOfPaths[second]);
-//        listOfPaths[currentNumOfPaths] = std::get<0>(crossResult2);
-//        currentNumOfPaths++;
-//        listOfPaths[currentNumOfPaths] = std::get<1>(crossResult2);
-//        currentNumOfPaths++;
-
-
-//        listOfPaths[currentNumOfPaths] = cross2(listOfPaths[first], listOfPaths[second]);
-//        currentNumOfPaths++;
+        //std::cout<<"--------------------\n";
 
     }
-/*
-/// Performing mutateCount mutate operations
+
+
+    /// CROSS 2 action
+    for(int i = 0; i < cross2Count; i++) {
+
+        int first, second;
+        do {
+            first = rand() % (populationSize / 2);
+            second = rand() % (populationSize);
+        } while (first == second);
+
+        std::tuple<Path, Path> crossResult2 = cross2(listOfPaths[first], listOfPaths[second]);
+        listOfPaths[currentNumOfPaths] = std::get<0>(crossResult2);
+        currentNumOfPaths++;
+        listOfPaths[currentNumOfPaths] = std::get<1>(crossResult2);
+        currentNumOfPaths++;
+
+    }
+
+
+
     /// MUTATE ACTION
     for(int i = 0; i < mutateCount; i++){
 
-        listOfPaths[currentNumOfPaths] = mutate(listOfPaths[rand() % (populationSize / 2)]);
+        listOfPaths[currentNumOfPaths] = mutate(listOfPaths[rand() % populationSize]);
         currentNumOfPaths++;
 
     }
 
+
     /// MUTATE 2 ACTION
-    for(int i = 0; i < mutateCount; i++){
+    for(int i = 0; i < mutate2Count; i++){
 
         listOfPaths[currentNumOfPaths] = mutate2(listOfPaths[rand() % (populationSize)]);
         currentNumOfPaths++;
@@ -157,7 +166,7 @@ void Genetic::epoch(int currentIteration) {
 //    printCurrentList();
 //    std::cout<<"\n\n";
 
-*/
+
 
 /// Calling pickTopResults function to sort all results and store only the top X one, where X = sizeOfPopulation
     pickTopResults();
@@ -209,7 +218,6 @@ void Genetic::pickTopResults() {
     currentNumOfPaths = populationSize;
 }
 
-//TODO: zmienieć na losowe miejsce pivot w zakresie tablicy
 
 /**
  * Takes half of path A and fill with lacking nodes in order of appearing in B.
@@ -226,20 +234,23 @@ std::tuple<Path, Path> Genetic::cross(Path A, Path B) {
 
     // Generating the first child path (newObjPathA)
     int counterA = 0;
+    int pivot = rand() % numOfCities;
 
     // Take the first half of cities from Path A
-    for (int i = 0; i < numOfCities / 2; i++) {
+    for (int i = 0; i < pivot; i++) {
         newPathA[i] = A.getCitiesList()[i];
         counterA++;
     }
+
+
 
     // Fill the remaining cities from Path B to form newObjPathA
     for (int i = 0; i < numOfCities; i++) {
         int potentialCity = B.getCitiesList()[i];
         bool isPresent = false;
 
-        // Check if the city is already present in the first half of newPathA
-        for (int j = 0; j < numOfCities / 2; j++) {
+        // Check if the city is already present in the first part of newPathA
+        for (int j = 0; j < pivot; j++) {
             if (potentialCity == newPathA[j]) {
                 isPresent = true;
                 break;
@@ -263,9 +274,10 @@ std::tuple<Path, Path> Genetic::cross(Path A, Path B) {
 
     // Generating the second child path (newObjPathB)
     int counterB = 0;
+    pivot = rand() % numOfCities;
 
     // Take the first half of cities from Path B
-    for (int i = 0; i < numOfCities / 2; i++) {
+    for (int i = 0; i < pivot; i++) {
         newPathB[i] = B.getCitiesList()[i];
         counterB++;
     }
@@ -276,7 +288,7 @@ std::tuple<Path, Path> Genetic::cross(Path A, Path B) {
         bool isPresent = false;
 
         // Check if the city is already present in the first half of newPathB
-        for (int j = 0; j < numOfCities / 2; j++) {
+        for (int j = 0; j < pivot; j++) {
             if (potentialCity == newPathB[j]) {
                 isPresent = true;
                 break;
@@ -298,13 +310,12 @@ std::tuple<Path, Path> Genetic::cross(Path A, Path B) {
     newObjPathB.setCitiesList(newPathB);
     newObjPathB.calculateCost(g);
 
-    ///delete[] newPathA; // Free dynamically allocated memory for newPathA
-    ///delete[] newPathB; // Free dynamically allocated memory for newPathB
+    delete[] newPathA; // Free dynamically allocated memory for newPathA
+    delete[] newPathB; // Free dynamically allocated memory for newPathB
 
     return std::make_tuple(newObjPathA, newObjPathB);
 }
 
-//TODO: zaimplementować algorytm PMX z pracy naukowej, zwraca tuple!
 
 /**
 
@@ -312,103 +323,8 @@ std::tuple<Path, Path> Genetic::cross(Path A, Path B) {
  * @param B Path - second parent
  * @return Tuple of two objects Path
  */
- /*
-std::tuple<Path, Path> Genetic::cross2(Path A, Path B) {
-
-    int crossoverPoint = rand() % A.getSize();
-
-//    std::cout<<"Crossover point: " << crossoverPoint << "\n";
-
-    int *newA = new int[numOfCities];
-    int *newB = new int[numOfCities];
-
-    std::copy(A.getCitiesList(), A.getCitiesList() + A.getSize(), newA);
-    std::copy(B.getCitiesList(), B.getCitiesList() + B.getSize(), newB);
-
-    //PRINTING newA, newB
-    std::cout<<"Printing raw copies of paths \n newA: ";
-    for(int x = 0 ; x < numOfCities; x++){
-        std::cout << ", " << newA[x];
-    }
-    std::cout<<"\n newB: ";
-
-    for(int x = 0 ; x < numOfCities; x++){
-        std::cout << ", " << newB[x];
-    }
-    std::cout<<"\n\n";
-
-
-    for(int i = 0; i < crossoverPoint; i++){
-
-        int itemToInsert = newB[i];
-        int itemToSwap = newA[i];
-
-        if(itemToInsert != itemToSwap){
-            for(int j = i;  j < A.getSize(); j++){
-                if( newA[j] == itemToInsert){
-                    std::swap(newA[i], newA[j]);
-                }
-            }
-        }
-
-    }
-
-    Path p1(A.getSize());
-    p1.setCitiesList(newA);
-    p1.calculateCost(g);
-
-
-
-
-
-    /// Performing same operation for the 2nd path
-
-    int *newAA = new int[numOfCities];
-    int *newBB = new int[numOfCities];
-
-    std::copy(A.getCitiesList(), A.getCitiesList() + A.getSize(), newAA);
-    std::copy(B.getCitiesList(), B.getCitiesList() + B.getSize(), newBB);
-
-
-    for(int i = 0; i < crossoverPoint; i++){
-
-        int itemToInsert = newAA[i];
-        int itemToSwap = newBB[i];
-
-        if(itemToInsert != itemToSwap){
-            for(int j = i;  j < B.getSize(); j++){
-                if( newBB[j] == itemToInsert){
-                    std::swap(newBB[i], newBB[j]);
-                }
-            }
-        }
-
-    }
-
-    Path p2(B.getSize());
-    p2.setCitiesList(newBB);
-    p2.calculateCost(g);
-
-
-    std::cout<<"Printing after editing \n newA: ";
-    for(int x = 0 ; x < numOfCities; x++){
-        std::cout << ", " << newAA[x];
-    }
-    std::cout<<"\n newB: ";
-
-    for(int x = 0 ; x < numOfCities; x++){
-        std::cout << ", " << newBB[x];
-    }
-    std::cout<<"\n";
-
-
-    return std::make_tuple(p1, p2);
-}
-*/
-
  std::tuple<Path, Path> Genetic::cross2(Path A, Path B) {
      int crossoverPoint = rand() % A.getSize();
-     std::cout<<"\nCROSSOVER POINT: " << crossoverPoint <<"\n";
 
      int *newA = new int[numOfCities];
      int *newB = new int[numOfCities];
@@ -475,8 +391,6 @@ std::tuple<Path, Path> Genetic::cross2(Path A, Path B) {
 
      return std::make_tuple(p1, p2);
  }
-
-
 
 
 Path Genetic::mutate(Path A) {

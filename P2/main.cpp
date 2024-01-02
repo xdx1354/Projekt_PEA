@@ -13,11 +13,11 @@ int main() {
 
 
     Graph g;
-    g.loadData("tsp_10a");
+    g.loadData("data10");
     g.printGraph();
     cout<<"\n\n------------------------------------------\n\n";
 
-    Genetic gen(g, 3, 5, 5, 5, 5, 5);
+    Genetic gen(g, 3, 5, 5, 50, 5, 50);
     gen.apply();
 
 
