@@ -8,7 +8,16 @@
 //#include <iterator>
 //#include <random>
 
-
+/**
+ *
+ * @param graph - Graph class object containing graph data
+ * @param numOfIterations - limit of epochs
+ * @param sizeOfPopulation  - limit of size of population selected after epoch for further development
+ * @param crossCount - number of cross operations per epoch
+ * @param mutateCount - number of mutate operations per epoch
+ * @param cross2Count - number of cross (2nd method) operations per epoch
+ * @param mutate2Count - number of mutate (2nd method) operations per epoch
+ */
 Genetic::Genetic(Graph graph, int numOfIterations, int sizeOfPopulation, int crossCount, int mutateCount, int cross2Count, int mutate2Count)
         : bestPath(bestPath) {
 
@@ -47,7 +56,11 @@ void Genetic::apply() {
 
 
     // generate random paths x sizeOfPopulation
-    for(int i = 0; i < populationSize; i++){
+
+    listOfPaths[0] = generateGreedyPath();
+    listOfPaths[0].calculateCost(g);
+
+    for(int i = 1; i < populationSize; i++){
         listOfPaths[i] = generateRandomPath();
         listOfPaths[i].calculateCost(g);
 
@@ -55,6 +68,8 @@ void Genetic::apply() {
     currentNumOfPaths = populationSize;
 
     std::cout<<"Rand paths generated\n";
+    printCurrentList();
+    std::cout<<"\n\n";
 
 
     //main loop iterating through epochs
@@ -63,8 +78,12 @@ void Genetic::apply() {
     }
 
     pickTopResults();
-    std::cout<<"\nAFTER\n";
+
+    std::cout<<"\n\nFinnal list: \n";
     printCurrentList();
+
+//    std::cout<<"\nAFTER\n";
+//    printCurrentList();
 //    std::cout<<"\nAFTER v2\n";
 //    printCurrentList();
 
@@ -75,23 +94,51 @@ void Genetic::apply() {
 
 void Genetic::epoch(int currentIteration) {
 
-//    for(int i = 0; i < crossCount; i++){
-//
-//        int first, second;
-//        do{
-//            first = rand() % (populationSize/2);
-//            second = rand() % (populationSize/2);
-//        } while (first == second);
-//
-//
-//        std::tuple<Path, Path> crossResult = cross2(listOfPaths[first], listOfPaths[second]);
-//        listOfPaths[currentNumOfPaths] = std::get<0>(crossResult);
-//        currentNumOfPaths++;
-//        listOfPaths[currentNumOfPaths] = std::get<1>(crossResult);
-//        currentNumOfPaths++;
-//    }
+    //// for some reason performing twice operation on same paths causes segfault because number of the nodes are inncorrect
+    //// for example 600 instead of in range of (0, 10). Somehow first action affects the data/
+
+/// Performing crossCount crossing operations
+    for(int i = 0; i < crossCount; i++){
+
+        int first, second;
+        do{
+            first = rand() % (populationSize/2);
+            second = rand() % (populationSize);
+        } while (first == second);
 
 
+
+
+        /// CROSS action
+        std::cout<<"First path: " << listOfPaths[first].to_string() <<" \n";
+        std::cout<<"Second path: " << listOfPaths[second].to_string() <<" \n\n";
+        std::tuple<Path, Path> crossResult = cross2(listOfPaths[first], listOfPaths[second]);
+
+        listOfPaths[currentNumOfPaths] = std::get<0>(crossResult);
+        std::cout<<"First child: " << listOfPaths[currentNumOfPaths].to_string() <<" \n\n";
+        currentNumOfPaths++;
+
+        listOfPaths[currentNumOfPaths] = std::get<1>(crossResult);
+        std::cout<<"Second child: " << listOfPaths[currentNumOfPaths].to_string() <<" \n\n";
+        currentNumOfPaths++;
+
+        std::cout<<"--------------------\n";
+
+        /// TO DO: CROSS2 action
+//        std::tuple<Path, Path> crossResult2 = cross(listOfPaths[first], listOfPaths[second]);
+//        listOfPaths[currentNumOfPaths] = std::get<0>(crossResult2);
+//        currentNumOfPaths++;
+//        listOfPaths[currentNumOfPaths] = std::get<1>(crossResult2);
+//        currentNumOfPaths++;
+
+
+//        listOfPaths[currentNumOfPaths] = cross2(listOfPaths[first], listOfPaths[second]);
+//        currentNumOfPaths++;
+
+    }
+/*
+/// Performing mutateCount mutate operations
+    /// MUTATE ACTION
     for(int i = 0; i < mutateCount; i++){
 
         listOfPaths[currentNumOfPaths] = mutate(listOfPaths[rand() % (populationSize / 2)]);
@@ -99,11 +146,24 @@ void Genetic::epoch(int currentIteration) {
 
     }
 
+    /// MUTATE 2 ACTION
+    for(int i = 0; i < mutateCount; i++){
+
+        listOfPaths[currentNumOfPaths] = mutate2(listOfPaths[rand() % (populationSize)]);
+        currentNumOfPaths++;
+
+    }
 //    std::cout<<"Epoch: " + std::to_string(currentIteration) <<"\n";
 //    printCurrentList();
 //    std::cout<<"\n\n";
 
+*/
+
+/// Calling pickTopResults function to sort all results and store only the top X one, where X = sizeOfPopulation
     pickTopResults();
+    printCurrentList();
+
+    std::cout<<"\n-----------------\n";
 
 }
 
@@ -113,12 +173,12 @@ void Genetic::pickTopResults() {
     // calculate current costs TODO: this should be done while adding a new path to save time
 
 //    /// THIS IS JUST A HOTFIX
-//    for(int i = 0; i < currentNumOfPaths; i++){
-//        listOfPaths[i].calculateCost(g);
-//    }
+    for(int i = 0; i < currentNumOfPaths; i++){
+        listOfPaths[i].calculateCost(g);
+    }
 
-    std::cout<<"\n\n\nBEFORE SORTING\n";
-    printCurrentList();
+//    std::cout<<"\n\n\nBEFORE SORTING\n";
+//    printCurrentList();
 
 //    // bubble sort
 //    for (int i = 0; i < currentNumOfPaths - 1; i++) {
@@ -137,8 +197,8 @@ void Genetic::pickTopResults() {
 //    for(int i = 0; i < populationSize)
 
 
-    std::cout<<"\n\n\nAFTER SORTING\n";
-    printCurrentList();
+//    std::cout<<"\n\n\nAFTER SORTING\n";
+//    printCurrentList();
     // check if new best result found
     bestCurrentCost = listOfPaths[0].getCost();
     if (bestCurrentCost < bestCost) {
@@ -148,6 +208,8 @@ void Genetic::pickTopResults() {
     // ignore paths at the end
     currentNumOfPaths = populationSize;
 }
+
+//TODO: zmienieć na losowe miejsce pivot w zakresie tablicy
 
 /**
  * Takes half of path A and fill with lacking nodes in order of appearing in B.
@@ -236,141 +298,186 @@ std::tuple<Path, Path> Genetic::cross(Path A, Path B) {
     newObjPathB.setCitiesList(newPathB);
     newObjPathB.calculateCost(g);
 
-    delete[] newPathA; // Free dynamically allocated memory for newPathA
-    delete[] newPathB; // Free dynamically allocated memory for newPathB
+    ///delete[] newPathA; // Free dynamically allocated memory for newPathA
+    ///delete[] newPathB; // Free dynamically allocated memory for newPathB
 
     return std::make_tuple(newObjPathA, newObjPathB);
 }
 
-
+//TODO: zaimplementować algorytm PMX z pracy naukowej, zwraca tuple!
 
 /**
- * Takes part of path A and rest of elemgents from B to form A'. Then by applying mapping legalizes the path.
- * To create B', takes part of B and fills rest with nodes from A, then applies mappin
+
  * @param A Path - first parent
  * @param B Path - second parent
  * @return Tuple of two objects Path
  */
-std::tuple <Path, Path> Genetic::cross2(Path A, Path B){
-    Path aPrim(numOfCities);
-    Path bPrim(numOfCities);
+ /*
+std::tuple<Path, Path> Genetic::cross2(Path A, Path B) {
 
-    int *aPrimList = new int[numOfCities];
-    int *bPrimList = new int[numOfCities];
+    int crossoverPoint = rand() % A.getSize();
 
-    int *aList = A.getCitiesList();
-    int *bList = B.getCitiesList();
+//    std::cout<<"Crossover point: " << crossoverPoint << "\n";
 
-    /// ALGORITHM LOGIC
+    int *newA = new int[numOfCities];
+    int *newB = new int[numOfCities];
 
-    int aBegin, aEnd, bBegin, bEnd;         // beginnings and ends of copied part from A/B to aPrim/bPrim
+    std::copy(A.getCitiesList(), A.getCitiesList() + A.getSize(), newA);
+    std::copy(B.getCitiesList(), B.getCitiesList() + B.getSize(), newB);
 
-    // pick random positions and make them in proper order
-    aBegin = rand()%numOfCities;
-    aEnd = rand()%numOfCities;
-
-    bBegin = rand()%numOfCities;
-    bEnd = rand()%numOfCities;
-
-    if(aBegin > aEnd){
-        std::swap(aBegin, aEnd);
+    //PRINTING newA, newB
+    std::cout<<"Printing raw copies of paths \n newA: ";
+    for(int x = 0 ; x < numOfCities; x++){
+        std::cout << ", " << newA[x];
     }
-    if(bBegin > bEnd){
-        std::swap(bBegin, bEnd);
+    std::cout<<"\n newB: ";
+
+    for(int x = 0 ; x < numOfCities; x++){
+        std::cout << ", " << newB[x];
     }
+    std::cout<<"\n\n";
 
 
-    // Copying part of A and B to A' and B'
-    for (int i = 0; i < numOfCities; i++) {
-        // Logic for aPrimList
-        if (i >= aBegin && i < aEnd) {
-            aPrimList[i] = aList[i];
-        } else {
-            // Store elements from B that are not already in A'
-            int currentElement = bList[i];
-            bool isDuplicate = false;
+    for(int i = 0; i < crossoverPoint; i++){
 
-            // Check if the element from B already exists in A'
-            for (int j = aBegin; j < aEnd; j++) {
-                if (aList[j] == currentElement) {
-                    isDuplicate = true;
-                    break;
-                }
-            }
+        int itemToInsert = newB[i];
+        int itemToSwap = newA[i];
 
-            if (!isDuplicate) {
-                aPrimList[i] = bList[i];
-            } else {
-                // If the element from B already exists in A', find a suitable replacement from A
-                for (int j = 0; j < numOfCities; j++) {
-                    bool foundInBPrim = false;
-
-                    // Check if the element from A already exists in B'
-                    for (int k = bBegin; k < bEnd; k++) {
-                        if (bList[k] == aList[j]) {
-                            foundInBPrim = true;
-                            break;
-                        }
-                    }
-
-                    if (!foundInBPrim) {
-                        aPrimList[i] = aList[j];
-                        break;
-                    }
+        if(itemToInsert != itemToSwap){
+            for(int j = i;  j < A.getSize(); j++){
+                if( newA[j] == itemToInsert){
+                    std::swap(newA[i], newA[j]);
                 }
             }
         }
 
-        // Logic for bPrimList
-        if (i >= bBegin && i < bEnd) {
-            bPrimList[i] = bList[i];
-        } else {
-            // Store elements from A that are not already in B'
-            int currentElement = aList[i];
-            bool isDuplicate = false;
+    }
 
-            // Check if the element from A already exists in B'
-            for (int j = bBegin; j < bEnd; j++) {
-                if (bList[j] == currentElement) {
-                    isDuplicate = true;
-                    break;
-                }
-            }
+    Path p1(A.getSize());
+    p1.setCitiesList(newA);
+    p1.calculateCost(g);
 
-            if (!isDuplicate) {
-                bPrimList[i] = aList[i];
-            } else {
-                // If the element from A already exists in B', find a suitable replacement from B
-                for (int j = 0; j < numOfCities; j++) {
-                    bool foundInAPrim = false;
 
-                    // Check if the element from B already exists in A'
-                    for (int k = aBegin; k < aEnd; k++) {
-                        if (aList[k] == bList[j]) {
-                            foundInAPrim = true;
-                            break;
-                        }
-                    }
 
-                    if (!foundInAPrim) {
-                        bPrimList[i] = bList[j];
-                        break;
-                    }
+
+
+    /// Performing same operation for the 2nd path
+
+    int *newAA = new int[numOfCities];
+    int *newBB = new int[numOfCities];
+
+    std::copy(A.getCitiesList(), A.getCitiesList() + A.getSize(), newAA);
+    std::copy(B.getCitiesList(), B.getCitiesList() + B.getSize(), newBB);
+
+
+    for(int i = 0; i < crossoverPoint; i++){
+
+        int itemToInsert = newAA[i];
+        int itemToSwap = newBB[i];
+
+        if(itemToInsert != itemToSwap){
+            for(int j = i;  j < B.getSize(); j++){
+                if( newBB[j] == itemToInsert){
+                    std::swap(newBB[i], newBB[j]);
                 }
             }
         }
+
     }
 
+    Path p2(B.getSize());
+    p2.setCitiesList(newBB);
+    p2.calculateCost(g);
 
 
+    std::cout<<"Printing after editing \n newA: ";
+    for(int x = 0 ; x < numOfCities; x++){
+        std::cout << ", " << newAA[x];
+    }
+    std::cout<<"\n newB: ";
 
-    aPrim.setCitiesList(aPrimList);
-    aPrim.calculateCost(g);
-    bPrim.setCitiesList(bPrimList);
-    bPrim.calculateCost(g);
+    for(int x = 0 ; x < numOfCities; x++){
+        std::cout << ", " << newBB[x];
+    }
+    std::cout<<"\n";
 
-    return std::make_tuple(aPrim,bPrim);
+
+    return std::make_tuple(p1, p2);
 }
+*/
+
+ std::tuple<Path, Path> Genetic::cross2(Path A, Path B) {
+     int crossoverPoint = rand() % A.getSize();
+     std::cout<<"\nCROSSOVER POINT: " << crossoverPoint <<"\n";
+
+     int *newA = new int[numOfCities];
+     int *newB = new int[numOfCities];
+
+     std::copy(A.getCitiesList(), A.getCitiesList() + A.getSize(), newA);
+     std::copy(B.getCitiesList(), B.getCitiesList() + B.getSize(), newB);
+
+     int *newAA = new int[numOfCities];
+     int *newBB = new int[numOfCities];
+
+     std::copy(A.getCitiesList(), A.getCitiesList() + A.getSize(), newAA);
+     std::copy(B.getCitiesList(), B.getCitiesList() + B.getSize(), newBB);
+
+     // First child path (p1)
+     for (int i = 0; i < crossoverPoint; ++i) {
+         int itemToInsert = newB[i];
+         int itemToSwap = newA[i];
+
+         if (itemToInsert != itemToSwap) {
+             int index = -1;
+             for (int j = 0; j < A.getSize(); ++j) {
+                 if (newA[j] == itemToInsert) {
+                     index = j;
+                     break;
+                 }
+             }
+
+             if (index != -1) {
+                 std::swap(newA[i], newA[index]);
+             }
+         }
+     }
+
+     Path p1(A.getSize());
+     p1.setCitiesList(newA);
+     p1.calculateCost(g);
+
+     // Second child path (p2)
+     for (int i = 0; i < crossoverPoint; ++i) {
+         int itemToInsert = newAA[i];
+         int itemToSwap = newBB[i];
+
+         if (itemToInsert != itemToSwap) {
+             int index = -1;
+             for (int j = 0; j < B.getSize(); ++j) {
+                 if (newBB[j] == itemToInsert) {
+                     index = j;
+                     break;
+                 }
+             }
+
+             if (index != -1) {
+                 std::swap(newBB[i], newBB[index]);
+             }
+         }
+     }
+
+     Path p2(B.getSize());
+     p2.setCitiesList(newBB);
+     p2.calculateCost(g);
+
+     delete[] newA;
+     delete[] newB;
+
+     return std::make_tuple(p1, p2);
+ }
+
+
+
 
 Path Genetic::mutate(Path A) {
 
@@ -406,6 +513,7 @@ Path Genetic::mutate2(Path A){
     do {
         pos1 = rand() % (numOfCities - 1) + 1;
         pos2 = rand() % (numOfCities - 1) + 1;
+//        std::cout<<"POS1: " << pos1 << " POS2: " << pos2 <<"\n";
     } while (pos1 == pos2 || abs(pos1 - pos2) < 2);
 
 
@@ -450,7 +558,7 @@ Path Genetic::generateRandomPath() {
 
 void Genetic::printCurrentList() {
     for( int i = 0; i < currentNumOfPaths; i++){
-        listOfPaths[i].calculateCost(g);
+//        listOfPaths[i].calculateCost(g);
         std::cout<<listOfPaths[i].to_string() <<"    COST: " << listOfPaths[i].getCost();
 
         std::cout<<"\n";
@@ -502,3 +610,45 @@ void Genetic::setNumOfCities(int numOfCities) {
 Genetic::~Genetic() {
 
 }
+
+Path Genetic::generateGreedyPath() {
+    Path greedyPath(numOfCities); // Inicjalizacja obiektu ścieżki
+
+    int *citiesList = new int[numOfCities];
+
+    bool *visited = new bool[numOfCities]; // Tablica odwiedzonych miast
+    for (int i = 0; i < numOfCities; ++i) {
+        visited[i] = false; // Inicjalizacja wszystkich miast jako nieodwiedzone
+    }
+
+    int currentCity = 0; // Początkowe miasto
+
+    for (int i = 0; i < numOfCities; ++i) {
+        int nextCity = -1;
+        int minCost = INT_MAX;
+
+        visited[currentCity] = true; // Oznacz bieżące miasto jako odwiedzone
+        citiesList[i] = currentCity; // Dodaj bieżące miasto do ścieżki
+
+        for (int j = 0; j < numOfCities; ++j) {
+            if (!visited[j] && matrix[currentCity][j] < minCost) {
+                minCost = matrix[currentCity][j];
+                nextCity = j;
+            }
+        }
+
+        if (nextCity != -1) {
+            currentCity = nextCity; // Przejście do następnego miasta
+        }
+    }
+
+    greedyPath.setCitiesList(citiesList); // Ustaw listę miast w obiekcie Path
+    greedyPath.calculateCost(g);
+
+    delete[] visited; // Zwolnienie zaalokowanej pamięci dla tablicy odwiedzonych miast
+
+    return greedyPath; // Zwróć ścieżkę
+}
+
+
+

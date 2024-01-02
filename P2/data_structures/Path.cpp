@@ -9,6 +9,7 @@
 Path::Path(int size){
     this -> size = size;
     cost = 0;
+    citiesList = nullptr;
 
 
 }
@@ -28,7 +29,7 @@ int Path::calculateCost(Graph g) {
 //    std::cout<<" = " << sum;
 //    std::cout<<"\n";
     cost = sum;
-    return sum;
+    return cost;
 }
 
 
@@ -51,8 +52,22 @@ int *Path::getCitiesList() const {
     return citiesList;
 }
 
-void Path::setCitiesList(int *citiesList) {
-    Path::citiesList = citiesList;
+void Path::setCitiesList(int *newList) {
+
+    // Zwolnienie poprzednio zaalokowanej pamięci dla citiesList, jeśli była już zaalokowana
+    if (citiesList != nullptr) {
+        delete[] citiesList;
+    }
+
+    citiesList = new int[size]; // Zaalokowanie nowej pamięci dla citiesList
+
+
+    for(int i = 0; i < size; i++){
+        citiesList[i] = newList[i];
+    }
+
+//    std::copy(citiesList, citiesList + size, this->citiesList);
+//    delete[] citiesList;
 }
 
 int Path::getCost() const {
@@ -74,7 +89,7 @@ void Path::setSize(int size) {
 Path::Path() {}
 
 Path::~Path() {
-
+//    delete [] citiesList;
 }
 
 

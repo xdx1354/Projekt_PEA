@@ -13,12 +13,15 @@ int main() {
 
 
     Graph g;
-    g.loadData("data10");
+    g.loadData("tsp_10a");
     g.printGraph();
     cout<<"\n\n------------------------------------------\n\n";
 
-    Genetic gen(g, 5, 5, 2, 2, 2, 2);
+    Genetic gen(g, 3, 5, 5, 5, 5, 5);
     gen.apply();
+
+
+
 ////
 //    Path ph(10);
 //    int temp[10] = {0, 9, 4, 6, 3, 5, 2, 7, 8, 1};

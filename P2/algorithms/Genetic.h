@@ -69,6 +69,7 @@ private:
 
     /// genetic operations
     std::tuple<Path, Path> cross(Path A, Path B);       // takes half of A and fills with B
+//    std::tuple<Path, Path> cross2(Path A, Path B);
     std::tuple<Path, Path> cross2(Path A, Path B);
 
     Path mutate(Path A);                                // swaps two cities
@@ -81,7 +82,7 @@ private:
     void printCurrentList();
 
 
-
+    Path generateGreedyPath();
 };
 
 
