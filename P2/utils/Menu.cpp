@@ -95,8 +95,9 @@ void Menu::start() {
 
                     switch(stoi(whatParams)){
                         case 1:{
+                            int pop = 100;
+                            runGenetic(1000, pop*0.2, pop*0.3, pop*0.1, pop*0.1, pop);
 
-                            runGenetic(100000, 20, 20, 20, 20, 100);        // TODO: fill with optimal data after tests
 
                             break;
                         }
@@ -188,4 +189,7 @@ void Menu::runTS(int endCon, float q1, float q2){
 void Menu::runGenetic(int endCon, int crossCount, int mutateCount, int crossCount2, int mutateCount2, int sizeOfPopulation){
     Genetic gen(g, endCon, sizeOfPopulation, crossCount, mutateCount, crossCount2, mutateCount2);
     gen.apply();
+    cout<<"Best found result: ";
+    gen.printBestPath();
+    cout << " ,cost: " << gen.getBestCost() << "\n\n";
 }

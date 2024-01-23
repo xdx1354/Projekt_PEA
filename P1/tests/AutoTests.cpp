@@ -226,3 +226,22 @@ void AutoTests::autoTestDP() {
 
     }
 }
+
+void AutoTests::comparisonTestsDP() {
+
+    int quantities[6] = {22, 23, 24, 25, 26, 27};  // fixed list of tested quantities
+
+
+    for (int q: quantities) {
+        generateData(q);                            // generating only once
+        string loc = R"(..\data\)";
+        string path = loc + "data" + to_string(q) + ".txt";
+        Graph g;
+        g.loadData(path);
+
+        DP dp(g);
+        dp.apply();
+        dp.printResult();
+        cout<<"\n\n";
+    }
+}

@@ -19,7 +19,7 @@
  * @param mutate2Count - number of mutate (2nd method) operations per epoch
  */
 Genetic::Genetic(Graph graph, int numOfIterations, int sizeOfPopulation, int crossCount, int mutateCount, int cross2Count, int mutate2Count)
-        : bestPath(bestPath) {
+{
 
     srand(time(NULL));
 
@@ -67,9 +67,9 @@ void Genetic::apply() {
     }
     currentNumOfPaths = populationSize;
 
-    std::cout<<"Rand paths generated\n";
-    printCurrentList();
-    std::cout<<"\n\n";
+//    std::cout<<"Rand paths generated\n";
+//    printCurrentList();
+//    std::cout<<"\n\n";
 
 
     //main loop iterating through epochs
@@ -79,8 +79,8 @@ void Genetic::apply() {
 
     pickTopResults();
 
-    std::cout<<"\n\nFinnal list: \n";
-    printCurrentList();
+//    std::cout<<"\n\nFinnal list: \n";
+//    printCurrentList();
 
 //    std::cout<<"\nAFTER\n";
 //    printCurrentList();
@@ -88,8 +88,8 @@ void Genetic::apply() {
 //    printCurrentList();
 
     std::cout<<"Cheapest ever path cost: " <<bestCost<<"\n";
-    std::cout<<"Cheapest path cost: " <<listOfPaths[0].getCost()<<"\n";
-    std::cout<<"2nd cheapest path cost: " <<listOfPaths[1].getCost()<<"\n";
+//    std::cout<<"Cheapest path cost: " <<listOfPaths[0].getCost()<<"\n";
+//    std::cout<<"2nd cheapest path cost: " <<listOfPaths[1].getCost()<<"\n";
 }
 
 void Genetic::epoch(int currentIteration) {
@@ -128,7 +128,7 @@ void Genetic::epoch(int currentIteration) {
 
 
     /// CROSS 2 action
-    for(int i = 0; i < cross2Count; i++) {
+    for(int i = 0; i < cross2Count; i++){
 
         int first, second;
         do {
@@ -162,6 +162,8 @@ void Genetic::epoch(int currentIteration) {
         currentNumOfPaths++;
 
     }
+
+
 //    std::cout<<"Epoch: " + std::to_string(currentIteration) <<"\n";
 //    printCurrentList();
 //    std::cout<<"\n\n";
@@ -170,48 +172,44 @@ void Genetic::epoch(int currentIteration) {
 
 /// Calling pickTopResults function to sort all results and store only the top X one, where X = sizeOfPopulation
     pickTopResults();
-    printCurrentList();
+//    printCurrentList();
 
-    std::cout<<"\n-----------------\n";
+//    std::cout<<"\n-----------------\n";
 
 }
 
 void Genetic::pickTopResults() {
     int bestCurrentCost = INT_MAX;
 
-    // calculate current costs TODO: this should be done while adding a new path to save time
 
-//    /// THIS IS JUST A HOTFIX
+
+   /// THIS IS JUST A HOTFIX
     for(int i = 0; i < currentNumOfPaths; i++){
         listOfPaths[i].calculateCost(g);
     }
 
-//    std::cout<<"\n\n\nBEFORE SORTING\n";
-//    printCurrentList();
 
-//    // bubble sort
-//    for (int i = 0; i < currentNumOfPaths - 1; i++) {
-//        for (int j = 0; j < currentNumOfPaths - i - 1; j++) {
-//            if (listOfPaths[j].getCost() > listOfPaths[j + 1].getCost()) {
-//                std::swap(listOfPaths[j], listOfPaths[j + 1]);
-//
-//            }
-//        }
-//    }
+
     std::sort(listOfPaths, listOfPaths + currentNumOfPaths, [](const Path& a, const Path& b) {
         return a.getCost() < b.getCost(); // Sort in ascending order of cost
     });
 
-//    std::vector<Path> vec;
-//    for(int i = 0; i < populationSize)
+
 
 
 //    std::cout<<"\n\n\nAFTER SORTING\n";
 //    printCurrentList();
+
     // check if new best result found
     bestCurrentCost = listOfPaths[0].getCost();
     if (bestCurrentCost < bestCost) {
         bestCost = bestCurrentCost;
+        bestPath.setCitiesList(listOfPaths[0].getCitiesList());
+        bestPath.calculateCost(g);
+    }
+
+    for(int i = populationSize; i < currentNumOfPaths; i++) {
+        delete[] listOfPaths[i].getCitiesList();
     }
 
     // ignore paths at the end
@@ -389,6 +387,9 @@ std::tuple<Path, Path> Genetic::cross(Path A, Path B) {
      delete[] newA;
      delete[] newB;
 
+     delete[] newAA;
+     delete[] newBB;
+
      return std::make_tuple(p1, p2);
  }
 
@@ -427,7 +428,6 @@ Path Genetic::mutate2(Path A){
     do {
         pos1 = rand() % (numOfCities - 1) + 1;
         pos2 = rand() % (numOfCities - 1) + 1;
-//        std::cout<<"POS1: " << pos1 << " POS2: " << pos2 <<"\n";
     } while (pos1 == pos2 || abs(pos1 - pos2) < 2);
 
 
@@ -466,7 +466,7 @@ Path Genetic::generateRandomPath() {
 
     p.setCitiesList(cities);
     p.calculateCost(g);
-
+    delete[] cities;
     return p;
 }
 
@@ -505,7 +505,7 @@ void Genetic::setBestCost(int bestCost) {
     Genetic::bestCost = bestCost;
 }
 
-const Path &Genetic::getBestPath() const {
+Path Genetic::getBestPath() const {
     return bestPath;
 }
 
@@ -522,6 +522,12 @@ void Genetic::setNumOfCities(int numOfCities) {
 }
 
 Genetic::~Genetic() {
+
+     for(int i =0; i< populationSize; i++){
+         delete[] listOfPaths[i].getCitiesList();
+     }
+
+     delete []listOfPaths;
 
 }
 
@@ -560,9 +566,14 @@ Path Genetic::generateGreedyPath() {
     greedyPath.calculateCost(g);
 
     delete[] visited; // Zwolnienie zaalokowanej pamięci dla tablicy odwiedzonych miast
+    delete[] citiesList;
 
     return greedyPath; // Zwróć ścieżkę
 }
+
+void Genetic::printBestPath() {
+     std::cout<<bestPath.to_string();
+ }
 
 
 

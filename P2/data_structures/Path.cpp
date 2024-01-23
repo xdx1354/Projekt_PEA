@@ -16,18 +16,16 @@ Path::Path(int size){
 
 int Path::calculateCost(Graph g) {
     int sum = 0;
-//    std::cout<<"\n";
+
     for (int i = 0; i < size; i++) {
         int currentCity = citiesList[i];
         int nextCity = citiesList[(i + 1) % size];
         int val = g.getMatrix()[currentCity][nextCity];
-//        std::cout<<" + "<< val;
+
         sum += val;
     }
 
 
-//    std::cout<<" = " << sum;
-//    std::cout<<"\n";
     cost = sum;
     return cost;
 }
@@ -89,7 +87,9 @@ void Path::setSize(int size) {
 Path::Path() {}
 
 Path::~Path() {
-//    delete [] citiesList;
+//    if (citiesList != nullptr) {
+//        delete[] citiesList;
+//    }
 }
 
 

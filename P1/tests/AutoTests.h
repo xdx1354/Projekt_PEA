@@ -21,6 +21,7 @@ public:
 
 
 
+    void comparisonTestsDP();
 };
 
 

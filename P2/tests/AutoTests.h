@@ -26,6 +26,12 @@ public:
     void mutateTestsGenetic();
 
     void crossTestsGenetic();
+
+    void geneticGeneralTests();
+
+    void comparisonTestsGenetic();
+
+    void comparisonTestsTS();
 };
 
 

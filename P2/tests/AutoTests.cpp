@@ -8,6 +8,7 @@
 #include "../data_structures/Graph.h"
 #include "../algorithms/TS.h"
 #include "../algorithms/Genetic.h"
+#include "Time.h"
 
 using namespace std;
 
@@ -263,52 +264,39 @@ void AutoTests::populationTestsGenetic() {
     string res_loc = "..\\results\\";
     tests.open(res_loc + "population_tests.txt");            // opening the ofstream to file
 
-    /// CROSS AND MUTATE VALUES ARE SET TO 1/10 OF THE SIZE OF POPULATION
+    int populationSize[7] = { 10, 50, 100, 200, 300, 500, 600};
+    int numOfIterations = 1000;
 
+    string loc = R"(..\data\)";
+    string path = loc + "data100" + ".txt";
+    int quantitie = 100;
 
+    for (int p = 0; p < 7; p++) {
+        tests << "Iterations: " << numOfIterations << ", Population: " << populationSize[p]  << "\n";
 
-    int populationSize[5] = {10, 100, 500, 1000, 5000};
+        int totalCost = 0; // To accumulate total cost for averaging
+        for (int k = 0; k < NUMBER_OF_TESTS; k++) {
+            Graph g;
+            g.loadData(path);
+            int currentPopulation = populationSize[p];
 
-    int quantities[4] = {20, 40, 80, 120};
-    const int lenQuantities = sizeof(quantities) / sizeof(quantities[0]);
-    int numOfIterations[4] = {100, 10000, 100000, 1000000};
-    const int lenIterations = sizeof(numOfIterations) / sizeof(numOfIterations[0]);
+            Genetic gen(g, currentPopulation, quantitie, currentPopulation / 10, currentPopulation / 10, currentPopulation / 10, currentPopulation / 10);
+            gen.apply();
 
-    for (int j = 0; j < lenQuantities; j++) {
-        string loc = R"(..\data\)";
-        string path = loc + "data" + to_string(quantities[j]) + ".txt";
-        int min = INT_MAX;
+            totalCost += gen.getBestCost(); // Accumulating total cost
 
-        generateData(quantities[j]);
-        tests << "TS: " << quantities[j] << ";\n";
-
-        for (int i = 0; i < lenIterations; i++) {
-            for (int p = 0; p < 5; p++) {
-                stats << "Quantity: " << quantities[j] << ", Iterations: " << numOfIterations[i] << ", Population: " << populationSize[i]  << "\n";
-                for (int k = 0; k < NUMBER_OF_TESTS; k++) {
-                    Graph g;
-                    g.loadData(path);
-                    int currentPopulation = numOfIterations[i];
-                    Genetic gen(g, currentPopulation, quantities[j], currentPopulation/10, currentPopulation/10, currentPopulation/10, currentPopulation/10);
-                    gen.apply();
-
-                    if(gen.getBestCost() < min){
-                        min = gen.getBestCost();
-                    }
-                    cout << "Auto test TS. Size: " << quantities[j] << " Try: " << k << "/19. Number of iterations: "
-                         << numOfIterations[i] << " Result " << gen.getBestCost() << "\n";
-
-
-                }
-                tests << min << "\n";
-            }
-            tests << "\n";
+            cout << "Auto test TS. Size: " << quantitie << " Try: " << k+1 << "/20. Number of iterations: "
+                 << numOfIterations << " Result " << gen.getBestCost() << "\n";
         }
-        cout << "BEST CALCULATED RESULT: " << min << "\n";
-        cout << "=======================================================================\n";
 
-        tests.close();
+        double avgCost = static_cast<double>(totalCost) / NUMBER_OF_TESTS; // Calculate average cost
+        tests << "Average: " << avgCost << "\n";
+        cout << "Average calculated result for population " << populationSize[p] << ": " << avgCost << "\n";
     }
+
+    tests << "=======================================================================\n";
+
+    tests.close();
 }
 
 
@@ -321,8 +309,8 @@ void AutoTests::mutateTestsGenetic() {
     /// CROSS AND MUTATE VALUES ARE SET TO 1/10 OF THE SIZE OF POPULATION
 
     int POPULATION = 100;
-    int SIZE_OF_GRAPH = 20;
-    int ITERATIONS = 10000;
+    int SIZE_OF_GRAPH = 100;
+    int ITERATIONS = 1000;
     float CROSS_NUMBER = 0.1;
 
     float quantities[9][2]={
@@ -339,14 +327,15 @@ void AutoTests::mutateTestsGenetic() {
 
 
     string loc = R"(..\data\)";
-    string path = loc + "data100.txt";
-    int min = INT_MAX;
+    string path = loc + "data" + to_string(SIZE_OF_GRAPH) + ".txt";
+//    int min = INT_MAX;
 
-    generateData(100);
-    tests << "Genetic MUTATE " << 100 << ";\n";
+    generateData(SIZE_OF_GRAPH);
+    tests << "Genetic MUTATE size of graph: " << SIZE_OF_GRAPH << ";\n";
 
     for (int p = 0; p < 9; p++) {
-        stats << "Size of graph: " << SIZE_OF_GRAPH  << ", Iterations: " << ITERATIONS << ", Population: " << POPULATION  <<", proportions : "<<quantities[p][0]<<", "<< quantities[p][1]<< "\n";
+        int min = INT_MAX;
+        tests << "Size of graph: " << SIZE_OF_GRAPH  << ", Iterations: " << ITERATIONS << ", Population: " << POPULATION  <<", proportions : "<<quantities[p][0]<<", "<< quantities[p][1]<< "\n";
         for (int k = 0; k < NUMBER_OF_TESTS; k++) {
             Graph g;
             g.loadData(path);
@@ -356,7 +345,7 @@ void AutoTests::mutateTestsGenetic() {
             if(gen.getBestCost() < min){
                 min = gen.getBestCost();
             }
-            cout << "Auto test genetic MUTATE. Size: " << SIZE_OF_GRAPH << " Try: " << k << "/19. Proportions: "
+            cout << "Auto test genetic MUTATE. Size: " << SIZE_OF_GRAPH << " Try: " << k+1 << "/50. Proportions: "
                  << quantities[p][0]<<", "<< quantities[p][1]<< " Result " << gen.getBestCost() << "\n";
 
 
@@ -368,7 +357,7 @@ void AutoTests::mutateTestsGenetic() {
     }
 
 
-        tests.close();
+    tests.close();
 
 }
 
@@ -381,8 +370,8 @@ void AutoTests::crossTestsGenetic() {
     /// CROSS AND MUTATE VALUES ARE SET TO 1/10 OF THE SIZE OF POPULATION
 
     int POPULATION = 100;
-    int SIZE_OF_GRAPH = 20;
-    int ITERATIONS = 10000;
+    int SIZE_OF_GRAPH = 100;
+    int ITERATIONS = 1000;
     float MUTATE_NUMBER = 0.1;
 
     float quantities[9][2]={
@@ -399,13 +388,14 @@ void AutoTests::crossTestsGenetic() {
 
 
     string loc = R"(..\data\)";
-    string path = loc + "data100.txt";
-    int min = INT_MAX;
+    string path = loc + "data" + to_string(SIZE_OF_GRAPH) + ".txt";
 
-    generateData(100);
-    tests << "Genetic CROSS " << 100 << ";\n";
+
+    generateData(SIZE_OF_GRAPH);
+    tests << "Genetic CROSS " << SIZE_OF_GRAPH << ";\n";
 
     for (int p = 0; p < 9; p++) {
+        int min = INT_MAX;
         stats << "Size of graph: " << SIZE_OF_GRAPH  << ", Iterations: " << ITERATIONS << ", Population: " << POPULATION  <<", proportions : "<<quantities[p][0]<<", "<< quantities[p][1]<< "\n";
         for (int k = 0; k < NUMBER_OF_TESTS; k++) {
             Graph g;
@@ -416,7 +406,7 @@ void AutoTests::crossTestsGenetic() {
             if(gen.getBestCost() < min){
                 min = gen.getBestCost();
             }
-            cout << "Auto test genetic CROSS. Size: " << SIZE_OF_GRAPH << " Try: " << k << "/19. Proportions: "
+            cout << "Auto test genetic CROSS. Size: " << SIZE_OF_GRAPH << " Try: " << k+1 << "/50. Proportions: "
                  << quantities[p][0]<<", "<< quantities[p][1]<< " Result " << gen.getBestCost() << "\n";
 
 
@@ -429,5 +419,127 @@ void AutoTests::crossTestsGenetic() {
 
 
     tests.close();
+
+}
+
+void AutoTests::geneticGeneralTests(){
+
+
+
+    int population_size = 10;
+
+    int cross_p1 = 0.2 * population_size;
+    int cross_p2 = 0.1 * population_size;
+
+    int mutate_p1 = 0.3 * population_size;
+    int mutate_p2 = 0.1 * population_size;
+
+    int numOfIterations[6] = {100, 1000, 2500, 5000, 7500, 10000};
+    int quantities[6] = {20, 40, 80, 120, 160, 200};
+
+    for (int j = 0; j < 6; j++) {
+
+        generateData(quantities[j]);
+        string loc = R"(..\data\)";
+        string path = loc + "data" + to_string(quantities[j]) + ".txt";
+
+
+        int result = 0;
+        int min = INT_MAX;
+
+        stats << "TS: " << quantities[j] << ";\n";
+
+        for (int i = 0; i < 6; i++) {
+
+            stats  << "\n" << quantities[j] << ";" << numOfIterations[i] << "\n";
+
+            for (int k = 0; k < NUMBER_OF_TESTS; k++) {
+
+                Graph g;
+                g.loadData(path);
+                Genetic genetic(g, numOfIterations[i], population_size, cross_p1, mutate_p1, cross_p2, mutate_p2);
+
+                genetic.apply();
+
+                result = genetic.getBestCost();
+
+                if(result < min){
+                    min = result;
+                }
+
+                cout << "Auto test TS. Size: " << quantities[j] << " Try: " << k << "/19. Number of iterations: "
+                     << numOfIterations[i] << " Result " << result << "\n";
+
+            }
+            stats << min <<";";
+
+
+        }
+
+    }
+    stats.close();
+
+
+
+
+}
+
+void AutoTests::comparisonTestsTS(){
+
+    float proportions[2] = {0.8, 0.2};
+    int quantities[6] = {22, 23, 24, 25, 26, 27};
+    int numOfIterations = 1000000;
+
+
+    for (int j = 0; j < 6; j++) {
+
+        string loc = R"(..\data\)";
+        string path = loc + "data" + to_string(quantities[j]) + ".txt";
+
+        Graph g;
+        g.loadData(path);
+
+        float avg = 0;
+
+        for (int i = 0; i < NUMBER_OF_TESTS; i++) {
+           TS ts(g);
+           ts.apply(numOfIterations, proportions[0], proportions[1]);
+           avg += ts.bestPathCost / NUMBER_OF_TESTS;
+        }
+        cout <<"Average result for size: " << quantities[j] << " was: " << avg << "\n";
+    }
+//
+}
+
+void AutoTests::comparisonTestsGenetic(){
+    int population_size = 300;
+
+    int cross_p1 = 0.2 * population_size;
+    int cross_p2 = 0.1 * population_size;
+
+    int mutate_p1 = 0.3 * population_size;
+    int mutate_p2 = 0.1 * population_size;
+    int numOfIterations= 6000;
+
+    int quantities[6] = {22, 23, 24, 25, 26, 27};
+
+    for (int j = 0; j < 6; j++) {
+
+        string loc = R"(..\data\)";
+        string path = loc + "data" + to_string(quantities[j]) + ".txt";
+
+        Graph g;
+        g.loadData(path);
+        float avg = 0;
+
+        for (int i = 0; i < NUMBER_OF_TESTS; i++) {
+            Genetic genetic(g, numOfIterations, population_size, cross_p1, mutate_p1, cross_p2, mutate_p2);
+            genetic.apply();
+
+            avg += genetic.getBestCost() / NUMBER_OF_TESTS;
+        }
+        cout <<"Average result for size: " << quantities[j] << " was: " << avg << "\n";
+    }
+
 
 }

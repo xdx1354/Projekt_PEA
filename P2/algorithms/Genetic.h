@@ -13,9 +13,9 @@ class Genetic {
 
 
 public:
-    void apply();
+    void apply();                                       // function for applying the algorithm
 
-    const Path &getBestPath() const;
+    Path getBestPath() const;
     void setBestPath(const Path &bestPath);
 
     int getCurrentNumOfPaths() const;
@@ -26,6 +26,18 @@ public:
 
     void setBestCost(int bestCost);
     int getBestCost() const;
+
+    void printBestPath();
+
+    int getNumOfCities() const;
+
+    void setNumOfCities(int numOfCities);
+
+    /// constructor/destructor
+    Genetic(Graph graph,int numOfIterations, int sizeOfPopulation, int crossCount, int mutateCount, int cross2Count, int mutate2Count);
+    ~Genetic();
+
+protected: Graph g{};
 
 private:
     int currentNumOfPaths;          // number of currently stored paths in listOfPaths
@@ -46,43 +58,29 @@ private:
     int **matrix;
     int numOfIterations;
 
-protected: Graph g{};
 
-
-
-public:
-    int getNumOfCities() const;
-
-    void setNumOfCities(int numOfCities);
-
-    /// constructor/destructor
-    Genetic(Graph graph,int numOfIterations, int sizeOfPopulation, int crossCount, int mutateCount, int cross2Count, int mutate2Count);
-    ~Genetic();
 
 private:
-
-
-
 
     /// method responsible for main logic of algo
     void epoch(int currentIteration);
 
     /// genetic operations
     std::tuple<Path, Path> cross(Path A, Path B);       // takes half of A and fills with B
-//    std::tuple<Path, Path> cross2(Path A, Path B);
     std::tuple<Path, Path> cross2(Path A, Path B);
 
+    // mutate operations
     Path mutate(Path A);                                // swaps two cities
     Path mutate2(Path A);
 
 
     ///utility methods
-    void pickTopResults();           // it will sort and then save only top 10 results
-    Path generateRandomPath();      // might be changed later to improve algo
-    void printCurrentList();
+    void pickTopResults();              // it will sort and then save only top 10 results
+    Path generateRandomPath();          // might be changed later to improve algo
+    void printCurrentList();            // printing current population list
 
 
-    Path generateGreedyPath();
+    Path generateGreedyPath();          // generating Greedy path
 };
 
 
