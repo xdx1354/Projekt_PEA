@@ -96,7 +96,7 @@ void Menu::start() {
                     switch(stoi(whatParams)){
                         case 1:{
                             int pop = 100;
-                            runGenetic(1000, pop*0.2, pop*0.3, pop*0.1, pop*0.1, pop);
+                            runGenetic(3000, pop*0.2, pop*0.3, pop*0.1, pop*0.1, pop);
 
 
                             break;

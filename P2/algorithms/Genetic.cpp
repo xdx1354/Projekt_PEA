@@ -5,8 +5,7 @@
 #include "Genetic.h"
 #include "iostream"
 #include <algorithm>
-//#include <iterator>
-//#include <random>
+
 
 /**
  *
@@ -67,10 +66,6 @@ void Genetic::apply() {
     }
     currentNumOfPaths = populationSize;
 
-//    std::cout<<"Rand paths generated\n";
-//    printCurrentList();
-//    std::cout<<"\n\n";
-
 
     //main loop iterating through epochs
     for(int i = 0; i < numOfIterations; i++){
@@ -79,17 +74,8 @@ void Genetic::apply() {
 
     pickTopResults();
 
-//    std::cout<<"\n\nFinnal list: \n";
-//    printCurrentList();
-
-//    std::cout<<"\nAFTER\n";
-//    printCurrentList();
-//    std::cout<<"\nAFTER v2\n";
-//    printCurrentList();
-
     std::cout<<"Cheapest ever path cost: " <<bestCost<<"\n";
-//    std::cout<<"Cheapest path cost: " <<listOfPaths[0].getCost()<<"\n";
-//    std::cout<<"2nd cheapest path cost: " <<listOfPaths[1].getCost()<<"\n";
+
 }
 
 void Genetic::epoch(int currentIteration) {
@@ -182,23 +168,15 @@ void Genetic::pickTopResults() {
     int bestCurrentCost = INT_MAX;
 
 
-
-   /// THIS IS JUST A HOTFIX
     for(int i = 0; i < currentNumOfPaths; i++){
         listOfPaths[i].calculateCost(g);
     }
-
 
 
     std::sort(listOfPaths, listOfPaths + currentNumOfPaths, [](const Path& a, const Path& b) {
         return a.getCost() < b.getCost(); // Sort in ascending order of cost
     });
 
-
-
-
-//    std::cout<<"\n\n\nAFTER SORTING\n";
-//    printCurrentList();
 
     // check if new best result found
     bestCurrentCost = listOfPaths[0].getCost();
